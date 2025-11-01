@@ -1,9 +1,18 @@
 "use client"
 
-import { BarChart3, MessageCircle, Columns3, CheckCircle2 } from "lucide-react"
+import { BarChart3, MessageCircle, Columns3, CheckCircle2, TrendingUp, Bell, Calendar, Trophy } from "lucide-react"
 import { FEATURES } from "@/lib/content/landing-content"
 
-const ICON_MAP: Record<string, any> = { BarChart3, MessageCircle, Columns3, CheckCircle2 }
+const ICON_MAP: Record<string, any> = { 
+  BarChart3, 
+  MessageCircle, 
+  Columns3, 
+  CheckCircle2,
+  TrendingUp,
+  Bell,
+  Calendar,
+  Trophy
+}
 
 export default function Features() {
   return (
@@ -16,19 +25,58 @@ export default function Features() {
           <p className="text-xl text-muted-foreground">See how One-University transforms your admission journey</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8">
           {FEATURES.map((feature) => {
             const Icon = ICON_MAP[feature.icon] || BarChart3
             return (
-              <div key={feature.id} className="bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "var(--brand-yellow)" }}>
-                  <Icon size={24} className="text-white" />
+              <div 
+                key={feature.id} 
+                className="group bg-card p-6 rounded-2xl border border-border hover:border-primary/20 shadow-sm hover:shadow-lg transition-all duration-300"
+              >
+                {/* Icon and Title Section */}
+                <div className="flex items-start gap-4 mb-4">
+                  <div 
+                    className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110" 
+                    style={{ backgroundColor: "var(--brand-yellow)" }}
+                  >
+                    <Icon size={28} className="text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold mb-1 text-foreground group-hover:text-primary transition-colors" style={{ color: "var(--brand-blue)" }}>
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3 text-foreground" style={{ color: "var(--brand-blue)" }}>
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">{feature.description}</p>
-                <div className="h-48 bg-muted rounded-lg"></div>
+
+                {/* Points List */}
+                <div className="mt-5 pt-5 border-t border-border/50">
+                  <ul className="space-y-3">
+                    {feature.points.map((point, idx) => {
+                      const PointIcon = ICON_MAP[point.icon]
+                      return (
+                        <li key={idx} className="flex items-start gap-3 group/item">
+                          <div className="flex-shrink-0 mt-0.5">
+                            {PointIcon && (
+                              <div className="w-5 h-5 rounded-md flex items-center justify-center bg-primary/10 group-hover/item:bg-primary/20 transition-colors">
+                                <PointIcon
+                                  size={14}
+                                  className="text-primary"
+                                  style={{ color: "var(--brand-blue)" }}
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-md text-foreground/80 leading-relaxed group-hover/item:text-foreground transition-colors">
+                            {point.text}
+                          </span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
               </div>
             )
           })}

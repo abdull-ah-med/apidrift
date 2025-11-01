@@ -27,7 +27,7 @@ export default function Problems() {
           {PROBLEMS.map((problem) => {
             const Icon = ICON_MAP[problem.icon] || AlertCircle
             return (
-              <div key={problem.id} className="bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow">
+              <div key={problem.id} className="bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow  border border-border hover:border-primary/20 shadow-sm hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "var(--brand-yellow)" }}>
                   <Icon size={24} className="text-white" />
                 </div>

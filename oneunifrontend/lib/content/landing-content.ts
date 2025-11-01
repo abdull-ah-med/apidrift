@@ -84,7 +84,7 @@ export const SOLUTIONS = [
     id: "s1",
     icon: "User",
     title: "One-Profile",
-    description: "Centralized academic profile with all your achievements",
+    description: "Centralized academic profile with all your info",
   },
   {
     id: "s2",
@@ -118,9 +118,21 @@ export const SOLUTIONS = [
   },
   {
     id: "s7",
-    icon: "BookOpen",
-    title: "One-Companion",
+    icon: "Compass",
+    title: "One-Comparison",
     description: "Post-admission guide and support",
+  },
+  {
+    id: "s8",
+    icon: "Database",
+    title: "One-Info",
+    description: "Centralized Info of all Universities",
+  },
+  {
+    id: "s9",
+    icon: "HeartHandshake",
+    title: "One-Companion",
+    description: "Complete Companion for your admission",
   },
 ];
 

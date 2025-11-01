@@ -1,9 +1,9 @@
 "use client"
 
-import { User, Send, Search, CheckCircle, Bot, Users, BookOpen } from "lucide-react"
+import { User, Send, Search, CheckCircle, Bot, Users, BookOpen, Compass, Database, HeartHandshake } from "lucide-react"
 import { SOLUTIONS } from "@/lib/content/landing-content"
 
-const ICON_MAP: Record<string, any> = { User, Send, Search, CheckCircle, Bot, Users, BookOpen }
+const ICON_MAP: Record<string, any> = { User, Send, Search, CheckCircle, Bot, Users, BookOpen, Compass, Database, HeartHandshake }
 
 export default function Solutions() {
   return (
@@ -20,7 +20,7 @@ export default function Solutions() {
           {SOLUTIONS.map((solution) => {
             const Icon = ICON_MAP[solution.icon] || User
             return (
-              <div key={solution.id} className="group bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow cursor-pointer">
+              <div key={solution.id} className="group bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow cursor-pointer  border border-border hover:border-primary/20 shadow-sm hover:shadow-lg transition-all duration-300 ">
                 <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 transition group-hover:scale-110" style={{ backgroundColor: "var(--brand-blue)" }}>
                   <Icon size={28} className="text-white" />
                 </div>

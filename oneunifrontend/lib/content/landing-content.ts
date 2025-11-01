@@ -165,53 +165,53 @@ export const SOLUTIONS = [
 //       "Know your chances instantly with our real-time eligibility assessment",
 //   },
 // ];
-
 export const FEATURES = [
   {
     id: "1",
     icon: "BarChart3",
-    title: "Advanced Analytics",
+    title: "Smart Dashboard",
     description: "Track your admission journey with detailed insights",
     points: [
-      { icon: "TrendingUp", text: "Real-time performance metrics" },
-      { icon: "BarChart3", text: "Visual progress tracking" },
-      { icon: "Bell", text: "Insights and recommendations" },
+      { icon: "TrendingUp", text: "Real-time application status and progress" },
+      { icon: "BarChart3", text: "Visual insights for profile and merit trends" },
+      { icon: "Bell", text: "Personalized reminders and admission updates" },
     ],
   },
   {
     id: "2",
     icon: "MessageCircle",
-    title: "Seamless Communication",
+    title: "AI-Powered Chatbot",
     description: "Connect directly with universities",
     points: [
-      { icon: "MessageCircle", text: "Direct university messaging" },
-      { icon: "Bell", text: "Instant notifications" },
-      { icon: "TrendingUp", text: "Real-time status updates" },
+      { icon: "MessageCircle", text: "Get instant answers to admission queries" },
+      { icon: "Bell", text: "24/7 intelligent assistance and alerts" },
+      { icon: "TrendingUp", text: "Connect with mentors or university reps instantly" },
     ],
   },
   {
     id: "3",
     icon: "Columns3",
-    title: "Organized Management",
+    title: "University Comparison",
     description: "Keep all your data in one place",
     points: [
-      { icon: "Calendar", text: "Deadline management" },
-      { icon: "Columns3", text: "Document organization" },
-      { icon: "CheckCircle2", text: "Task tracking" },
+      { icon: "Calendar", text: "Compare deadlines, fees, and ranking side-by-side" },
+      { icon: "Columns3", text: "Filter universities by programs and eligibility" },
+      { icon: "CheckCircle2", text: "Data-backed recommendations for better decisions" },
     ],
   },
   {
     id: "4",
     icon: "CheckCircle2",
-    title: "Success Tracking",
+    title: "Eligibility Checker",
     description: "Monitor your progress",
     points: [
-      { icon: "Trophy", text: "Milestone celebrations" },
-      { icon: "TrendingUp", text: "Progress visualization" },
-      { icon: "CheckCircle2", text: "Achievement badges" },
+      { icon: "Trophy", text: "Calculate merit using official university formulas" },
+      { icon: "TrendingUp", text: "Analyze chances based on past merit trends" },
+      { icon: "CheckCircle2", text: "Instant eligibility feedback for multiple programs" },
     ],
   },
 ];
+
 
 export const REASONS = [
   {
@@ -249,24 +249,24 @@ export const REASONS = [
 export const TESTIMONIALS = [
   {
     id: "t1",
-    name: "Sarah Ahmed",
-    role: "Student, Class of 2024",
+    name: "Zainab Khalil",
+    role: "Undergraduate FJWU, Session 2022",
     content:
-      "One-University made my admission journey so much easier. I got into my dream university!",
+      "A platform ilke One University is really needed. We'll surely support such platform.",
     rating: 5,
   },
   {
     id: "t2",
-    name: "Raj Patel",
-    role: "Student, Class of 2024",
+    name: "Shayan Ahmad",
+    role: "Undergraduate, Session 2023",
     content:
-      "The AI chatbot answered all my questions instantly. Highly recommended!",
+      "I heard Khalil's idea and that really fascinates me. A platform like this is really needed.",
     rating: 5,
   },
   {
     id: "t3",
-    name: "Emma Wilson",
-    role: "Student, Class of 2025",
+    name: "Ayan Ahmad",
+    role: "Undergraduate, Session 2025",
     content:
       "Finally, a platform that understands what students need. Game-changer!",
     rating: 5,

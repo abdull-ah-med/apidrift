@@ -3,6 +3,15 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, Moon, Sun } from "lucide-react"
+import Image from "next/image"
+import OneUniL from "@/public/Logo/OneUniL.png"
+
+const NAV_ITEMS = [
+  { id: 'features', label: 'Features' },
+  { id: 'why-us', label: 'Why Us' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'contact', label: 'Contact' },
+]
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -33,26 +42,23 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-background shadow-minimal transition-colors">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg" style={{ backgroundColor: "var(--brand-blue)" }}></div>
-          <span className="font-bold text-xl text-foreground" style={{ color: "var(--brand-blue)" }}>
-            One-University
+         <Image src={OneUniL} height={80} width={80} alt="Logo"/>
+          <span className="font-bold text-xl text-foreground" style={{ color: "var(--brand-yellow)" }}>
+            One-<span className="text-primary">University</span>
           </span>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="#features" className="text-muted-foreground hover:text-foreground transition">
-            Features
-          </Link>
-          <Link href="#why-us" className="text-muted-foreground hover:text-foreground transition">
-            Why Us
-          </Link>
-          <Link href="#testimonials" className="text-muted-foreground hover:text-foreground transition">
-            Testimonials
-          </Link>
-          <Link href="#contact" className="text-muted-foreground hover:text-foreground transition">
-            Contact
-          </Link>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })}
+              className="cursor-pointer text-muted-foreground hover:text-accent transition cursor-pointer"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
         {/* CTA Button and Theme Toggle */}
@@ -61,7 +67,8 @@ export default function Header() {
             {isDark ? <Sun size={20} className="text-accent" /> : <Moon size={20} className="text-muted-foreground" />}
           </button>
           <button
-            className="px-6 py-2 rounded-full font-medium transition hover:shadow-minimal-hover text-white"
+          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="cursor-pointer px-6 py-2 rounded-full font-medium transition hover:shadow-minimal-hover text-white"
             style={{ backgroundColor: "var(--brand-blue)" }}
           >
             Get Started
@@ -73,7 +80,7 @@ export default function Header() {
           <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-muted transition" aria-label="Toggle theme">
             {isDark ? <Sun size={20} className="text-accent" /> : <Moon size={20} className="text-muted-foreground" />}
           </button>
-          <button className="p-2 text-foreground" onClick={() => setIsOpen(!isOpen)}>
+          <button className="cursor-pointer p-2 text-foreground" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -82,18 +89,18 @@ export default function Header() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden bg-background px-4 py-4 space-y-4 transition-colors border-t border-border">
-          <Link href="#features" className="block text-muted-foreground hover:text-foreground">
-            Features
-          </Link>
-          <Link href="#why-us" className="block text-muted-foreground hover:text-foreground">
-            Why Us
-          </Link>
-          <Link href="#testimonials" className="block text-muted-foreground hover:text-foreground">
-            Testimonials
-          </Link>
-          <Link href="#contact" className="block text-muted-foreground hover:text-foreground">
-            Contact
-          </Link>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+                setIsOpen(false)
+              }}
+              className="block w-full text-left text-muted-foreground hover:text-foreground"
+            >
+              {item.label}
+            </button>
+          ))}
           <button
             className="w-full px-6 py-2 rounded-full font-medium transition text-white"
             style={{ backgroundColor: "var(--brand-blue)" }}

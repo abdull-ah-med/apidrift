@@ -1,7 +1,8 @@
 "use client"
 
-import { GraduationCap } from "lucide-react"
+import Image from "next/image"
 import { HERO } from "@/lib/content/landing-content"
+import OneUniN from "@/public/Logo/OneUniN.png"
 
 export default function Hero() {
   return (
@@ -15,10 +16,20 @@ export default function Hero() {
             </h1>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">{HERO.subtitle}</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-3 rounded-full font-semibold transition hover:shadow-minimal-hover text-white" style={{ backgroundColor: "var(--brand-blue)" }}>
+              <button onClick={() => {
+                  const featuresSection = document.getElementById('contact')
+                  featuresSection?.scrollIntoView({ behavior: 'smooth' })
+                }} className="cursor-pointer px-8 py-3 rounded-full font-semibold transition hover:shadow-minimal-hover text-white" style={{ backgroundColor: "var(--brand-blue)" }}>
                 {HERO.cta}
               </button>
-              <button className="px-8 py-3 rounded-full font-semibold transition hover:bg-muted" style={{ borderColor: "var(--brand-blue)", color: "var(--brand-blue)" }}>
+              <button 
+                onClick={() => {
+                  const featuresSection = document.getElementById('features')
+                  featuresSection?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className="cursor-pointer px-8 py-3 rounded-full font-semibold transition hover:bg-muted border" 
+                style={{ borderColor: "var(--brand-blue)", color: "var(--brand-blue)" }}
+              >
                 Explore Features
               </button>
             </div>
@@ -27,13 +38,22 @@ export default function Hero() {
           {/* Right Illustration */}
           <div className="animate-slide-in-right">
             <div className="relative h-96 bg-card rounded-2xl overflow-hidden shadow-minimal hover:shadow-minimal-hover transition-shadow">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
+              <div className="absolute inset-0 flex items-center justify-center p-8">
+                {/* Replace src with your actual image/logo path */}
+                <Image 
+                  src={OneUniN}
+                  alt="One-University Logo" 
+                  className="w-full h-full object-contain"
+                  height={500}
+                  width={500}
+                />
+                {/* Fallback icon - remove this when you add your image */}
+                {/* <div className="text-center">
                   <div className="w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: "var(--brand-blue)" }}>
                     <GraduationCap size={48} className="text-white" />
                   </div>
                   <p className="text-foreground font-medium">Students Guided to Success</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

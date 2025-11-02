@@ -1,7 +1,34 @@
-"use client"
+"use client";
 
-import { Mail, Linkedin, Instagram, Twitter } from "lucide-react"
-import Link from "next/link"
+import { Mail, Linkedin, Instagram, Twitter } from "lucide-react";
+import Link from "next/link";
+import OneUniL from "@/public/Logo/OneUniL.png";
+import Image from "next/image";
+
+const FOOTER_LINKS = {
+  product: [
+    { label: "Features", href: "#features" },
+    { label: "Contact", href: "#contact" },
+    { label: "Testimonials", href: "#testimonials" },
+  ],
+  company: [
+    { label: "About", href: "#hero" },
+    { label: "Problems", href: "#problems" },
+    { label: "Solution", href: "#solution" },
+  ],
+  legal: [
+    { label: "Privacy", href: "#privacy" },
+    { label: "Terms", href: "#terms" },
+    { label: "FAQs", href: "#faqs" },
+  ],
+};
+
+const SOCIAL_LINKS = [
+  { icon: Mail, href: "mailto:oneuni.verse.ity@gmail.com", label: "Email" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/106135432", label: "LinkedIn" },
+  // { icon: Instagram, href: "#", label: "Instagram" },
+  // { icon: Twitter, href: "#", label: "Twitter" },
+];
 
 export default function Footer() {
   return (
@@ -10,9 +37,12 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg" style={{ backgroundColor: "var(--brand-blue)" }}></div>
-              <span className="font-bold text-lg text-foreground" style={{ color: "var(--brand-blue)" }}>
+            <div className="flex items-center gap-1 mb-4">
+              <Image src={OneUniL} height={50} width={50} alt="Logo" />
+              <span
+                className="font-bold text-lg text-foreground"
+                style={{ color: "var(--brand-blue)" }}
+              >
                 One-University
               </span>
             </div>
@@ -23,99 +53,84 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-bold mb-4 text-foreground" style={{ color: "var(--brand-blue)" }}>
+            <h4
+              className="font-bold mb-4 text-foreground"
+              style={{ color: "var(--brand-blue)" }}
+            >
               Product
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Security
-                </Link>
-              </li>
+              {FOOTER_LINKS.product.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="hover:text-foreground transition">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="font-bold mb-4 text-foreground" style={{ color: "var(--brand-blue)" }}>
+            <h4
+              className="font-bold mb-4 text-foreground"
+              style={{ color: "var(--brand-blue)" }}
+            >
               Company
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Careers
-                </Link>
-              </li>
+              {FOOTER_LINKS.company.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="hover:text-foreground transition">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="font-bold mb-4 text-foreground" style={{ color: "var(--brand-blue)" }}>
+            <h4
+              className="font-bold mb-4 text-foreground"
+              style={{ color: "var(--brand-blue)" }}
+            >
               Legal
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  Terms
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-foreground transition">
-                  FAQs
-                </Link>
-              </li>
+              {FOOTER_LINKS.legal.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="hover:text-foreground transition">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         {/* Bottom */}
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm mb-4 md:mb-0">© 2025 One-University. All rights reserved.</p>
+          <p className="text-muted-foreground text-sm mb-4 md:mb-0">
+            © 2025 One-University. All rights reserved.
+          </p>
           <div className="flex gap-4">
-            <a
-              href="mailto:hello@one-university.com"
-              className="text-muted-foreground hover:text-foreground transition"
-            >
-              <Mail size={20} />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition">
-              <Linkedin size={20} />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition">
-              <Instagram size={20} />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition">
-              <Twitter size={20} />
-            </a>
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="text-muted-foreground hover:text-foreground transition"
+                  aria-label={social.label}
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

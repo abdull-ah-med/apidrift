@@ -280,3 +280,18 @@ export const CTA = {
   primary: "Join the Waitlist",
   secondary: "Get Started Free",
 };
+
+
+export interface ThankYouContent {
+  title: string
+  subtitle: string
+  message: string
+  cta: string
+}
+
+export const THANK_YOU: ThankYouContent = {
+  title: "Thank You!",
+  subtitle: "We're excited to have you on board",
+  message: "Check your email for next steps and get started with your admission journey.",
+  cta: "Back to Home",
+}

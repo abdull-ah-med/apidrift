@@ -26,7 +26,7 @@ export default function SolutionCard({ icon, title, description }: SolutionCardP
   const Icon = ICON_MAP[icon] || User
 
   return (
-    <div className="group bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow cursor-pointer border border-border hover:border-primary/20 shadow-sm hover:shadow-lg transition-all duration-300">
+    <div className="group bg-card p-8 rounded-xl shadow-minimal hover:shadow-minimal-hover transition-shadow cursor-pointer border border-border hover:border-accent/20 shadow-sm hover:shadow-lg transition-all duration-300">
       <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-4 transition group-hover:scale-110" style={{ backgroundColor: "var(--brand-blue)" }}>
         <Icon size={28} className="text-white" />
       </div>

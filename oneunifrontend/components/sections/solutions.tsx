@@ -1,7 +1,7 @@
 "use client"
 
 import { SOLUTIONS } from "@/lib/content/landing-content"
-import SolutionCard from "../solution-card"
+import SolutionCard from "../cards/solution-card"
 
 export default function Solutions() {
   return (

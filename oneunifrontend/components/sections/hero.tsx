@@ -1,48 +1,23 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { HERO } from "@/lib/content/landing-content"
-import OneUniN from "@/public/Logo/OneUniN.png"
+import Image from "next/image";
+import { HERO } from "@/lib/content/landing-content";
+import OneUniN from "@/public/Logo/OneUniN.png";
+import Button from "../ui/button";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-background pt-20 pb-32 px-4 sm:px-6 lg:px-8 transition-colors">
+    <section className="relative overflow-hidden bg-background pt-3 md:pt-4 pb-32 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="animate-fade-in-up">
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-foreground" style={{ color: "var(--brand-blue)" }}>
-              {HERO.title}
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">{HERO.subtitle}</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button onClick={() => {
-                  const featuresSection = document.getElementById('contact')
-                  featuresSection?.scrollIntoView({ behavior: 'smooth' })
-                }} className="cursor-pointer px-8 py-3 rounded-full font-semibold transition hover:shadow-minimal-hover text-white" style={{ backgroundColor: "var(--brand-blue)" }}>
-                {HERO.cta}
-              </button>
-              <button 
-                onClick={() => {
-                  const featuresSection = document.getElementById('features')
-                  featuresSection?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="cursor-pointer px-8 py-3 rounded-full font-semibold transition hover:bg-muted border" 
-                style={{ borderColor: "var(--brand-blue)", color: "var(--brand-blue)" }}
-              >
-                Explore Features
-              </button>
-            </div>
-          </div>
-
+        <div className="grid md:grid-cols-1 gap-12  direction-ltr items-center">
           {/* Right Illustration */}
           <div className="animate-slide-in-right">
             <div className="relative h-96 bg-card rounded-2xl overflow-hidden shadow-minimal hover:shadow-minimal-hover transition-shadow">
               <div className="absolute inset-0 flex items-center justify-center p-8">
                 {/* Replace src with your actual image/logo path */}
-                <Image 
+                <Image
                   src={OneUniN}
-                  alt="One-University Logo" 
+                  alt="One-University Logo"
                   className="w-full h-full object-contain"
                   height={500}
                   width={500}
@@ -57,8 +32,42 @@ export default function Hero() {
               </div>
             </div>
           </div>
+
+          {/* Left Content */}
+          <div className="animate-fade-in-up flex items-center flex-col">
+            <h1
+              className="text-4xl md:text-5xl text-center font-bold leading-tight mb-3 text-foreground"
+              style={{ color: "var(--brand-blue)" }}
+            >
+              {HERO.title}
+            </h1>
+            <p className="text-center text-md text-muted-foreground mb-8 leading-relaxed">
+              {HERO.subtitle}
+            </p>
+            <div className="flex sm:flex-row gap-4">
+              <Button
+              variant="primary"
+                onClick={() => {
+                  const featuresSection = document.getElementById("contact");
+                  featuresSection?.scrollIntoView({ behavior: "smooth" });
+                }}
+                // className="cursor-pointer px-8 py-3 rounded-full font-semibold transition hover:shadow-minimal-hover text-white"
+              >
+                {HERO.cta}
+              </Button>
+              <Button
+              variant="secondary"
+                onClick={() => {
+                  const featuresSection = document.getElementById("features");
+                  featuresSection?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Explore Features
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

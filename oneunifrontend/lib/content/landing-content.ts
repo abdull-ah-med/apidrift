@@ -278,7 +278,7 @@ export const CTA = {
   subtitle:
     "Join thousands of students who have already transformed their university admission experience",
   primary: "Join the Waitlist",
-  secondary: "Get Started Free",
+  secondary: "Get Featured",
 };
 
 
@@ -295,3 +295,8 @@ export const THANK_YOU: ThankYouContent = {
   message: "Check your email for next steps and get started with your admission journey.",
   cta: "Back to Home",
 }
+
+export const SOCIALS = [
+  { icon: "Mail", href: "mailto:oneuni.verse.ity@gmail.com", label: "Email" },
+  { icon: "Linkedin", href: "https://www.linkedin.com/company/one-uni/", label: "LinkedIn" },
+];

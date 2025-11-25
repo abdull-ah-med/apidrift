@@ -1,9 +1,15 @@
 "use client";
 
-import { Mail, Linkedin, Instagram, Twitter } from "lucide-react";
+import { Mail, Linkedin } from "lucide-react";
 import Link from "next/link";
 import OneUniL from "@/public/Logo/OneUniL.png";
 import Image from "next/image";
+import { SOCIALS } from "@/lib/content/landing-content";
+
+const ICON_MAP: Record<string, any> = {
+  Mail,
+  Linkedin,
+};
 
 const FOOTER_LINKS = {
   product: [
@@ -22,13 +28,6 @@ const FOOTER_LINKS = {
     { label: "FAQs", href: "#faqs" },
   ],
 };
-
-const SOCIAL_LINKS = [
-  { icon: Mail, href: "mailto:oneuni.verse.ity@gmail.com", label: "Email" },
-  { icon: Linkedin, href: "https://www.linkedin.com/company/106135432", label: "LinkedIn" },
-  // { icon: Instagram, href: "#", label: "Instagram" },
-  // { icon: Twitter, href: "#", label: "Twitter" },
-];
 
 export default function Footer() {
   return (
@@ -115,8 +114,8 @@ export default function Footer() {
             © 2025 One-University. All rights reserved.
           </p>
           <div className="flex gap-4">
-            {SOCIAL_LINKS.map((social) => {
-              const Icon = social.icon;
+            {SOCIALS.map((social) => {
+              const Icon = ICON_MAP[social.icon];
               return (
                 <a
                   key={social.label}
@@ -124,7 +123,7 @@ export default function Footer() {
                   className="text-muted-foreground hover:text-foreground transition"
                   aria-label={social.label}
                 >
-                  <Icon size={20} />
+                  {Icon && <Icon size={20} />}
                 </a>
               );
             })}

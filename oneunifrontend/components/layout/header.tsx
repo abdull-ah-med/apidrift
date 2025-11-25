@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Menu, X, Moon, Sun } from "lucide-react"
 import Image from "next/image"
 import OneUniL from "@/public/Logo/OneUniL.png"
+import Button from "../ui/button"
 
 const NAV_ITEMS = [
   { id: 'features', label: 'Features' },
@@ -66,13 +67,12 @@ export default function Header() {
           <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-muted transition" aria-label="Toggle theme">
             {isDark ? <Sun size={20} className="text-accent" /> : <Moon size={20} className="text-muted-foreground" />}
           </button>
-          <button
+          <Button
+          variant="primary"
           onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="cursor-pointer px-6 py-2 rounded-full font-medium transition hover:shadow-minimal-hover text-white"
-            style={{ backgroundColor: "var(--brand-blue)" }}
+            // className="cursor-pointer px-6 py-2 rounded-full font-medium transition hover:shadow-minimal-hover text-white"
+          children="Get Started"/
           >
-            Get Started
-          </button>
         </div>
 
         {/* Mobile Menu Button */}

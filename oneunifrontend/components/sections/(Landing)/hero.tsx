@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { HERO } from "@/lib/content/landing-content";
 import OneUniN from "@/public/Logo/OneUniN.png";
-import Button from "../ui/button";
+import Button from "../../ui/button";
 
 export default function Hero() {
+
   return (
     <section className="relative overflow-hidden bg-background pt-3 md:pt-4 pb-32 px-4 sm:px-6 lg:px-8 transition-colors">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-1 gap-12  direction-ltr items-center">
           {/* Right Illustration */}
           <div className="animate-slide-in-right">
-            <div className="relative h-96 bg-card rounded-2xl overflow-hidden shadow-minimal hover:shadow-minimal-hover transition-shadow">
+            <div className="relative h-96 bg-[#eaeaea] dark:bg-card rounded-2xl overflow-hidden shadow-minimal hover:shadow-minimal-hover transition-shadow">
               <div className="absolute inset-0 flex items-center justify-center p-8">
                 {/* Replace src with your actual image/logo path */}
                 <Image
@@ -46,7 +47,7 @@ export default function Hero() {
             </p>
             <div className="flex sm:flex-row gap-4">
               <Button
-              variant="primary"
+                variant="primary"
                 onClick={() => {
                   const featuresSection = document.getElementById("contact");
                   featuresSection?.scrollIntoView({ behavior: "smooth" });
@@ -56,7 +57,7 @@ export default function Hero() {
                 {HERO.cta}
               </Button>
               <Button
-              variant="secondary"
+                variant="secondary"
                 onClick={() => {
                   const featuresSection = document.getElementById("features");
                   featuresSection?.scrollIntoView({ behavior: "smooth" });

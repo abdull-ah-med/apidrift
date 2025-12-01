@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { CTA as CTA_CONTENT } from "@/lib/content/landing-content"
-import { EmailModal } from "../forms/email-modal"
+import { EmailModal } from "../../forms/email-modal"
 import { ThankYouSection } from "./thank-you-section"
 
 export default function CTA() {

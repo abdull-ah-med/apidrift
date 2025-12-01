@@ -1,7 +1,7 @@
 "use client"
 
 import { TESTIMONIALS } from "@/lib/content/landing-content"
-import TestimonialCard from "../cards/testimonial-card"
+import TestimonialCard from "../../cards/testimonial-card"
 
 export default function Testimonials() {
   return (

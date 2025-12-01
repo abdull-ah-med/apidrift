@@ -1,7 +1,7 @@
 "use client"
 
 import { FEATURES } from "@/lib/content/landing-content"
-import FeatureCard from "../cards/feature-card"
+import FeatureCard from "../../cards/feature-card"
 
 export default function Features() {
   return (

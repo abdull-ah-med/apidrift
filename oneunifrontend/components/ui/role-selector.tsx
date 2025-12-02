@@ -24,7 +24,7 @@ export default function RoleSelector({
       onClick={() => onRoleSelect(roleId as Role)}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`flex flex-col items-center gap-[16px] p-[24px] rounded-[10px] border-2 transition-all ${
+      className={`w-full flex flex-col items-center gap-[16px] p-[24px] rounded-[10px] border-2 transition-all ${
         isSelected
           ? "border-[#2563eb] bg-[#eff6ff]"
           : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1]"

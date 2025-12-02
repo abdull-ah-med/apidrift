@@ -62,14 +62,14 @@ export default function Input({
           onBlur={onBlur}
           className={clsx(
             "w-full",
-            leftIcon ? "pl-[46px]" : "pl-[16px]",
-            rightIcon ? "pr-[46px]" : "pr-[16px]",
-            "py-[14px]",
-            "bg-white border-2 border-[#e2e8f0] rounded-[10px]",
-            "font-['Inter:Regular',sans-serif] text-[16px] text-[#1e293b]",
-            "placeholder:text-[#cbd5e1]",
-            "focus:border-[#2563eb] focus:outline-none",
-            "transition-colors",
+            leftIcon ? "pl-[46px]" : "pl-[20px]",
+            rightIcon ? "pr-[46px]" : "pr-[20px]",
+            "py-[16px]",
+            "bg-slate-50 border border-slate-200 rounded-xl",
+            "font-['Inter:Regular',sans-serif] text-[16px] text-slate-700",
+            "placeholder:text-slate-400",
+            "focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:outline-none",
+            "transition-all duration-200",
             disabled && "opacity-60 cursor-not-allowed"
           )}
         />

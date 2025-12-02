@@ -2,7 +2,7 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import Input from "./input";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Lock, Check } from "lucide-react";
 
 type Strength = { strength: number; label: string; color: string };
@@ -65,6 +65,7 @@ export default function PasswordInput({
   const meets8 = value.length >= 8;
   const meetsCase = /[A-Z]/.test(value) && /[a-z]/.test(value);
   const meetsNumber = /[0-9]/.test(value);
+  const allMet = meets8 && meetsCase && meetsNumber;
 
   return (
     <div className={className}>
@@ -130,53 +131,66 @@ export default function PasswordInput({
         </div>
       )}
 
-      {showRequirements && touched && (
-        <div className="p-[12px] bg-[#fef3c7] border border-[#fbbf24] rounded-[10px] mt-[12px]">
-          <p className="font-['Inter:Medium',sans-serif] text-[13px] text-[#92400e] mb-[8px]">
-            Password requirements:
-          </p>
-          <ul className="space-y-[6px]">
-            <li className="flex items-center gap-[8px]">
-              <div
-                className={`w-[16px] h-[16px] rounded-full flex items-center justify-center ${
-                  meets8 ? "bg-[#10b981]" : "bg-[#e5e7eb]"
-                }`}
-              >
-                {meets8 && <Check size={10} className="text-white" strokeWidth={3} />}
-              </div>
-              <span className="font-['Inter:Regular',sans-serif] text-[13px] text-[#92400e]">
-                At least 8 characters
-              </span>
-            </li>
+      <AnimatePresence>
+        {showRequirements && value.length > 0 && !allMet && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+            className="p-4 bg-slate-50 border border-slate-100 rounded-xl overflow-hidden"
+          >
+            <p className="font-['Inter:Medium',sans-serif] text-[13px] text-slate-500 mb-3">
+              Password requirements:
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors duration-200 ${
+                    meets8 ? "bg-emerald-500" : "bg-slate-200"
+                  }`}
+                >
+                  {meets8 && <Check size={12} className="text-white" strokeWidth={3} />}
+                </div>
+                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
+                  meets8 ? "text-slate-700" : "text-slate-400"
+                }`}>
+                  At least 8 characters
+                </span>
+              </li>
 
-            <li className="flex items-center gap-[8px]">
-              <div
-                className={`w-[16px] h-[16px] rounded-full flex items-center justify-center ${
-                  meetsCase ? "bg-[#10b981]" : "bg-[#e5e7eb]"
-                }`}
-              >
-                {meetsCase && <Check size={10} className="text-white" strokeWidth={3} />}
-              </div>
-              <span className="font-['Inter:Regular',sans-serif] text-[13px] text-[#92400e]">
-                Mix of uppercase & lowercase
-              </span>
-            </li>
+              <li className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors duration-200 ${
+                    meetsCase ? "bg-emerald-500" : "bg-slate-200"
+                  }`}
+                >
+                  {meetsCase && <Check size={12} className="text-white" strokeWidth={3} />}
+                </div>
+                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
+                  meetsCase ? "text-slate-700" : "text-slate-400"
+                }`}>
+                  Mix of uppercase & lowercase
+                </span>
+              </li>
 
-            <li className="flex items-center gap-[8px]">
-              <div
-                className={`w-[16px] h-[16px] rounded-full flex items-center justify-center ${
-                  meetsNumber ? "bg-[#10b981]" : "bg-[#e5e7eb]"
-                }`}
-              >
-                {meetsNumber && <Check size={10} className="text-white" strokeWidth={3} />}
-              </div>
-              <span className="font-['Inter:Regular',sans-serif] text-[13px] text-[#92400e]">
-                At least one number
-              </span>
-            </li>
-          </ul>
-        </div>
-      )}
+              <li className="flex items-center gap-3">
+                <div
+                  className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors duration-200 ${
+                    meetsNumber ? "bg-emerald-500" : "bg-slate-200"
+                  }`}
+                >
+                  {meetsNumber && <Check size={12} className="text-white" strokeWidth={3} />}
+                </div>
+                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
+                  meetsNumber ? "text-slate-700" : "text-slate-400"
+                }`}>
+                  At least one number
+                </span>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

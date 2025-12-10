@@ -1,137 +1,139 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, Check } from "lucide-react";
+import clsx from "clsx";
 
 export interface StepConfig {
   id: number;
   title: string;
+  slug: string;
   icon: LucideIcon;
-  component: React.ComponentType<any>;
+  component?: React.ComponentType<any>;
 }
 
 interface StepIndicatorProps {
   steps: StepConfig[];
   currentStep: number;
-  onStepChange: (step: number) => void;
+  onStepChange: (stepId: number) => void;
+  maxCompletedStep?: number;
 }
 
-export default function StepIndicator({ steps, currentStep, onStepChange }: StepIndicatorProps) {
+export default function StepIndicator({ steps, currentStep, onStepChange, maxCompletedStep }: StepIndicatorProps) {
   return (
-    <div className="bg-white border-b border-[#e2e8f0] sticky top-0 z-50">
-      <div className="w-full mx-auto px-[16px] md:px-[24px] py-[24px] md:pb-[20px] pb-[24px] md:pt-[25px] ">
-        {/* Desktop: Horizontal Step Indicator */}
-        <div className="hidden md:block">
-          <div className="flex items-center justify-between relative mb-6">
-            {/* Connecting Progress Bar */}
-            <div className="absolute top-1/2 left-0 right-0 h-[3px] bg-[#e2e8f0] -translate-y-1/2 -z-10">
-              <motion.div
-                className="h-full bg-gradient-to-r from-[#2563eb] to-[#3b82f6]"
-                initial={{ width: 0 }}
-                animate={{
-                  width: `${((currentStep - 1) / (steps.length - 1)) * 100}%`,
-                }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-              />
-            </div>
+    <div className="w-full bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-50">
+      <div className="max-w-5xl mx-auto px-4 py-4">
+        
+        {/* Desktop View: Modern Stepper */}
+        <div className="hidden md:block relative">
+            <div className="relative flex items-center justify-between">
+            {/* Background Line */}
+            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 rounded-full -z-10" />
+            
+            {/* Progress Line */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full -z-10 transition-all duration-500 ease-out"
+                style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }} 
+            />
 
-            {/* Step Circles */}
-            {steps.map((step, index) => {
-              const StepIcon = step.icon;
-              return (
-                <motion.div
-                  key={step.id}
-                  className="flex flex-col items-center gap-2.5 relative z-10"
-                >
-                  {/* Circle */}
-                  <motion.div
-                    className={`w-[52px] h-[52px] rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                      index + 1 < currentStep
-                        ? "bg-[#22c55e]"
-                        : index + 1 === currentStep
-                        ? "bg-[#2563eb] ring-4 ring-blue-500/20"
-                        : "bg-white border-2 border-[#e2e8f0]"
-                    }`}
-                    whileHover={{ scale: 1.08, rotate: 2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {index + 1 < currentStep ? (
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M20 6L9 17L4 12"
-                          stroke="white"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    ) : (
-                      <StepIcon
-                        className={`${
-                          index + 1 === currentStep
-                            ? "text-white"
-                            : "text-[#94a3b8]"
-                        }`}
-                        size={22}
-                      />
+            {steps.map((step) => {
+                const isActive = step.id === currentStep;
+                const isCompleted = step.id < currentStep;
+                const isNavigable = step.id < currentStep || (maxCompletedStep !== undefined && step.id <= maxCompletedStep);
+                const StepIcon = step.icon;
+
+                return (
+                <div key={step.id} className="relative flex flex-col items-center group">
+                    <motion.button
+                    onClick={() => {
+                      if (isNavigable) {
+                        onStepChange(step.id);
+                      }
+                    }}
+                    initial={false}
+                    animate={{
+                        scale: isActive ? 1.1 : 1,
+                        backgroundColor: isActive ? "#ffffff" : isCompleted ? "#ffffff" : "#f1f5f9",
+                        borderColor: isActive ? "#2563eb" : isCompleted ? "#10b981" : "#e2e8f0",
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className={clsx(
+                        "w-10 h-10 rounded-full flex items-center justify-center border-2 shadow-sm transition-all duration-300 z-10 relative",
+                        isActive ? "ring-4 ring-blue-100 shadow-blue-200 cursor-default" : 
+                        isCompleted ? "text-emerald-600 cursor-pointer hover:bg-slate-50" : 
+                        isNavigable ? "text-slate-500 cursor-pointer hover:bg-slate-50 hover:text-blue-600" : "text-slate-400 cursor-not-allowed"
                     )}
-                  </motion.div>
+                    >
+                    {isCompleted ? (
+                        <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        >
+                        <Check size={18} strokeWidth={3} />
+                        </motion.div>
+                    ) : (
+                        <StepIcon 
+                        size={18} 
+                        className={clsx(
+                            "transition-colors duration-300",
+                            isActive ? "text-blue-600" : "text-slate-400"
+                        )} 
+                        />
+                    )}
+                    
+                    {/* Ripple Effect for Active */}
+                    {isActive && (
+                        <span className="absolute inset-0 rounded-full  opacity-20" />
+                    )}
+                    </motion.button>
 
-                  {/* Label */}
-                  <p
-                    className={`text-sm font-semibold whitespace-nowrap transition-colors ${
-                      index + 1 <= currentStep
-                        ? "text-[#1e293b]"
-                        : "text-[#94a3b8]"
-                    }`}
-                  >
-                    {step.title}
-                  </p>
-                </motion.div>
-              );
+                    {/* Floating Label */}
+                    <div className="absolute top-12 flex flex-col items-center">
+                    <motion.span
+                        initial={false}
+                        animate={{
+                        opacity: isActive ? 1 : 0,
+                        y: isActive ? 0 : -10,
+                        scale: isActive ? 1 : 0.8,
+                        }}
+                        className="whitespace-nowrap text-sm font-['Inter:Bold',sans-serif] text-slate-900 bg-white px-3 py-1 rounded-full shadow-md border border-slate-100"
+                    >
+                        {step.title}
+                    </motion.span>
+                    </div>
+                    
+                    {/* Hover Tooltip for non-active */}
+                    {!isActive && (
+                    <div className="absolute top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        <span className="whitespace-nowrap text-xs font-['Inter:Medium',sans-serif] text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+                        {step.title}
+                        </span>
+                    </div>
+                    )}
+                </div>
+                );
             })}
-          </div>
-
-          {/* Progress Text */}
-          <div className="flex items-center justify-between px-2">
-            <p className="text-sm text-[#64748b]">
-              <span className="font-semibold text-[#1e293b]">
-                Step {currentStep}
-              </span>{" "}
-              of {steps.length}
-            </p>
-            <p className="text-sm font-medium text-[#2563eb]">
-              {Math.round(((currentStep - 1) / (steps.length - 1)) * 100)}%
-              Complete
-            </p>
-          </div>
+            </div>
         </div>
 
-        {/* Mobile: Compact Progress Bar */}
+        {/* Mobile View: Compact Linear Progress */}
         <div className="md:hidden">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-sm font-semibold text-[#1e293b]">
+              <p className="text-sm font-semibold text-slate-800">
                 Step {currentStep} of {steps.length}
               </p>
-              <p className="text-xs text-[#64748b] mt-0.5">
-                {steps[currentStep - 1].title}
+              <p className="text-xs text-slate-500 mt-0.5">
+                {steps[currentStep - 1]?.title}
               </p>
             </div>
-            <p className="text-sm font-medium text-[#2563eb]">
+            <p className="text-sm font-medium text-blue-600">
               {Math.round(((currentStep - 1) / (steps.length - 1)) * 100)}%
             </p>
           </div>
 
-          {/* Linear Progress Bar with Animated Fill */}
-          <div className="w-full h-[6px] bg-[#e2e8f0] rounded-full overflow-hidden shadow-sm">
+          {/* Linear Progress Bar */}
+          <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-4">
             <motion.div
-              className="h-full bg-gradient-to-r from-[#2563eb] via-[#3b82f6] to-[#60a5fa]"
+              className="h-full bg-gradient-to-r from-blue-500 to-indigo-600"
               initial={{ width: 0 }}
               animate={{
                 width: `${((currentStep - 1) / (steps.length - 1)) * 100}%`,
@@ -140,18 +142,16 @@ export default function StepIndicator({ steps, currentStep, onStepChange }: Step
             />
           </div>
 
-          {/* Step Indicators - Inline on Mobile */}
-          <div className="flex items-center gap-1.5 mt-4">
+           {/* Step Indicators - Inline on Mobile */}
+           <div className="flex items-center gap-1.5">
             {steps.map((step, index) => (
               <motion.div
                 key={step.id}
-                className={`flex-1 h-[4px] rounded-full transition-all ${
-                  index + 1 < currentStep
-                    ? "bg-[#22c55e]"
-                    : index + 1 === currentStep
-                    ? "bg-[#2563eb] ring-1 ring-[#2563eb]/30"
-                    : "bg-[#e2e8f0]"
-                }`}
+                className={clsx(
+                    "flex-1 h-1 rounded-full transition-all duration-300",
+                    index + 1 < currentStep ? "bg-emerald-500" :
+                    index + 1 === currentStep ? "bg-blue-600" : "bg-slate-200"
+                )}
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ delay: index * 0.05 }}
@@ -159,6 +159,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange }: Step
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, User, CreditCard, Calendar, Phone, Mail, Camera } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
 import Input from '../ui/input';
+import { ValidatePersonalInfo, InfoErrors } from '@/lib/validation/validate';
 
 interface PersonalInfoStepProps {
   data: ProfileData;
@@ -12,12 +13,12 @@ interface PersonalInfoStepProps {
 }
 
 export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalInfoStepProps) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<InfoErrors>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     updateData({ [name]: value });
-    if (errors[name]) {
+    if (errors[name as keyof InfoErrors]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
@@ -27,25 +28,11 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
     updateData({ photo: file });
   };
 
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!data.fullName.trim()) newErrors.fullName = 'Required';
-    if (!data.fatherName.trim()) newErrors.fatherName = 'Required';
-    if (!data.cnic.trim()) newErrors.cnic = 'Required';
-    else if (!/^\d{5}-\d{7}-\d{1}$/.test(data.cnic)) newErrors.cnic = 'Format: 12345-1234567-1';
-    if (!data.dateOfBirth) newErrors.dateOfBirth = 'Required';
-    if (!data.gender) newErrors.gender = 'Required';
-    if (!data.phone.trim()) newErrors.phone = 'Required';
-    if (!data.email.trim()) newErrors.email = 'Required';
-    else if (!/\S+@\S+\.\S+/.test(data.email)) newErrors.email = 'Invalid email';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleNext = () => {
-    if (validate()) {
+    const newErrors=ValidatePersonalInfo(data);
+    setErrors(newErrors);
+    const hasErrors = Object.values(newErrors).some((msg) => msg && msg.length);
+    if (!hasErrors) {
       onNext();
     }
   };
@@ -71,7 +58,7 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
                 onChange={handleChange}
                 placeholder="Your full name"
                 leftIcon={<User size={18} />}
-                error={errors.fullName}
+                error={(errors.fullName)}
               />
 
               {/* Father Name */}

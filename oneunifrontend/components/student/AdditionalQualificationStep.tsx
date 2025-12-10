@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, BookMarked, Trophy, AlertCircle, Check } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
+import { ValidateAdditionalQualifications } from '../../lib/validation/validate';
 import Input from '../ui/input';
 import clsx from 'clsx';
 
@@ -33,17 +34,8 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
   };
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (data.hasDisability === 'yes' && !data.disabilityType.trim()) {
-      newErrors.disabilityType = 'Required';
-    }
-
-    if (data.sportsQuota === 'yes' && !data.sportType.trim()) {
-      newErrors.sportType = 'Required';
-    }
-
-    setErrors(newErrors);
+    const newErrors = ValidateAdditionalQualifications(data);
+    setErrors(newErrors as Record<string, string>);
     return Object.keys(newErrors).length === 0;
   };
 

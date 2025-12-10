@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Upload, FileText, CheckCircle, AlertCircle, FileCheck, XCircle, Shield, ScanLine } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
+import { ValidateDocuments } from '../../lib/validation/validate';
 import clsx from 'clsx';
 
 interface DocumentUploadStepProps {
@@ -23,12 +24,8 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
   };
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
-    if (!data.cnicDoc) newErrors.cnicDoc = 'Required';
-    if (!data.matricDoc) newErrors.matricDoc = 'Required';
-    if (!data.interDoc) newErrors.interDoc = 'Required';
-    if (!data.domicileDoc) newErrors.domicileDoc = 'Required';
-    setErrors(newErrors);
+    const newErrors = ValidateDocuments(data);
+    setErrors(newErrors as Record<string, string>);
     return Object.keys(newErrors).length === 0;
   };
 

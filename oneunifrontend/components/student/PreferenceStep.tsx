@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, MapPin, GraduationCap, Building2, Clock, Plus, X, CheckCircle2 } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
+import { ValidateProgramPreferences } from '../../lib/validation/validate';
 import clsx from 'clsx';
 import Input from '../ui/input';
 
@@ -121,14 +122,8 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
   };
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!data.interestedCity) newErrors.interestedCity = 'City preference is required';
-    if (data.preferredDegrees.length === 0) newErrors.degrees = 'Add at least one degree';
-    if (data.preferredUniversities.length === 0) newErrors.universities = 'Add at least one university';
-    if (!data.shift) newErrors.shift = 'Shift preference is required';
-
-    setErrors(newErrors);
+    const newErrors = ValidateProgramPreferences(data);
+    setErrors(newErrors as Record<string, string>);
     return Object.keys(newErrors).length === 0;
   };
 

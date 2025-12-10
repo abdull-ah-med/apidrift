@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, User, Phone, CreditCard, Home, MapPin, DollarSign, Users } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
+import { ValidateGuardianInformation } from '../../lib/validation/validate';
 import Input from '../ui/input';
 import clsx from 'clsx';
 
@@ -24,18 +25,8 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
   };
 
   const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!data.guardianRelation) newErrors.guardianRelation = 'Required';
-    if (!data.guardianName.trim()) newErrors.guardianName = "Required";
-    if (!data.guardianPhone.trim()) newErrors.guardianPhone = 'Required';
-    if (!data.guardianCNIC.trim()) newErrors.guardianCNIC = 'Required';
-    else if (!/^\d{5}-\d{7}-\d{1}$/.test(data.guardianCNIC)) newErrors.guardianCNIC = 'Format: 12345-1234567-1';
-    if (!data.permanentAddress.trim()) newErrors.permanentAddress = 'Required';
-    if (!data.city.trim()) newErrors.city = 'Required';
-    if (!data.annualIncome) newErrors.annualIncome = 'Required';
-
-    setErrors(newErrors);
+    const newErrors = ValidateGuardianInformation(data);
+    setErrors(newErrors as Record<string, string>);
     return Object.keys(newErrors).length === 0;
   };
 

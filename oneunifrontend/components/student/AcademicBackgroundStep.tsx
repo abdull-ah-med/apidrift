@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft, School, BookOpen } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
-import Input from '../ui/input';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight, ChevronLeft, School, BookOpen } from "lucide-react";
+import { ProfileData } from "../../lib/schemas/profile";
+import Input from "../ui/input";
+import {
+  ValidateAcademicBackground,
+  InfoErrors,
+} from "@/lib/validation/validate";
 
 interface AcademicBackgroundStepProps {
   data: ProfileData;
@@ -11,40 +15,27 @@ interface AcademicBackgroundStepProps {
   onBack: () => void;
 }
 
-export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: AcademicBackgroundStepProps) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+export function AcademicBackgroundStep({
+  data,
+  updateData,
+  onNext,
+  onBack,
+}: AcademicBackgroundStepProps) {
+  const [errors, setErrors] = useState<InfoErrors>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     updateData({ [name]: value });
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+    if (errors[name as keyof InfoErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    // Matric validation
-    if (!data.matricInstitute.trim()) newErrors.matricInstitute = 'Required';
-    if (!data.matricBoard.trim()) newErrors.matricBoard = 'Required';
-    if (!data.matricYear.trim()) newErrors.matricYear = 'Required';
-    if (!data.matricMarks.trim()) newErrors.matricMarks = 'Required';
-    if (!data.matricTotalMarks.trim()) newErrors.matricTotalMarks = 'Required';
-
-    // Intermediate validation
-    if (!data.interInstitute.trim()) newErrors.interInstitute = 'Required';
-    if (!data.interBoard.trim()) newErrors.interBoard = 'Required';
-    if (!data.interYear.trim()) newErrors.interYear = 'Required';
-    if (!data.interMarks.trim()) newErrors.interMarks = 'Required';
-    if (!data.interTotalMarks.trim()) newErrors.interTotalMarks = 'Required';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleNext = () => {
-    if (validate()) {
+    const newErrors = ValidateAcademicBackground(data);
+    setErrors(newErrors);
+    const hasErrors = Object.values(newErrors).some((msg) => msg && typeof msg === 'string' && msg.length > 0);
+    if (!hasErrors) {
       onNext();
     }
   };
@@ -53,22 +44,25 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
     const obtainedNum = parseFloat(obtained);
     const totalNum = parseFloat(total);
     if (obtainedNum && totalNum && totalNum > 0) {
-      return ((obtainedNum / totalNum) * 100).toFixed(2) + '%';
+      return ((obtainedNum / totalNum) * 100).toFixed(2) + "%";
     }
-    return '-';
+    return "-";
   };
 
   return (
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">Academic Background</h1>
-        <p className="text-slate-500">Provide details of your previous academic qualifications.</p>
+        <h1 className="text-2xl font-bold text-slate-900">
+          Academic Background
+        </h1>
+        <p className="text-slate-500">
+          Provide details of your previous academic qualifications.
+        </p>
       </div>
 
       {/* Main Content - Side by Side Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
         {/* Matric Card */}
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-5 h-fit hover:shadow-md transition-shadow duration-200">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -82,7 +76,9 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               </div>
             </div>
             <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex flex-col items-end min-w-[80px]">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Percentage</span>
+              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
+                Percentage
+              </span>
               <span className="text-sm font-bold text-blue-600">
                 {calculatePercentage(data.matricMarks, data.matricTotalMarks)}
               </span>
@@ -92,7 +88,12 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <Input
-                label={<>Institute / School Name <span className="text-red-500">*</span></>}
+                label={
+                  <>
+                    Institute / School Name{" "}
+                    <span className="text-red-500">*</span>
+                  </>
+                }
                 name="matricInstitute"
                 value={data.matricInstitute}
                 onChange={handleChange}
@@ -102,7 +103,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               />
             </div>
             <Input
-              label={<>Board <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Board <span className="text-red-500">*</span>
+                </>
+              }
               name="matricBoard"
               value={data.matricBoard}
               onChange={handleChange}
@@ -110,7 +115,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.matricBoard}
             />
             <Input
-              label={<>Passing Year <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Passing Year <span className="text-red-500">*</span>
+                </>
+              }
               name="matricYear"
               value={data.matricYear}
               onChange={handleChange}
@@ -118,7 +127,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.matricYear}
             />
             <Input
-              label={<>Marks Obtained <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Marks Obtained <span className="text-red-500">*</span>
+                </>
+              }
               name="matricMarks"
               type="number"
               value={data.matricMarks}
@@ -127,7 +140,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.matricMarks}
             />
             <Input
-              label={<>Total Marks <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Total Marks <span className="text-red-500">*</span>
+                </>
+              }
               name="matricTotalMarks"
               type="number"
               value={data.matricTotalMarks}
@@ -151,7 +168,9 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               </div>
             </div>
             <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex flex-col items-end min-w-[80px]">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Percentage</span>
+              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
+                Percentage
+              </span>
               <span className="text-sm font-bold text-amber-600">
                 {calculatePercentage(data.interMarks, data.interTotalMarks)}
               </span>
@@ -161,7 +180,12 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <Input
-                label={<>Institute / College Name <span className="text-red-500">*</span></>}
+                label={
+                  <>
+                    Institute / College Name{" "}
+                    <span className="text-red-500">*</span>
+                  </>
+                }
                 name="interInstitute"
                 value={data.interInstitute}
                 onChange={handleChange}
@@ -171,7 +195,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               />
             </div>
             <Input
-              label={<>Board <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Board <span className="text-red-500">*</span>
+                </>
+              }
               name="interBoard"
               value={data.interBoard}
               onChange={handleChange}
@@ -179,7 +207,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.interBoard}
             />
             <Input
-              label={<>Passing Year <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Passing Year <span className="text-red-500">*</span>
+                </>
+              }
               name="interYear"
               value={data.interYear}
               onChange={handleChange}
@@ -187,7 +219,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.interYear}
             />
             <Input
-              label={<>Marks Obtained <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Marks Obtained <span className="text-red-500">*</span>
+                </>
+              }
               name="interMarks"
               type="number"
               value={data.interMarks}
@@ -196,7 +232,11 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
               error={errors.interMarks}
             />
             <Input
-              label={<>Total Marks <span className="text-red-500">*</span></>}
+              label={
+                <>
+                  Total Marks <span className="text-red-500">*</span>
+                </>
+              }
               name="interTotalMarks"
               type="number"
               value={data.interTotalMarks}
@@ -218,7 +258,7 @@ export function AcademicBackgroundStep({ data, updateData, onNext, onBack }: Aca
           <ChevronLeft size={18} />
           Back
         </button>
-        
+
         <motion.button
           type="button"
           onClick={handleNext}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, CheckCircle, User, GraduationCap, Users, FileText, Send, MapPin, Clock, Building2, AlertCircle, Calendar, Phone, Mail, Briefcase } from 'lucide-react';
-import { ProfileData } from '../../lib/content/profile-setup';
+import { ProfileData } from '../../lib/schemas/profile';
 import clsx from 'clsx';
 
 interface ReviewSubmitStepProps {

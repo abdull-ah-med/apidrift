@@ -1,183 +1,146 @@
 "use client";
 
-import { Building2, MapPin, GraduationCap, Users, Wallet, FileText, School, Coffee, Library, Trophy } from "lucide-react";
-import { UniversityHeader } from "@/components/university/UniversityHeader";
-import { InfoCard } from "@/components/university/InfoCard";
-import { FeeStructure } from "@/components/university/FeeStructure";
-// import { ProgramList } from "@/components/university/ProgramList";
-import { FacilityList } from "@/components/university/FacilityList";
+import Image from "next/image";
+import { Building2, MapPin, Phone, Mail, Globe, ArrowRight } from "lucide-react";
+import { universityData } from "@/lib/data/mock-university";
+import Button from "@/components/ui/button";
 
-// Mock Data - In a real app, this would come from an API based on a slug/ID
-const universityData = {
-  name: "National University of Sciences and Technology (NUST)",
-  logo: "/nust-logo.png", // Placeholder
-  location: "H-12, Islamabad, Pakistan",
-  website: "https://nust.edu.pk",
-  ranking: 334, // QS World Ranking
-  established: "1991",
-  vcName: "Engr. Javed Mahmood Bukhari",
-  contact: {
-    phone: "+92-51-90850000",
-    email: "info@nust.edu.pk"
-  },
-  overview: "NUST is a premier public research university in Pakistan, known for its emphasis on science and technology. It offers a wide range of undergraduate and graduate programs and is consistently ranked among the top universities in the country and globally.",
-  subCampuses: [
-    "College of Electrical & Mechanical Engineering (CEME), Rawalpindi",
-    "Military College of Signals (MCS), Rawalpindi",
-    "Pakistan Navy Engineering College (PNEC), Karachi",
-    "College of Aeronautical Engineering (CAE), Risalpur"
-  ],
-  fees: {
-    semester: "PKR 180,000",
-    year: "PKR 360,000",
-    degree: "PKR 1,440,000" // 4 years
-  },
-  departments: [
-    {
-      name: "School of Electrical Engineering and Computer Science (SEECS)",
-      programs: [
-        { name: "BS Computer Science", duration: "4 Years", type: "BS" },
-        { name: "BS Software Engineering", duration: "4 Years", type: "BS" },
-        { name: "BS Electrical Engineering", duration: "4 Years", type: "BS" }
-      ]
-    },
-    {
-      name: "NUST Business School (NBS)",
-      programs: [
-        { name: "BBA (Hons)", duration: "4 Years", type: "BS" },
-        { name: "BS Accounting & Finance", duration: "4 Years", type: "BS" },
-        { name: "MBA", duration: "2 Years", type: "MS" }
-      ]
-    }
-  ],
-  facilities: [
-    "State-of-the-art Hostels",
-    "Central Library",
-    "Sports Complex & Gym",
-    "Medical Center",
-    "Transport Service",
-    "Cafeterias & Food Courts",
-    "Auditoriums",
-    "Research Labs"
-  ],
-  societies: [
-    "NUST Science Society",
-    "NUST Debating Society",
-    "NUST Community Service Club",
-    "NUST Adventure Club",
-    "NUST Literary Circle",
-    "NUST Media Club"
-  ],
-  admissionRequirements: {
-    tests: ["NET (NUST Entry Test)", "SAT (Scholastic Assessment Test)", "ACT"],
-    criteria: [
-      "Minimum 60% marks in Matriculation/O-Levels",
-      "Minimum 60% marks in HSSC/A-Levels (Pre-Engineering/ICS)",
-      "Valid Entry Test Score"
-    ]
-  },
-  scholarships: [
-    "Need-based Scholarship",
-    "Merit-based Scholarship",
-    "PEEF Scholarship",
-    "EHSAAS Undergraduate Scholarship"
-  ]
-};
-
-export default function UniversityProfilePage() {
+export default function UniversityOverviewPage() {
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {/* Header Section */}
-        <UniversityHeader data={universityData} />
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Left Column (Main Content) */}
-          <div className="lg:col-span-2 flex flex-col gap-8">
-            
-            {/* Overview */}
-            <InfoCard title="Overview" icon={Building2}>
-              <p>{universityData.overview}</p>
-            </InfoCard>
-
-            {/* Programs */}
-            {/* <ProgramList departments={universityData.departments} /> */}
-
-            {/* Admission Requirements */}
-            <InfoCard title="Admission Requirements" icon={FileText}>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-slate-900 mb-2 text-sm">Accepted Tests</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {universityData.admissionRequirements.tests.map((test, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full border border-blue-100">
-                        {test}
-                      </span>
-                    ))}
+    <div className="flex flex-col gap-12 pb-12">
+      
+      {/* Hero / Overview Section */}
+      <section className="w-full bg-white border-b border-slate-200">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 text-primary text-sm font-medium">
+                <Building2 size={16} />
+                <span>About the University</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+                Excellence in <span className="text-primary">Science & Technology</span>
+              </h1>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                {universityData.overview}
+              </p>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="p-2 bg-primary/10 text-primary rounded-lg">
+                    <MapPin size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Main Campus</p>
+                    <p className="font-medium text-slate-900">{universityData.location}</p>
                   </div>
                 </div>
-                <div>
-                  <h4 className="font-medium text-slate-900 mb-2 text-sm">Eligibility Criteria</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-slate-600 marker:text-blue-500">
-                    {universityData.admissionRequirements.criteria.map((crit, idx) => (
-                      <li key={idx}>{crit}</li>
-                    ))}
-                  </ul>
+                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="p-2 bg-secondary/10 text-secondary rounded-lg">
+                    <Globe size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">Global Ranking</p>
+                    <p className="font-medium text-slate-900">#{universityData.ranking} (QS)</p>
+                  </div>
                 </div>
               </div>
-            </InfoCard>
-
-            {/* Fee Structure */}
-            <FeeStructure fees={universityData.fees} />
-
-          </div>
-
-          {/* Right Column (Sidebar) */}
-          <div className="flex flex-col gap-8">
-            
-            {/* Facilities */}
-            <FacilityList 
-              title="Campus Facilities" 
-              icon={Coffee} 
-              items={universityData.facilities} 
-            />
-
-            {/* Societies */}
-            <FacilityList 
-              title="Societies & Clubs" 
-              icon={Users} 
-              items={universityData.societies} 
-            />
-
-            {/* Sub Campuses */}
-            <InfoCard title="Sub Campuses" icon={MapPin}>
-              <ul className="space-y-3">
-                {universityData.subCampuses.map((campus, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 flex-shrink-0" />
-                    {campus}
-                  </li>
-                ))}
-              </ul>
-            </InfoCard>
-
-            {/* Scholarships */}
-            <InfoCard title="Scholarships & Funding" icon={Wallet}>
-              <div className="space-y-3">
-                {universityData.scholarships.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 p-3 bg-amber-50 border border-amber-100 rounded-lg">
-                    <Trophy size={16} className="text-amber-600 flex-shrink-0" />
-                    <span className="text-sm font-medium text-amber-900">{item}</span>
-                  </div>
-                ))}
+            </div>
+            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+              <Image 
+                src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1000&auto=format&fit=crop" 
+                alt="University Campus" 
+                fill 
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-6 left-6 text-white">
+                <p className="font-medium text-lg">Main Campus</p>
+                <p className="text-white/80 text-sm">Islamabad, Pakistan</p>
               </div>
-            </InfoCard>
-
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Sub Campuses Section */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">Our Campuses</h2>
+            <p className="text-slate-600 mt-2 max-w-2xl">
+              Spread across the country, our campuses offer specialized programs and state-of-the-art facilities.
+            </p>
+          </div>
+          <Button variant="secondary" className="gap-2">
+            View All Locations <ArrowRight size={16} />
+          </Button>
+        </div>
+
+        <div className="flex overflow-x-auto pb-6 gap-6 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
+          {universityData.subCampuses.map((campus: any, idx: number) => (
+            <div key={idx} className="min-w-[85vw] sm:min-w-[350px] lg:min-w-[400px] snap-center group relative h-[300px] rounded-xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 flex-shrink-0">
+              <Image 
+                src={campus.image} 
+                alt={campus.name} 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6 w-full">
+                <div className="flex items-center gap-2 text-secondary text-xs font-medium mb-2 uppercase tracking-wider">
+                  <MapPin size={12} />
+                  {campus.location}
+                </div>
+                <h3 className="text-white font-bold text-lg leading-snug group-hover:text-secondary transition-colors">
+                  {campus.name}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact / CTA Section */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 w-full mb-8">
+        <div className="bg-blue-900 rounded-3xl p-8 md:p-12 lg:p-16 relative overflow-hidden">
+          {/* Abstract Background Shapes */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-800/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/20 rounded-full blur-2xl translate-y-1/3 -translate-x-1/4" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to start your journey?
+              </h2>
+              <p className="text-blue-100 text-lg mb-8 max-w-lg">
+                Get in touch with our admissions office or visit our campus to learn more about the opportunities waiting for you.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button className="bg-white text-blue-900 hover:bg-blue-50 border-none">
+                  Apply Now
+                </Button>
+                <Button variant="secondary" className="border-blue-400 text-blue-100 hover:bg-blue-800 hover:text-white bg-transparent">
+                  Download Prospectus
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-blue-800/50 backdrop-blur-sm p-6 rounded-xl border border-blue-700/50">
+                <Phone className="text-amber-400 mb-4" size={28} />
+                <p className="text-blue-200 text-sm mb-1">Call Us</p>
+                <p className="text-white font-semibold text-lg">{universityData.contact.phone}</p>
+              </div>
+              <div className="bg-blue-800/50 backdrop-blur-sm p-6 rounded-xl border border-blue-700/50">
+                <Mail className="text-amber-400 mb-4" size={28} />
+                <p className="text-blue-200 text-sm mb-1">Email Us</p>
+                <p className="text-white font-semibold text-lg break-all">{universityData.contact.email}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

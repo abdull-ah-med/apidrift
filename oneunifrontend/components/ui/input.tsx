@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
 
 type InputProps = {
-  label?: string;
+  label?: React.ReactNode;
   placeholder?: string;
   value?: string;
   name?: string;
@@ -33,20 +33,42 @@ export default function Input({
   onChange,
   onBlur,
 }: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasBeenTouched, setHasBeenTouched] = useState(false);
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
+    setHasBeenTouched(true);
+    onBlur?.(e);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  // Show error if:
+  // 1. There is an error AND
+  // 2. The field has been touched OR the error is present (implying submit)
+  // 3. AND the field is NOT currently focused (optional, keeps UI clean while typing)
+  const showError = error && (hasBeenTouched || error) && !isFocused;
+
   return (
-    <div className={clsx("flex flex-col gap-[8px]", classname)}>
+    <div className={clsx("flex flex-col gap-[6px]", classname)}>
       {label && (
         <label
           htmlFor={name}
-          className="font-['Inter:Medium',sans-serif] text-[14px] text-[#334155]"
+          className="font-['Inter:Medium',sans-serif] text-[14px] text-slate-700 ml-1"
         >
           {label}
         </label>
       )}
 
-      <div className="relative">
+      <div className="relative group">
         {leftIcon && (
-          <div className="absolute left-[14px] top-1/2 -translate-y-1/2 text-[#94a3b8]">
+          <div className={clsx(
+            "absolute left-[16px] top-1/2 -translate-y-1/2 transition-colors duration-200",
+            error ? "text-red-400" : "text-slate-400 group-focus-within:text-blue-500"
+          )}>
             {leftIcon}
           </div>
         )}
@@ -59,18 +81,22 @@ export default function Input({
           placeholder={placeholder}
           disabled={disabled}
           onChange={onChange}
-          onBlur={onBlur}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           className={clsx(
             "w-full",
-            leftIcon ? "pl-[46px]" : "pl-[20px]",
-            rightIcon ? "pr-[46px]" : "pr-[20px]",
-            "py-[16px]",
-            "bg-slate-50 border border-slate-200 rounded-xl",
-            "font-['Inter:Regular',sans-serif] text-[16px] text-slate-700",
+            leftIcon ? "pl-[48px]" : "pl-[20px]",
+            rightIcon ? "pr-[48px]" : "pr-[20px]",
+            "py-[14px]",
+            "bg-white border rounded-xl",
+            "font-['Inter:Regular',sans-serif] text-[15px] text-slate-900",
             "placeholder:text-slate-400",
-            "focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:outline-none",
-            "transition-all duration-200",
-            disabled && "opacity-60 cursor-not-allowed"
+            "transition-all duration-200 ease-in-out",
+            "shadow-sm hover:shadow-md",
+            disabled && "opacity-60 cursor-not-allowed bg-slate-50",
+            error 
+              ? "border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10" 
+              : "border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
           )}
         />
 
@@ -78,7 +104,10 @@ export default function Input({
           <button
             type="button"
             onClick={onRightIconClick}
-            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#1e293b] transition-colors p-0"
+            className={clsx(
+              "absolute right-[16px] top-1/2 -translate-y-1/2 transition-colors duration-200 p-0",
+              error ? "text-red-400" : "text-slate-400 hover:text-slate-600 group-focus-within:text-blue-500"
+            )}
             tabIndex={-1}
             aria-label="Toggle input action"
           >
@@ -87,11 +116,11 @@ export default function Input({
         )}
       </div>
 
-      {error && value && value.trim() !== "" && (
+      {showError && (
         <motion.p
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-['Inter:Regular',sans-serif] text-[13px] text-[#ef4444]"
+          className="font-['Inter:Medium',sans-serif] text-[12px] text-red-500 ml-1"
         >
           {error}
         </motion.p>

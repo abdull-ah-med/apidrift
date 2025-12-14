@@ -1,5 +1,5 @@
 "use client";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?:
@@ -8,7 +8,8 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     | "ghost"
     | "link"
     | "subtle"
-    | "destructive";
+    | "destructive"
+    | "outline";
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
 };
@@ -35,11 +36,13 @@ export default function Button({
     subtle:
       "cursor-pointer px-8 border border-transparent bg-gray-100 text-gray-800 py-3 font-medium transition hover:bg-gray-200",
     link: "cursor-pointer px-0 py-0 border-0 bg-transparent text-[var(--brand-blue)] underline-offset-4 hover:underline",
+    outline:
+      "cursor-pointer px-8 border border-slate-200 bg-transparent hover:bg-slate-100 text-slate-900 py-3 font-semibold transition",
   };
 
   return (
     <button
-      className={clsx(baseStyle, variantStyles[variant], className)}
+      className={cn(baseStyle, variantStyles[variant], className)}
       {...props}
     >
       {iconLeft && <span className="inline-flex items-center">{iconLeft}</span>}

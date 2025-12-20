@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Search, ChevronRight, GraduationCap, BookOpen, Clock, LayoutGrid, List } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Select from "../ui/select";
 
 interface Program {
   name: string;
@@ -118,19 +119,15 @@ export function ProgramList({ departments }: ProgramListProps) {
 
           {/* Mobile Department Selector (Dropdown style) */}
           <div className="lg:hidden w-full">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Select Department</label>
-            <select 
+            <Select
+              label="Select Department"
               value={activeDept}
               onChange={(e) => setActiveDept(e.target.value)}
-              className="w-full p-3 bg-white border border-slate-200 rounded-lg text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none"
-              style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '0.65em auto' }}
-            >
-              {filteredDepartments.map((dept) => (
-                <option key={dept.name} value={dept.name}>
-                  {dept.name}
-                </option>
-              ))}
-            </select>
+              options={filteredDepartments.map((dept) => ({
+                label: dept.name,
+                value: dept.name,
+              }))}
+            />
           </div>
 
           {/* Right Panel (Programs Grid) */}

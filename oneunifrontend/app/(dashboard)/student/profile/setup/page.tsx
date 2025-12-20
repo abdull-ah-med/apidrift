@@ -30,7 +30,7 @@ const steps: StepConfig[] = [
 
 export default function testp() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [maxStepReached, setMaxStepReached] = useState(1);
+  const [maxStepReached, setMaxStepReached] = useState(8); // Set to 8 to allow free navigation for now
   const [profileData, setProfileData] = useState<ProfileData>({
     fullName: '',
     fatherName: '',
@@ -41,23 +41,15 @@ export default function testp() {
     email: '',
     photo: null,
     
-    matricInstitute: '',
-    matricBoard: '',
-    matricYear: '',
-    matricMarks: '',
-    matricTotalMarks: '',
-    
-    interInstitute: '',
-    interBoard: '',
-    interYear: '',
-    interMarks: '',
-    interTotalMarks: '',
+    educations: [],
     
     hasDisability: 'no',
     disabilityType: '',
     isHafiz: 'no',
     sportsQuota: 'no',
     sportType: '',
+    isOrphan: 'no',
+    needsHostel: 'no',
     
     guardianRelation: '',
     guardianName: '',
@@ -68,13 +60,14 @@ export default function testp() {
     annualIncome: '',
     
     interestedCity: '',
-    preferredDegrees: [],
-    preferredUniversities: [],
+    interests: [],
     shift: '',
     
     cnicDoc: null,
+    cnicDocType: 'cnic',
     matricDoc: null,
     interDoc: null,
+    interDocType: 'complete',
     domicileDoc: null,
   });
 

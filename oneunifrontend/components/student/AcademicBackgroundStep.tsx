@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ChevronRight, ChevronLeft, School, BookOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, ChevronLeft, Plus, AlertCircle, ChevronDown } from "lucide-react";
 import { ProfileData } from "../../lib/schemas/profile";
-import Input from "../ui/input";
-import {
-  ValidateAcademicBackground,
-  InfoErrors,
-} from "@/lib/validation/validate";
+import { InfoErrors } from "@/lib/validation/validate";
+import Button from "../ui/button";
+import clsx from "clsx";
+
+// Reusable Components
+import { EmptyState } from "./academic/EmptyState";
+import { EducationCard } from "./academic/EducationCard";
+import { EducationForm } from "./academic/EducationForm";
 
 interface AcademicBackgroundStepProps {
   data: ProfileData;
@@ -15,6 +18,15 @@ interface AcademicBackgroundStepProps {
   onBack: () => void;
 }
 
+type EducationEntry = {
+  type: string;
+  institute: string;
+  board: string;
+  year: string;
+  marks: string;
+  totalMarks: string;
+};
+
 export function AcademicBackgroundStep({
   data,
   updateData,
@@ -22,22 +34,68 @@ export function AcademicBackgroundStep({
   onBack,
 }: AcademicBackgroundStepProps) {
   const [errors, setErrors] = useState<InfoErrors>({});
+  const [isAdding, setIsAdding] = useState(data.educations.length === 0);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  
+  const [currentEdu, setCurrentEdu] = useState<EducationEntry>({
+    type: "Matriculation",
+    institute: "",
+    board: "",
+    year: "",
+    marks: "",
+    totalMarks: "",
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEduChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    updateData({ [name]: value });
-    if (errors[name as keyof InfoErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+    setCurrentEdu(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
     }
   };
 
-  const handleNext = () => {
-    const newErrors = ValidateAcademicBackground(data);
-    setErrors(newErrors);
-    const hasErrors = Object.values(newErrors).some((msg) => msg && typeof msg === 'string' && msg.length > 0);
-    if (!hasErrors) {
-      onNext();
+  const handleSave = () => {
+    const newLocalErrors: any = {};
+    if (!currentEdu.institute) newLocalErrors.institute = "Required";
+    if (!currentEdu.board) newLocalErrors.board = "Required";
+    if (!currentEdu.year) newLocalErrors.year = "Required";
+    if (!currentEdu.marks) newLocalErrors.marks = "Required";
+    if (!currentEdu.totalMarks) newLocalErrors.totalMarks = "Required";
+
+    if (Object.keys(newLocalErrors).length > 0) {
+      setErrors(newLocalErrors);
+      return;
     }
+
+    let newEducations = [...data.educations];
+    if (editingIndex !== null) {
+      newEducations[editingIndex] = currentEdu;
+    } else {
+      newEducations.push(currentEdu);
+    }
+
+    updateData({ educations: newEducations });
+    setIsAdding(false);
+    setEditingIndex(null);
+  };
+
+  const handleEdit = (index: number) => {
+    setCurrentEdu(data.educations[index]);
+    setEditingIndex(index);
+    setIsAdding(true);
+  };
+
+  const handleRemove = (index: number) => {
+    const newEducations = data.educations.filter((_, i) => i !== index);
+    updateData({ educations: newEducations });
+  };
+
+  const handleNext = () => {
+    if (data.educations.length === 0) {
+      setErrors({ educations: "Please add at least one education record." });
+      return;
+    }
+    onNext();
   };
 
   const calculatePercentage = (obtained: string, total: string) => {
@@ -49,6 +107,22 @@ export function AcademicBackgroundStep({
     return "-";
   };
 
+  const getDropdownOptions = () => {
+    const allOptions = [
+      { label: "Matriculation / O-Level", value: "Matriculation" },
+      { label: "HSSC Part-I", value: "HSSC Part-I" },
+      { label: "HSSC Part-II", value: "HSSC Part-II" },
+      { label: "Diploma", value: "Diploma" },
+      { label: "Other Certificate", value: "Other" },
+    ];
+
+    return allOptions.filter(opt => {
+      if (opt.value === "Other") return true;
+      const alreadyExists = data.educations.some((edu, idx) => edu.type === opt.value && idx !== editingIndex);
+      return !alreadyExists;
+    });
+  };
+
   return (
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
@@ -57,219 +131,118 @@ export function AcademicBackgroundStep({
           Academic Background
         </h1>
         <p className="text-slate-500">
-          Provide details of your previous academic qualifications.
+          Add your educational qualifications one by one.
         </p>
       </div>
 
-      {/* Main Content - Side by Side Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Matric Card */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-5 h-fit hover:shadow-md transition-shadow duration-200">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                <School size={20} className="text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900">Matriculation</h3>
-                <p className="text-xs text-slate-500">SSC / O-Level</p>
-              </div>
-            </div>
-            <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex flex-col items-end min-w-[80px]">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
-                Percentage
-              </span>
-              <span className="text-sm font-bold text-blue-600">
-                {calculatePercentage(data.matricMarks, data.matricTotalMarks)}
-              </span>
-            </div>
-          </div>
+      <AnimatePresence mode="wait">
+        {!isAdding ? (
+          <motion.div
+            key="list"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="flex flex-col gap-6"
+          >
+            <div className="flex flex-col gap-4">
+              {data.educations.length === 0 ? (
+                <EmptyState 
+                  title="No qualifications added" 
+                  description="Click the button below to add your first one" 
+                />
+              ) : (
+                <div className="grid grid-cols-1 gap-3">
+                  {data.educations.map((edu, index) => (
+                    <EducationCard
+                      key={index}
+                      type={edu.type}
+                      institute={edu.institute}
+                      percentage={calculatePercentage(edu.marks, edu.totalMarks)}
+                      onEdit={() => handleEdit(index)}
+                      onRemove={() => handleRemove(index)}
+                    />
+                  ))}
+                </div>
+              )}
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <Input
-                label={
-                  <>
-                    Institute / School Name{" "}
-                    <span className="text-red-500">*</span>
-                  </>
-                }
-                name="matricInstitute"
-                value={data.matricInstitute}
-                onChange={handleChange}
-                placeholder="Enter your school name"
-                error={errors.matricInstitute}
-                leftIcon={<School size={18} />}
-              />
+              <button
+                onClick={() => {
+                  const types = ["Matriculation", "HSSC Part-II", "HSSC Part-I", "Diploma", "Other"];
+                  const nextType = types.find(t => t === "Other" || !data.educations.some(e => e.type === t)) || "Other";
+                  
+                  setCurrentEdu({
+                    type: nextType as any,
+                    institute: "",
+                    board: "",
+                    year: "",
+                    marks: "",
+                    totalMarks: "",
+                  });
+                  setEditingIndex(null);
+                  setIsAdding(true);
+                }}
+                className="w-full py-4 border-2 border-dashed border-blue-200 rounded-xl text-blue-600 font-bold flex items-center justify-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-all"
+              >
+                <Plus size={20} />
+                Add Qualification
+              </button>
             </div>
-            <Input
-              label={
-                <>
-                  Board <span className="text-red-500">*</span>
-                </>
-              }
-              name="matricBoard"
-              value={data.matricBoard}
-              onChange={handleChange}
-              placeholder="e.g., BISE Lahore"
-              error={errors.matricBoard}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="form"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+          >
+            <EducationForm
+              currentEdu={currentEdu}
+              editingIndex={editingIndex}
+              errors={errors}
+              options={getDropdownOptions()}
+              onEduChange={handleEduChange}
+              onSave={handleSave}
+              onCancel={() => setIsAdding(false)}
             />
-            <Input
-              label={
-                <>
-                  Passing Year <span className="text-red-500">*</span>
-                </>
-              }
-              name="matricYear"
-              value={data.matricYear}
-              onChange={handleChange}
-              placeholder="2020"
-              error={errors.matricYear}
-            />
-            <Input
-              label={
-                <>
-                  Marks Obtained <span className="text-red-500">*</span>
-                </>
-              }
-              name="matricMarks"
-              type="number"
-              value={data.matricMarks}
-              onChange={handleChange}
-              placeholder="850"
-              error={errors.matricMarks}
-            />
-            <Input
-              label={
-                <>
-                  Total Marks <span className="text-red-500">*</span>
-                </>
-              }
-              name="matricTotalMarks"
-              type="number"
-              value={data.matricTotalMarks}
-              onChange={handleChange}
-              placeholder="1100"
-              error={errors.matricTotalMarks}
-            />
-          </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Error Summary */}
+      {errors.educations && (
+        <div className="p-4 bg-red-50 border border-red-100 rounded-xl flex items-center gap-3 text-red-600 text-sm font-medium">
+          <AlertCircle size={20} />
+          <span>{errors.educations as string}</span>
         </div>
-
-        {/* Intermediate Card */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-5 h-fit hover:shadow-md transition-shadow duration-200">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
-                <BookOpen size={20} className="text-amber-500" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900">Intermediate</h3>
-                <p className="text-xs text-slate-500">HSSC / A-Level</p>
-              </div>
-            </div>
-            <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex flex-col items-end min-w-[80px]">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
-                Percentage
-              </span>
-              <span className="text-sm font-bold text-amber-600">
-                {calculatePercentage(data.interMarks, data.interTotalMarks)}
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <Input
-                label={
-                  <>
-                    Institute / College Name{" "}
-                    <span className="text-red-500">*</span>
-                  </>
-                }
-                name="interInstitute"
-                value={data.interInstitute}
-                onChange={handleChange}
-                placeholder="Enter your college name"
-                error={errors.interInstitute}
-                leftIcon={<BookOpen size={18} />}
-              />
-            </div>
-            <Input
-              label={
-                <>
-                  Board <span className="text-red-500">*</span>
-                </>
-              }
-              name="interBoard"
-              value={data.interBoard}
-              onChange={handleChange}
-              placeholder="e.g., BISE Lahore"
-              error={errors.interBoard}
-            />
-            <Input
-              label={
-                <>
-                  Passing Year <span className="text-red-500">*</span>
-                </>
-              }
-              name="interYear"
-              value={data.interYear}
-              onChange={handleChange}
-              placeholder="2022"
-              error={errors.interYear}
-            />
-            <Input
-              label={
-                <>
-                  Marks Obtained <span className="text-red-500">*</span>
-                </>
-              }
-              name="interMarks"
-              type="number"
-              value={data.interMarks}
-              onChange={handleChange}
-              placeholder="900"
-              error={errors.interMarks}
-            />
-            <Input
-              label={
-                <>
-                  Total Marks <span className="text-red-500">*</span>
-                </>
-              }
-              name="interTotalMarks"
-              type="number"
-              value={data.interTotalMarks}
-              onChange={handleChange}
-              placeholder="1100"
-              error={errors.interTotalMarks}
-            />
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* Footer Actions */}
       <div className="flex items-center justify-between pt-6 border-t border-slate-200 mt-auto">
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={onBack}
-          className="px-6 py-2.5 text-slate-600 font-medium hover:text-slate-900 transition-colors flex items-center gap-2 hover:bg-slate-50 rounded-lg"
+          className="px-6 py-2.5 text-slate-600 hover:bg-slate-50 rounded-xl"
+          iconLeft={<ChevronLeft size={20} />}
         >
-          <ChevronLeft size={18} />
           Back
-        </button>
+        </Button>
 
-        <motion.button
-          type="button"
+        <Button
           onClick={handleNext}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
+          disabled={isAdding}
+          className={clsx(
+            "px-10 py-2.5 rounded-xl shadow-md",
+            isAdding && "opacity-50 cursor-not-allowed shadow-none"
+          )}
+          iconRight={<ChevronRight size={20} />}
         >
           Save & Continue
-          <ChevronRight size={18} />
-        </motion.button>
+        </Button>
       </div>
     </div>
   );
 }
+
+
+
+

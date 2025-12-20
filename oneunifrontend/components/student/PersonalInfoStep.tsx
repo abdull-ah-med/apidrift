@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ChevronLeft, User, CreditCard, Calendar, Phone, Mail, Camera } from 'lucide-react';
 import { ProfileData } from '../../lib/schemas/profile';
 import Input from '../ui/input';
+import Select from '../ui/select';
+import Button from '../ui/button';
 import { ValidatePersonalInfo, InfoErrors } from '@/lib/validation/validate';
 
 interface PersonalInfoStepProps {
@@ -95,28 +97,19 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
               />
 
               {/* Gender */}
-              <div className="flex flex-col gap-[6px]">
-                <label htmlFor="gender" className="font-['Inter:Medium',sans-serif] text-[14px] text-slate-700 ml-1">
-                  Gender <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={data.gender}
-                  onChange={handleChange}
-                  className={`w-full px-[20px] py-[14px] bg-white border rounded-xl font-['Inter:Regular',sans-serif] text-[15px] text-slate-900 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md focus:outline-none focus:ring-4 ${
-                    errors.gender 
-                      ? "border-red-300 focus:border-red-500 focus:ring-red-500/10" 
-                      : "border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:ring-blue-500/10"
-                  }`}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                {errors.gender && <p className="font-['Inter:Medium',sans-serif] text-[12px] text-red-500 ml-1">{errors.gender}</p>}
-              </div>
+              <Select
+                label={<>Gender <span className="text-red-500">*</span></>}
+                name="gender"
+                value={data.gender}
+                onChange={handleChange as any}
+                error={errors.gender}
+                options={[
+                  { label: "Select Gender", value: "" },
+                  { label: "Male", value: "male" },
+                  { label: "Female", value: "female" },
+                  { label: "Other", value: "other" },
+                ]}
+              />
 
               {/* Phone */}
               <Input
@@ -172,25 +165,22 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
 
           {/* Actions Card */}
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
-            <motion.button
-              type="button"
+            <Button
               onClick={handleNext}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 text-white font-semibold py-3.5 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors shadow-sm"
+              className="w-full py-3.5 rounded-lg shadow-sm"
+              iconRight={<ChevronRight size={18} />}
             >
               Save & Continue
-              <ChevronRight size={18} />
-            </motion.button>
+            </Button>
             
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               onClick={onBack}
-              className="w-full py-3 text-slate-600 font-medium hover:text-slate-900 transition-colors flex items-center justify-center gap-2 hover:bg-slate-50 rounded-lg"
+              className="w-full py-3 text-slate-600 hover:bg-slate-50 rounded-lg"
+              iconLeft={<ChevronLeft size={18} />}
             >
-              <ChevronLeft size={18} />
               Go Back
-            </button>
+            </Button>
           </div>
         </div>
       </div>

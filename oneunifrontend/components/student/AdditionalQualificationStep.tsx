@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, BookMarked, Trophy, AlertCircle, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronRight, ChevronLeft, BookMarked, Trophy, AlertCircle, Heart, Home } from 'lucide-react';
 import { ProfileData } from '../../lib/schemas/profile';
 import { ValidateAdditionalQualifications } from '../../lib/validation/validate';
 import Input from '../ui/input';
-import clsx from 'clsx';
+import Button from '../ui/button';
+import { OptionCard } from './OptionCard';
 
 interface AdditionalQualificationsStepProps {
   data: ProfileData;
@@ -45,76 +46,6 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
     }
   };
 
-  const OptionCard = ({ 
-    title, 
-    description, 
-    icon: Icon, 
-    colorClass, 
-    bgClass,
-    name, 
-    value, 
-    children 
-  }: any) => {
-    const isYes = value === 'yes';
-    
-    return (
-      <div className={clsx(
-        "p-6 rounded-xl border transition-all duration-200 flex flex-col gap-4 h-full",
-        isYes ? "bg-white shadow-md ring-1 ring-slate-200 border-slate-200" : "bg-white border-slate-200 shadow-sm hover:shadow-md"
-      )}>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className={clsx("w-10 h-10 rounded-lg flex items-center justify-center", bgClass)}>
-              <Icon size={20} className={colorClass} />
-            </div>
-            <div>
-              <h3 className="font-semibold text-slate-900">{title}</h3>
-              <p className="text-xs text-slate-500">{description}</p>
-            </div>
-          </div>
-          
-          {isYes && (
-            <div className={clsx("w-6 h-6 rounded-full flex items-center justify-center", bgClass)}>
-              <Check size={14} className={colorClass} />
-            </div>
-          )}
-        </div>
-
-        <div className="flex gap-2 p-1 bg-slate-100 rounded-lg">
-          <label className={clsx(
-            "flex-1 py-2 text-sm font-medium rounded-md text-center cursor-pointer transition-all",
-            value === 'no' ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
-          )}>
-            <input type="radio" name={name} value="no" checked={value === 'no'} onChange={handleChange} className="hidden" />
-            No
-          </label>
-          <label className={clsx(
-            "flex-1 py-2 text-sm font-medium rounded-md text-center cursor-pointer transition-all",
-            value === 'yes' ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
-          )}>
-            <input type="radio" name={name} value="yes" checked={value === 'yes'} onChange={handleChange} className="hidden" />
-            Yes
-          </label>
-        </div>
-
-        <AnimatePresence>
-          {isYes && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              <div className="pt-2">
-                {children}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  };
-
   return (
     <div className="w-full h-full flex flex-col gap-6">
       <div className="flex flex-col gap-1">
@@ -122,7 +53,7 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
         <p className="text-slate-500">Select any special qualifications or quotas that apply to you.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <OptionCard
           title="Hafiz-e-Quran"
           description="20 marks added to merit"
@@ -131,6 +62,7 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
           bgClass="bg-emerald-50"
           name="isHafiz"
           value={data.isHafiz}
+          onChange={handleChange as any}
         >
           <div className="p-3 bg-emerald-50 rounded-lg border border-emerald-100 text-xs text-emerald-700">
             You will need to pass the Hifz test conducted by the university.
@@ -145,12 +77,13 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
           bgClass="bg-blue-50"
           name="sportsQuota"
           value={data.sportsQuota}
+          onChange={handleChange as any}
         >
           <Input
             label="Sport Type"
             name="sportType"
             value={data.sportType}
-            onChange={handleChange}
+            onChange={handleChange as any}
             placeholder="e.g., Cricket"
             error={errors.sportType}
           />
@@ -164,38 +97,66 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
           bgClass="bg-amber-50"
           name="hasDisability"
           value={data.hasDisability}
+          onChange={handleChange as any}
         >
           <Input
             label="Disability Type"
             name="disabilityType"
             value={data.disabilityType}
-            onChange={handleChange}
+            onChange={handleChange as any}
             placeholder="Specify disability"
             error={errors.disabilityType}
           />
         </OptionCard>
+
+        <OptionCard
+          title="Orphan"
+          description="Special financial support"
+          icon={Heart}
+          colorClass="text-rose-600"
+          bgClass="bg-rose-50"
+          name="isOrphan"
+          value={data.isOrphan}
+          onChange={handleChange as any}
+        >
+          <div className="p-3 bg-rose-50 rounded-lg border border-rose-100 text-xs text-rose-700">
+            You may be eligible for special scholarships or fee waivers.
+          </div>
+        </OptionCard>
+
+        <OptionCard
+          title="Hostel Facility"
+          description="University affiliated hostel"
+          icon={Home}
+          colorClass="text-indigo-600"
+          bgClass="bg-indigo-50"
+          name="needsHostel"
+          value={data.needsHostel}
+          onChange={handleChange as any}
+        >
+          <div className="p-3 bg-indigo-50 rounded-lg border border-indigo-100 text-xs text-indigo-700">
+            Hostel allotment is subject to availability and merit.
+          </div>
+        </OptionCard>
       </div>
 
       <div className="flex items-center justify-between pt-6 border-t border-slate-200 mt-auto">
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={onBack}
-          className="px-6 py-2.5 text-slate-600 font-medium hover:text-slate-900 transition-colors flex items-center gap-2 hover:bg-slate-50 rounded-lg"
+          className="px-6 py-2.5 text-slate-600 hover:bg-slate-50 rounded-xl"
+          iconLeft={<ChevronLeft size={20} />}
         >
-          <ChevronLeft size={18} />
           Back
-        </button>
+        </Button>
         
-        <motion.button
-          type="button"
+        <Button
           onClick={handleNext}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
+          className="px-10 py-2.5 rounded-xl shadow-md"
+          iconRight={<ChevronRight size={20} />}
         >
           Continue
-          <ChevronRight size={18} />
-        </motion.button>
+        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronRight, GraduationCap, FileText, Award, Users, Clock, Shield, Save } from 'lucide-react';
+import Button from '../ui/button';
 
 interface WelcomeStepProps {
   onNext: () => void;
@@ -91,16 +92,13 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
               </div>
             </div>
 
-            <motion.button
-              type="button"
+            <Button
               onClick={onNext}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="relative z-10 w-full bg-white text-blue-700 font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors shadow-sm"
+              className="relative z-10 w-full bg-white text-blue-700 hover:bg-blue-50 border-white shadow-sm"
+              iconRight={<ChevronRight size={18} />}
             >
-              Get Started
-              <ChevronRight size={18} />
-            </motion.button>
+              Start Application
+            </Button>
           </div>
         </div>
       </div>

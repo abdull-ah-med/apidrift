@@ -4,6 +4,8 @@ import { ChevronRight, ChevronLeft, User, Phone, CreditCard, Home, MapPin, Dolla
 import { ProfileData } from '../../lib/schemas/profile';
 import { ValidateGuardianInformation } from '../../lib/validation/validate';
 import Input from '../ui/input';
+import Select from '../ui/select';
+import Button from '../ui/button';
 import clsx from 'clsx';
 
 interface FamilyFinancialStepProps {
@@ -57,37 +59,25 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
 
           <div className="flex flex-col gap-4">
             {/* Guardian Relation */}
-            <div className="flex flex-col gap-[6px]">
-              <label htmlFor="guardianRelation" className="font-['Inter:Medium',sans-serif] text-[14px] text-slate-700 ml-1">
-                Relation <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="guardianRelation"
-                name="guardianRelation"
-                value={data.guardianRelation}
-                onChange={handleChange}
-                className={clsx(
-                  "w-full px-[20px] py-[14px] bg-white border rounded-xl font-['Inter:Regular',sans-serif] text-[15px] text-slate-900 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md focus:outline-none focus:ring-4",
-                  errors.guardianRelation 
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500/10" 
-                    : "border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:ring-blue-500/10"
-                )}
-              >
-                <option value="">Select relation</option>
-                <option value="father">Father</option>
-                <option value="mother">Mother</option>
-                <option value="brother">Brother</option>
-                <option value="sister">Sister</option>
-                <option value="uncle">Uncle</option>
-                <option value="aunt">Aunt</option>
-                <option value="grandfather">Grandfather</option>
-                <option value="grandmother">Grandmother</option>
-                <option value="other">Other</option>
-              </select>
-              {errors.guardianRelation && (
-                <p className="font-['Inter:Medium',sans-serif] text-[12px] text-red-500 ml-1">{errors.guardianRelation}</p>
-              )}
-            </div>
+            <Select
+              label={<>Relation <span className="text-red-500">*</span></>}
+              name="guardianRelation"
+              value={data.guardianRelation}
+              onChange={handleChange as any}
+              error={errors.guardianRelation}
+              options={[
+                { label: "Select relation", value: "" },
+                { label: "Father", value: "father" },
+                { label: "Mother", value: "mother" },
+                { label: "Brother", value: "brother" },
+                { label: "Sister", value: "sister" },
+                { label: "Uncle", value: "uncle" },
+                { label: "Aunt", value: "aunt" },
+                { label: "Grandfather", value: "grandfather" },
+                { label: "Grandmother", value: "grandmother" },
+                { label: "Other", value: "other" },
+              ]}
+            />
 
             {/* Guardian Name */}
             <Input
@@ -157,38 +147,22 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
             />
 
             {/* Annual Income */}
-            <div className="flex flex-col gap-[6px]">
-              <label htmlFor="annualIncome" className="font-['Inter:Medium',sans-serif] text-[14px] text-slate-700 ml-1">
-                Annual Income <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-[16px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                  <DollarSign size={18} />
-                </div>
-                <select
-                  id="annualIncome"
-                  name="annualIncome"
-                  value={data.annualIncome}
-                  onChange={handleChange}
-                  className={clsx(
-                    "w-full pl-[48px] pr-[20px] py-[14px] bg-white border rounded-xl font-['Inter:Regular',sans-serif] text-[15px] text-slate-900 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md focus:outline-none focus:ring-4",
-                    errors.annualIncome 
-                      ? "border-red-300 focus:border-red-500 focus:ring-red-500/10" 
-                      : "border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:ring-blue-500/10"
-                  )}
-                >
-                  <option value="">Select income range</option>
-                  <option value="below-300k">Below PKR 300,000</option>
-                  <option value="300k-500k">PKR 300,000 - 500,000</option>
-                  <option value="500k-1m">PKR 500,000 - 1,000,000</option>
-                  <option value="1m-2m">PKR 1,000,000 - 2,000,000</option>
-                  <option value="above-2m">Above PKR 2,000,000</option>
-                </select>
-              </div>
-              {errors.annualIncome && (
-                <p className="font-['Inter:Medium',sans-serif] text-[12px] text-red-500 ml-1">{errors.annualIncome}</p>
-              )}
-            </div>
+            <Select
+              label={<>Annual Income <span className="text-red-500">*</span></>}
+              name="annualIncome"
+              value={data.annualIncome}
+              onChange={handleChange as any}
+              error={errors.annualIncome}
+              leftIcon={<DollarSign size={18} />}
+              options={[
+                { label: "Select income range", value: "" },
+                { label: "Below PKR 300,000", value: "below-300k" },
+                { label: "PKR 300,000 - 500,000", value: "300k-500k" },
+                { label: "PKR 500,000 - 1,000,000", value: "500k-1m" },
+                { label: "PKR 1,000,000 - 2,000,000", value: "1m-2m" },
+                { label: "Above PKR 2,000,000", value: "above-2m" },
+              ]}
+            />
           </div>
         </div>
 
@@ -233,25 +207,22 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
 
           {/* Actions Card */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
-            <motion.button
-              type="button"
+            <Button
               onClick={handleNext}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-blue-600 text-white font-semibold py-3.5 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors shadow-sm"
+              className="w-full py-3.5 rounded-xl shadow-lg shadow-blue-600/10"
+              iconRight={<ChevronRight size={18} />}
             >
               Save & Continue
-              <ChevronRight size={18} />
-            </motion.button>
+            </Button>
             
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               onClick={onBack}
-              className="w-full py-3 text-slate-600 font-medium hover:text-slate-900 transition-colors flex items-center justify-center gap-2 hover:bg-slate-50 rounded-lg"
+              className="w-full py-3 text-slate-500 hover:text-slate-900"
+              iconLeft={<ChevronLeft size={18} />}
             >
-              <ChevronLeft size={18} />
               Go Back
-            </button>
+            </Button>
           </div>
         </div>
       </div>

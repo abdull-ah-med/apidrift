@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, CheckCircle, User, GraduationCap, Users, FileText, Send, MapPin, Clock, Building2, AlertCircle, Calendar, Phone, Mail, Briefcase } from 'lucide-react';
 import { ProfileData } from '../../lib/schemas/profile';
 import clsx from 'clsx';
+import Button from '../ui/button';
 
 interface ReviewSubmitStepProps {
   data: ProfileData;
@@ -91,33 +92,26 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
             className="md:col-span-1"
           >
             <div className="flex flex-col gap-6">
-              {/* Matric */}
-              <div className="relative pl-4 border-l-2 border-purple-100">
-                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500 ring-4 ring-white" />
-                <h4 className="font-['Inter:Semi_Bold',sans-serif] text-sm text-slate-900 mb-3">Matriculation / O-Level</h4>
-                <div className="grid grid-cols-1 gap-3">
-                  <InfoItem label="Institute" value={data.matricInstitute} />
-                  <div className="grid grid-cols-2 gap-3">
-                    <InfoItem label="Board" value={data.matricBoard} />
-                    <InfoItem label="Year" value={data.matricYear} />
+              {data.educations.map((edu, index) => (
+                <div key={index} className="relative pl-4 border-l-2 border-purple-100">
+                  <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500 ring-4 ring-white" />
+                  <h4 className="font-['Inter:Semi_Bold',sans-serif] text-sm text-slate-900 mb-3">{edu.type}</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    <InfoItem label="Institute" value={edu.institute} />
+                    <div className="grid grid-cols-2 gap-3">
+                      <InfoItem label="Board" value={edu.board} />
+                      <InfoItem label="Year" value={edu.year} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <InfoItem label="Marks" value={`${edu.marks} / ${edu.totalMarks}`} />
+                      <InfoItem label="Percentage" value={((parseFloat(edu.marks) / parseFloat(edu.totalMarks)) * 100).toFixed(2) + "%"} />
+                    </div>
                   </div>
-                  <InfoItem label="Marks" value={`${data.matricMarks} / ${data.matricTotalMarks}`} />
                 </div>
-              </div>
-              
-              {/* Inter */}
-              <div className="relative pl-4 border-l-2 border-purple-100">
-                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500 ring-4 ring-white" />
-                <h4 className="font-['Inter:Semi_Bold',sans-serif] text-sm text-slate-900 mb-3">Intermediate / A-Level</h4>
-                <div className="grid grid-cols-1 gap-3">
-                  <InfoItem label="Institute" value={data.interInstitute} />
-                  <div className="grid grid-cols-2 gap-3">
-                    <InfoItem label="Board" value={data.interBoard} />
-                    <InfoItem label="Year" value={data.interYear} />
-                  </div>
-                  <InfoItem label="Marks" value={`${data.interMarks} / ${data.interTotalMarks}`} />
-                </div>
-              </div>
+              ))}
+              {data.educations.length === 0 && (
+                <p className="text-slate-500 text-sm italic">No education records added.</p>
+              )}
             </div>
           </SectionCard>
 
@@ -137,26 +131,12 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
               </div>
               
               <div className="pt-4 border-t border-slate-100">
-                <span className="text-[11px] font-['Inter:Medium',sans-serif] text-slate-500 uppercase tracking-wider block mb-3">Preferred Degrees</span>
+                <span className="text-[11px] font-['Inter:Medium',sans-serif] text-slate-500 uppercase tracking-wider block mb-3">Areas of Interest</span>
                 <div className="flex flex-wrap gap-2">
-                  {data.preferredDegrees.map((deg, i) => (
+                  {data.interests.map((interest, i) => (
                     <span key={i} className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-['Inter:Medium',sans-serif] rounded-md border border-emerald-100">
-                      {deg}
+                      {interest}
                     </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-100">
-                <span className="text-[11px] font-['Inter:Medium',sans-serif] text-slate-500 uppercase tracking-wider block mb-3">Preferred Universities</span>
-                <div className="flex flex-col gap-2">
-                  {data.preferredUniversities.map((uni, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-slate-700">
-                      <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500">
-                        {i + 1}
-                      </div>
-                      <span className="font-['Inter:Medium',sans-serif]">{uni}</span>
-                    </div>
                   ))}
                 </div>
               </div>
@@ -193,9 +173,9 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: 'CNIC', file: data.cnicDoc },
+                { label: 'Identity', file: data.cnicDoc, type: data.cnicDocType },
                 { label: 'Matric', file: data.matricDoc },
-                { label: 'Intermediate', file: data.interDoc },
+                { label: 'Intermediate', file: data.interDoc, type: data.interDocType },
                 { label: 'Domicile', file: data.domicileDoc },
               ].map((doc, i) => (
                 <div key={i} className="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center gap-3">
@@ -206,7 +186,14 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
                     {doc.file ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                   </div>
                   <div className="flex flex-col overflow-hidden">
-                    <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{doc.label}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{doc.label}</span>
+                      {doc.type && (
+                        <span className="text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded uppercase">
+                          {doc.type}
+                        </span>
+                      )}
+                    </div>
                     <span className={clsx(
                       "text-xs font-semibold truncate",
                       doc.file ? "text-slate-900" : "text-red-500"
@@ -257,41 +244,34 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
 
           {/* Actions */}
           <div className="flex flex-col gap-3">
-            <motion.button
-              type="button"
+            <Button
               onClick={handleSubmit}
               disabled={!agreed || isSubmitting}
-              whileHover={{ scale: agreed && !isSubmitting ? 1.02 : 1 }}
-              whileTap={{ scale: agreed && !isSubmitting ? 0.98 : 1 }}
               className={clsx(
-                "w-full font-['Inter:Semi_Bold',sans-serif] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg",
-                agreed && !isSubmitting
-                  ? "bg-slate-900 text-white hover:bg-slate-800 shadow-slate-900/20"
-                  : "bg-slate-100 text-slate-400 cursor-not-allowed shadow-none"
+                "w-full py-3.5 rounded-xl shadow-lg",
+                (!agreed || isSubmitting) && "opacity-50 cursor-not-allowed shadow-none"
               )}
+              iconRight={!isSubmitting && <Send size={18} />}
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                   Submitting...
                 </>
               ) : (
-                <>
-                  Submit Application
-                  <Send size={18} />
-                </>
+                "Submit Application"
               )}
-            </motion.button>
+            </Button>
             
-            <button
-              type="button"
+            <Button
+              variant="ghost"
               onClick={onBack}
               disabled={isSubmitting}
-              className="w-full py-3 text-slate-600 font-['Inter:Medium',sans-serif] hover:text-slate-900 transition-colors flex items-center justify-center gap-2 hover:bg-slate-50 rounded-xl disabled:opacity-50"
+              className="w-full py-3 text-slate-600 hover:bg-slate-50 rounded-xl disabled:opacity-50"
+              iconLeft={<ChevronLeft size={18} />}
             >
-              <ChevronLeft size={18} />
               Go Back
-            </button>
+            </Button>
           </div>
 
         </div>

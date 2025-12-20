@@ -21,17 +21,14 @@ export const profileSchema = z.object({
   photo: z.custom<File>().nullable(),
 
   // Academic Background
-  matricInstitute: z.string().trim().min(1, "Required"),
-  matricBoard: z.string().trim().min(1, "Required"),
-  matricYear: z.string().trim().min(1, "Required"),
-  matricMarks: z.string().trim().min(1, "Required"),
-  matricTotalMarks: z.string().trim().min(1, "Required"),
-
-  interInstitute: z.string().trim().min(1, "Required"),
-  interBoard: z.string().trim().min(1, "Required"),
-  interYear: z.string().trim().min(1, "Required"),
-  interMarks: z.string().trim().min(1, "Required"),
-  interTotalMarks: z.string().trim().min(1, "Required"),
+  educations: z.array(z.object({
+    type: z.string().min(1, "Required"),
+    institute: z.string().trim().min(1, "Required"),
+    board: z.string().trim().min(1, "Required"),
+    year: z.string().trim().min(1, "Required"),
+    marks: z.string().trim().min(1, "Required"),
+    totalMarks: z.string().trim().min(1, "Required"),
+  })).min(1, "At least one education record is required"),
 
   // Additional Qualifications
   hasDisability: z.string(),
@@ -39,6 +36,8 @@ export const profileSchema = z.object({
   isHafiz: z.string(),
   sportsQuota: z.string(),
   sportType: z.string().trim().optional(),
+  isOrphan: z.string(),
+  needsHostel: z.string(),
 
   // Family & Financial
   guardianRelation: z.string().min(1, "Guardian Relation Required"),
@@ -55,19 +54,18 @@ export const profileSchema = z.object({
 
   // Program Preferences
   interestedCity: z.string().min(1, "City preference is required"),
-  preferredDegrees: z
+  interests: z
     .array(z.string())
-    .min(1, "Add at least one degree"),
-  preferredUniversities: z
-    .array(z.string())
-    .min(1, "Add at least one university"),
+    .min(1, "Add at least one interest"),
   shift: z.string().min(1, "Shift preference is required"),
 
   // Documents
   cnicDoc: z.custom<File | null>().refine((file) => !!file, { message: "Required" }),
+  cnicDocType: z.enum(["cnic", "bform", "nic"]).default("cnic"),
   matricDoc: z.custom<File | null>().refine((file) => !!file, { message: "Required" }),
   interDoc: z.custom<File | null>().refine((file) => !!file, { message: "Required" }),
-  domicileDoc: z.custom<File | null>().refine((file) => !!file, { message: "Required" }),
+  interDocType: z.enum(["complete", "firstYear"]).default("complete"),
+  domicileDoc: z.custom<File | null>().optional(),
 });
 
 // 🔹 conditional rules (extra) for disability/sports
@@ -78,6 +76,8 @@ export const additionalQualificationsSchema = profileSchema
     isHafiz: true,
     sportsQuota: true,
     sportType: true,
+    isOrphan: true,
+    needsHostel: true,
   })
   .superRefine((values, ctx) => {
     if (values.hasDisability === "yes" && !values.disabilityType?.trim()) {
@@ -108,16 +108,7 @@ export const personalInfoSchema = profileSchema.pick({
 });
 
 export const academicSchema = profileSchema.pick({
-  matricInstitute: true,
-  matricBoard: true,
-  matricYear: true,
-  matricMarks: true,
-  matricTotalMarks: true,
-  interInstitute: true,
-  interBoard: true,
-  interYear: true,
-  interMarks: true,
-  interTotalMarks: true,
+  educations: true,
 });
 
 export const guardianSchema = profileSchema.pick({
@@ -132,15 +123,16 @@ export const guardianSchema = profileSchema.pick({
 
 export const programPreferencesSchema = profileSchema.pick({
   interestedCity: true,
-  preferredDegrees: true,
-  preferredUniversities: true,
+  interests: true,
   shift: true,
 });
 
 export const documentsSchema = profileSchema.pick({
   cnicDoc: true,
+  cnicDocType: true,
   matricDoc: true,
   interDoc: true,
+  interDocType: true,
   domicileDoc: true,
 });
 

@@ -14,21 +14,21 @@ const StepIndicator = ({ totalSteps, currentStep }: StepIndicatorProps) => {
           <div key={step} className="flex items-center gap-[12px] flex-1">
             <div
               className={`w-[40px] h-[40px] rounded-full flex items-center justify-center transition-colors ${
-                currentStep >= step ? "bg-[#2563eb]" : "bg-[#e2e8f0]"
+                currentStep >= step ? "bg-primary" : "bg-slate-200"
               }`}
             >
               <span
-                className={`font-['Inter:Semi_Bold',sans-serif] text-[16px] ${
-                  currentStep >= step ? "text-white" : "text-[#94a3b8]"
+                className={`font-semibold text-[16px] ${
+                  currentStep >= step ? "text-white" : "text-slate-400"
                 }`}
               >
                 {step}
               </span>
             </div>
             {step < totalSteps && (
-              <div className="flex-1 h-[3px] bg-[#e2e8f0] rounded-full overflow-hidden">
+              <div className="flex-1 h-[3px] bg-slate-200 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-[#2563eb]"
+                  className="h-full bg-primary"
                   initial={{ width: "0%" }}
                   animate={{ width: currentStep > step ? "100%" : "0%" }}
                   transition={{ duration: 0.3 }}

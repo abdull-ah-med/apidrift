@@ -31,7 +31,7 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
         <div className={clsx("w-8 h-8 rounded-lg flex items-center justify-center", bgClass)}>
           <Icon size={16} className={colorClass} />
         </div>
-        <h3 className="font-['Inter:Semi_Bold',sans-serif] text-base text-slate-900">{title}</h3>
+        <h3 className="font-semibold text-base text-text-main">{title}</h3>
       </div>
       <div className="p-6 flex-1">
         {children}
@@ -41,11 +41,11 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
 
   const InfoItem = ({ label, value, icon: Icon, className }: { label: string, value: string | number | undefined, icon?: any, className?: string }) => (
     <div className={clsx("flex flex-col gap-1.5", className)}>
-      <div className="flex items-center gap-2 text-slate-500">
+      <div className="flex items-center gap-2 text-text-muted">
         {Icon && <Icon size={12} />}
-        <span className="text-[11px] font-['Inter:Medium',sans-serif] uppercase tracking-wider">{label}</span>
+        <span className="text-[11px] font-medium uppercase tracking-wider">{label}</span>
       </div>
-      <span className="text-[14px] font-['Inter:Semi_Bold',sans-serif] text-slate-900 break-words">{value || '-'}</span>
+      <span className="text-[14px] font-semibold text-text-main break-words">{value || '-'}</span>
     </div>
   );
 
@@ -53,8 +53,8 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900 font-['Inter:Bold',sans-serif]">Review Application</h1>
-        <p className="text-slate-500 font-['Inter:Regular',sans-serif]">Please review your information carefully before submitting.</p>
+        <h1 className="text-2xl font-bold text-text-main">Review Application</h1>
+        <p className="text-text-muted">Please review your information carefully before submitting.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -66,9 +66,9 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
           <SectionCard 
             title="Personal Information" 
             icon={User}
-            colorClass="text-blue-600"
-            bgClass="bg-blue-50"
-            accentColor="bg-blue-500"
+            colorClass="text-primary"
+            bgClass="bg-primary/5"
+            accentColor="bg-primary"
             className="md:col-span-2"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">
@@ -95,7 +95,7 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
               {data.educations.map((edu, index) => (
                 <div key={index} className="relative pl-4 border-l-2 border-purple-100">
                   <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 rounded-full bg-purple-500 ring-4 ring-white" />
-                  <h4 className="font-['Inter:Semi_Bold',sans-serif] text-sm text-slate-900 mb-3">{edu.type}</h4>
+                  <h4 className="font-semibold text-sm text-text-main mb-3">{edu.type}</h4>
                   <div className="grid grid-cols-1 gap-3">
                     <InfoItem label="Institute" value={edu.institute} />
                     <div className="grid grid-cols-2 gap-3">
@@ -110,7 +110,7 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
                 </div>
               ))}
               {data.educations.length === 0 && (
-                <p className="text-slate-500 text-sm italic">No education records added.</p>
+                <p className="text-text-muted text-sm italic">No education records added.</p>
               )}
             </div>
           </SectionCard>
@@ -131,10 +131,10 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
               </div>
               
               <div className="pt-4 border-t border-slate-100">
-                <span className="text-[11px] font-['Inter:Medium',sans-serif] text-slate-500 uppercase tracking-wider block mb-3">Areas of Interest</span>
+                <span className="text-[11px] font-medium text-text-muted uppercase tracking-wider block mb-3">Areas of Interest</span>
                 <div className="flex flex-wrap gap-2">
                   {data.interests.map((interest, i) => (
-                    <span key={i} className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-['Inter:Medium',sans-serif] rounded-md border border-emerald-100">
+                    <span key={i} className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-md border border-emerald-100">
                       {interest}
                     </span>
                   ))}
@@ -166,9 +166,9 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
           <SectionCard 
             title="Uploaded Documents" 
             icon={FileText}
-            colorClass="text-slate-600"
+            colorClass="text-text-body"
             bgClass="bg-slate-100"
-            accentColor="bg-slate-500"
+            accentColor="bg-text-muted"
             className="md:col-span-2"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -187,16 +187,16 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
                   </div>
                   <div className="flex flex-col overflow-hidden">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{doc.label}</span>
+                      <span className="text-[10px] font-medium text-text-muted uppercase tracking-wider">{doc.label}</span>
                       {doc.type && (
-                        <span className="text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded uppercase">
+                        <span className="text-[9px] font-bold text-primary bg-primary/5 px-1.5 py-0.5 rounded uppercase">
                           {doc.type}
                         </span>
                       )}
                     </div>
                     <span className={clsx(
                       "text-xs font-semibold truncate",
-                      doc.file ? "text-slate-900" : "text-red-500"
+                      doc.file ? "text-text-main" : "text-red-500"
                     )}>
                       {doc.file instanceof File ? doc.file.name : 'Missing'}
                     </span>
@@ -213,12 +213,12 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
           
           {/* Declaration Card */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col shadow-sm">
-            <div className="h-1 w-full bg-slate-900" />
+            <div className="h-1 w-full bg-text-main" />
             <div className="p-5 flex flex-col gap-5">
-                <h3 className="font-['Inter:Semi_Bold',sans-serif] text-slate-900">Declaration</h3>
+                <h3 className="font-semibold text-text-main">Declaration</h3>
                 
                 <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-                <p className="text-xs text-slate-600 leading-relaxed font-['Inter:Medium',sans-serif] text-justify">
+                <p className="text-xs text-text-body leading-relaxed font-medium text-justify">
                     I hereby declare that the information provided is true and correct to the best of my knowledge. I understand that any false statement may result in cancellation of my admission.
                 </p>
                 </div>
@@ -229,13 +229,13 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
                     type="checkbox"
                     checked={agreed}
                     onChange={(e) => setAgreed(e.target.checked)}
-                    className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all checked:border-slate-900 checked:bg-slate-900 hover:border-slate-400"
+                    className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all checked:border-text-main checked:bg-text-main hover:border-slate-400"
                     />
                     <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100">
                     <CheckCircle size={12} />
                     </div>
                 </div>
-                <span className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors select-none font-['Inter:Regular',sans-serif]">
+                <span className="text-sm text-text-body group-hover:text-text-main transition-colors select-none">
                     I agree to the terms and conditions
                 </span>
                 </label>
@@ -267,7 +267,7 @@ export function ReviewSubmitStep({ data, onBack, onComplete }: ReviewSubmitStepP
               variant="ghost"
               onClick={onBack}
               disabled={isSubmitting}
-              className="w-full py-3 text-slate-600 hover:bg-slate-50 rounded-xl disabled:opacity-50"
+              className="w-full py-3 text-text-body hover:bg-slate-50 rounded-xl disabled:opacity-50"
               iconLeft={<ChevronLeft size={18} />}
             >
               Go Back

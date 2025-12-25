@@ -43,8 +43,8 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">Personal Information</h1>
-        <p className="text-slate-500">Provide your basic details as they appear on official documents.</p>
+        <h1 className="text-2xl font-bold text-text-main">Personal Information</h1>
+        <p className="text-text-muted">Provide your basic details as they appear on official documents.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -152,14 +152,14 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
                   <User size={48} className="text-slate-300" />
                 )}
               </div>
-              <label className="absolute bottom-0 right-0 p-2.5 bg-blue-600 text-white rounded-full cursor-pointer hover:bg-blue-700 transition-all shadow-lg hover:scale-110 active:scale-95">
+              <label className="absolute bottom-0 right-0 p-2.5 bg-primary text-white rounded-full cursor-pointer hover:bg-primary/90 transition-all shadow-lg hover:scale-110 active:scale-95">
                 <Camera size={18} />
                 <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
               </label>
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900">Profile Photo</h3>
-              <p className="text-xs text-slate-500 mt-1">Upload a clear passport-size photo</p>
+              <h3 className="font-semibold text-text-main">Profile Photo</h3>
+              <p className="text-xs text-text-muted mt-1">Upload a clear passport-size photo</p>
             </div>
           </div>
 
@@ -176,7 +176,7 @@ export function PersonalInfoStep({ data, updateData, onNext, onBack }: PersonalI
             <Button
               variant="ghost"
               onClick={onBack}
-              className="w-full py-3 text-slate-600 hover:bg-slate-50 rounded-lg"
+              className="w-full py-3 text-text-body hover:bg-slate-50 rounded-lg"
               iconLeft={<ChevronLeft size={18} />}
             >
               Go Back

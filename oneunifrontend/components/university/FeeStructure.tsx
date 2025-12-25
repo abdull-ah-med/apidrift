@@ -27,7 +27,7 @@ export function FeeStructure({ fees }: FeeStructureProps) {
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
       <div className="p-6 border-b border-slate-100">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">Fee Structure (Average)</h3>
+        <h3 className="text-lg font-semibold text-text-main mb-4">Fee Structure (Average)</h3>
         <div className="flex p-1 bg-slate-100 rounded-lg">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -39,8 +39,8 @@ export function FeeStructure({ fees }: FeeStructureProps) {
                 className={clsx(
                   "flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-all duration-200",
                   isActive
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-slate-500 hover:text-slate-700"
+                    ? "bg-white text-primary shadow-sm"
+                    : "text-text-muted hover:text-text-body"
                 )}
               >
                 <Icon size={16} />
@@ -60,13 +60,13 @@ export function FeeStructure({ fees }: FeeStructureProps) {
             exit={{ opacity: 0, y: -10 }}
             className="text-center"
           >
-            <p className="text-sm text-slate-500 mb-1 uppercase tracking-wider font-medium">
+            <p className="text-sm text-text-muted mb-1 uppercase tracking-wider font-medium">
               Estimated Cost
             </p>
-            <h4 className="text-4xl font-bold text-slate-900">
+            <h4 className="text-4xl font-bold text-text-main">
               {fees[activeTab]}
             </h4>
-            <p className="text-xs text-slate-400 mt-2">
+            <p className="text-xs text-text-muted mt-2">
               *Excluding taxes and additional charges
             </p>
           </motion.div>

@@ -49,7 +49,7 @@ export function UniversityNav() {
                   "flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
                   isActive
                     ? "border-primary text-primary"
-                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                    : "border-transparent text-text-muted hover:text-text-body hover:border-slate-300"
                 )}
               >
                 <item.icon size={18} />

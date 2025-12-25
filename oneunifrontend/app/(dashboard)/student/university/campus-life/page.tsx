@@ -32,8 +32,8 @@ export default function UniversityCampusLifePage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end border-b border-slate-200 pb-6">
         <div>
-          <h2 className="text-3xl font-bold text-slate-900">Campus Life</h2>
-          <p className="text-slate-600 mt-1">Discover the vibrant community and world-class facilities at NUST.</p>
+          <h2 className="text-3xl font-bold text-text-main">Campus Life</h2>
+          <p className="text-text-body mt-1">Discover the vibrant community and world-class facilities at NUST.</p>
         </div>
         <Button variant="outline" className="gap-2">
           <MapPin size={16} />
@@ -49,10 +49,10 @@ export default function UniversityCampusLifePage() {
           const colors = [
             "bg-primary/5 text-primary border-primary/10 hover:border-primary/30",
             "bg-secondary/5 text-secondary border-secondary/10 hover:border-secondary/30",
-            "bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300",
+            "bg-slate-50 text-text-body border-slate-200 hover:border-slate-300",
             "bg-primary/5 text-primary border-primary/10 hover:border-primary/30",
             "bg-secondary/5 text-secondary border-secondary/10 hover:border-secondary/30",
-            "bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300",
+            "bg-slate-50 text-text-body border-slate-200 hover:border-slate-300",
           ];
           const colorClass = colors[idx % colors.length];
 
@@ -67,8 +67,8 @@ export default function UniversityCampusLifePage() {
               <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon size={32} />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">{facility.name}</h3>
-              <p className="text-sm text-slate-500 px-2">
+              <h3 className="text-lg font-bold text-text-main mb-2">{facility.name}</h3>
+              <p className="text-sm text-text-muted px-2">
                 {/* @ts-ignore */}
                 {facility.description || "State-of-the-art amenities designed for student success and comfort."}
               </p>
@@ -80,7 +80,7 @@ export default function UniversityCampusLifePage() {
       {/* Societies Section */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-slate-900">Student Societies</h3>
+          <h3 className="text-xl font-bold text-text-main">Student Societies</h3>
           <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 flex items-center gap-1">
             View All <ArrowRight size={14} />
           </a>
@@ -92,12 +92,12 @@ export default function UniversityCampusLifePage() {
             const Icon = icons[idx % icons.length];
             return (
               <div key={idx} className="flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-xl hover:border-primary/20 hover:shadow-sm transition-all cursor-pointer group">
-                <div className="w-10 h-10 rounded-full bg-slate-50 text-slate-500 flex items-center justify-center group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                <div className="w-10 h-10 rounded-full bg-slate-50 text-text-muted flex items-center justify-center group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                   <Icon size={20} />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-900 text-sm">{society}</h4>
-                  <p className="text-xs text-slate-500">500+ Members</p>
+                  <h4 className="font-semibold text-text-main text-sm">{society}</h4>
+                  <p className="text-xs text-text-muted">500+ Members</p>
                 </div>
               </div>
             );

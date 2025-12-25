@@ -38,10 +38,10 @@ export default function LoginForm({
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="font-['Inter:Bold',sans-serif] text-3xl text-[#1e293b] tracking-tight">
+          <h2 className="font-bold text-3xl text-text-main tracking-tight">
             Welcome back
           </h2>
-          <p className="font-['Inter:Regular',sans-serif] text-[15px] text-[#64748b] mt-2 leading-relaxed">
+          <p className="text-[15px] text-text-body mt-2 leading-relaxed">
             Enter your credentials to access your account and continue your
             learning journey.
           </p>
@@ -62,7 +62,7 @@ export default function LoginForm({
               type="email"
               value={formData.email}
               onChange={onChange}
-              leftIcon={<Mail size={18} className="text-slate-400" />}
+              leftIcon={<Mail size={18} className="text-text-muted" />}
               error={errors.email}
             />
           </motion.div>
@@ -84,7 +84,7 @@ export default function LoginForm({
             <div className="flex justify-end">
               <Link
                 href="/forgot-password"
-                className="text-[13px] font-medium text-[#2563eb] hover:text-[#1d4ed8] transition-colors hover:underline"
+                className="text-[13px] font-medium text-primary hover:text-primary/80 transition-colors hover:underline"
               >
                 Forgot password?
               </Link>
@@ -112,7 +112,7 @@ export default function LoginForm({
         type="button"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full cursor-pointer flex items-center justify-center gap-[12px] px-[24px] py-[12px] bg-white border-2 border-[#e2e8f0] hover:border-[#cbd5e1] rounded-[10px] font-['Inter:Medium',sans-serif] text-[15px] text-[#334155] transition-all"
+        className="w-full cursor-pointer flex items-center justify-center gap-[12px] px-[24px] py-[12px] bg-white border-2 border-slate-200 hover:border-slate-300 rounded-[10px] font-medium text-[15px] text-text-body transition-all"
       >
         <svg
           width="20"
@@ -146,10 +146,10 @@ export default function LoginForm({
         transition={{ delay: 0.6 }}
         className="flex items-center justify-center gap-2 pt-4 border-t border-slate-100"
       >
-        <p className="text-[14px] text-[#64748b]">Don't have an account?</p>
+        <p className="text-[14px] text-text-muted">Don't have an account?</p>
         <Link
           href="/registration"
-          className="text-[14px] font-semibold text-[#2563eb] hover:text-[#1d4ed8] transition-colors hover:underline"
+          className="text-[14px] font-semibold text-primary hover:text-primary/80 transition-colors hover:underline"
         >
           Create account
         </Link>

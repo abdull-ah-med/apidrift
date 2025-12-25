@@ -26,10 +26,10 @@ export default function CreatePasswordForm({
       className="flex flex-col gap-[32px]"
     >
       <div className="flex flex-col gap-[8px]">
-        <h2 className="font-['Inter:Semi_Bold',sans-serif] text-[28px] text-[#1e293b]">
+        <h2 className="font-bold text-[28px] text-text-main">
           Secure your account
         </h2>
-        <p className="font-['Inter:Regular',sans-serif] text-[16px] text-[#64748b]">
+        <p className="text-[16px] text-text-body">
           Create a strong password to protect your account
         </p>
       </div>

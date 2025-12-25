@@ -42,8 +42,8 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">Family & Financial</h1>
-        <p className="text-slate-500">Provide guardian details and household financial information.</p>
+        <h1 className="text-2xl font-bold text-text-main">Family & Financial</h1>
+        <p className="text-text-muted">Provide guardian details and household financial information.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -51,10 +51,10 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
         {/* Column 1: Guardian Information */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-5">
           <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-              <Users size={16} className="text-blue-600" />
+            <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center">
+              <Users size={16} className="text-primary" />
             </div>
-            <h3 className="font-semibold text-slate-900">Guardian Details</h3>
+            <h3 className="font-semibold text-text-main">Guardian Details</h3>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -121,7 +121,7 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
             <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
               <Home size={16} className="text-amber-500" />
             </div>
-            <h3 className="font-semibold text-slate-900">Residential Info</h3>
+            <h3 className="font-semibold text-text-main">Residential Info</h3>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -170,36 +170,36 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
         <div className="flex flex-col gap-6">
           {/* Summary Card */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-4">
-            <h3 className="font-semibold text-slate-900">Quick Summary</h3>
+            <h3 className="font-semibold text-text-main">Quick Summary</h3>
             
             <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm">
-                  <User size={14} className="text-slate-500" />
+                  <User size={14} className="text-text-muted" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Guardian</p>
-                  <p className="text-sm font-medium text-slate-900">{data.guardianName || 'Not set'}</p>
+                  <p className="text-xs text-text-muted">Guardian</p>
+                  <p className="text-sm font-medium text-text-main">{data.guardianName || 'Not set'}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm">
-                  <Phone size={14} className="text-slate-500" />
+                  <Phone size={14} className="text-text-muted" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Contact</p>
-                  <p className="text-sm font-medium text-slate-900">{data.guardianPhone || 'Not set'}</p>
+                  <p className="text-xs text-text-muted">Contact</p>
+                  <p className="text-sm font-medium text-text-main">{data.guardianPhone || 'Not set'}</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm">
-                  <MapPin size={14} className="text-slate-500" />
+                  <MapPin size={14} className="text-text-muted" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">City</p>
-                  <p className="text-sm font-medium text-slate-900">{data.city || 'Not set'}</p>
+                  <p className="text-xs text-text-muted">City</p>
+                  <p className="text-sm font-medium text-text-main">{data.city || 'Not set'}</p>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
             <Button
               onClick={handleNext}
-              className="w-full py-3.5 rounded-xl shadow-lg shadow-blue-600/10"
+              className="w-full py-3.5 rounded-xl shadow-lg shadow-primary/10"
               iconRight={<ChevronRight size={18} />}
             >
               Save & Continue
@@ -218,7 +218,7 @@ export function FamilyFinancialStep({ data, updateData, onNext, onBack }: Family
             <Button
               variant="ghost"
               onClick={onBack}
-              className="w-full py-3 text-slate-500 hover:text-slate-900"
+              className="w-full py-3 text-text-muted hover:text-text-main"
               iconLeft={<ChevronLeft size={18} />}
             >
               Go Back

@@ -6,17 +6,17 @@
 :root {
   /* Light mode - Brand colors */
   --background: #ffffff;
-  --foreground: #1f2937;
-  --card: #fbfbfb55;
-  --card-foreground: #1f2937;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
   --popover: #ffffff;
-  --popover-foreground: #1f2937;
+  --popover-foreground: #0f172a;
   --primary: #2a2f91;
   --primary-foreground: #ffffff;
   --secondary: #f6a21e;
   --secondary-foreground: #ffffff;
   --muted: #f9fafb;
-  --muted-foreground: #6b7280;
+  --muted-foreground: #94a3b8;
   --accent: #f6a21e;
   --accent-foreground: #1f2937;
   --destructive: #ef4444;
@@ -31,8 +31,15 @@
   --chart-5: #f59e0b;
   --radius: 0.625rem;
 
+  /* Text Colors */
+  --text-main: #0f172a;      /* Slate 900 */
+  --text-body: #334155;      /* Slate 700 */
+  --text-muted: #64748b;     /* Slate 500 */
+  --text-white: #ffffff;
+
   /* Brand colors */
   --brand-blue: #2a2f91;
+  --brand-blue-dark: #1e2266;
   --brand-yellow: #f6a21e;
   --brand-light-gray: #f8f9fa;
   --brand-dark-gray: #1f2937;
@@ -86,11 +93,22 @@
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.15 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+
+  /* Text Colors for Dark Mode */
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Custom Text Colors */
+  --color-text-main: var(--text-main);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

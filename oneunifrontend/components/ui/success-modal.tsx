@@ -37,7 +37,7 @@ export default function SuccessModal({
           initial={{ scale: 0 }}
           animate={{ scale: 1, rotate: 360 }}
           transition={{ type: "spring", duration: 0.8, delay: 0.2 }}
-          className="w-[100px] h-[100px] rounded-full bg-[#2563eb] flex items-center justify-center shadow-lg"
+          className="w-[100px] h-[100px] rounded-full bg-primary flex items-center justify-center shadow-lg"
         >
           <Check size={50} className="text-white" strokeWidth={3} />
         </motion.div>
@@ -48,10 +48,10 @@ export default function SuccessModal({
           transition={{ delay: 0.4 }}
           className="flex flex-col gap-[12px]"
         >
-          <h2 className="font-['Inter:Semi_Bold',sans-serif] text-[32px] text-[#1e293b]">
+          <h2 className="font-semibold text-[32px] text-text-main">
             {firstName ? `Welcome aboard, ${firstName}!` : title}
           </h2>
-          <p className="font-['Inter:Regular',sans-serif] text-[17px] text-[#64748b] max-w-[400px]">
+          <p className="text-[17px] text-text-muted max-w-[400px]">
             {description}
           </p>
         </motion.div>
@@ -63,7 +63,7 @@ export default function SuccessModal({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleAction}
-          className="px-[32px] py-[14px] bg-[#2563eb] hover:bg-[#1d4ed8] rounded-[12px] font-['Inter:Medium',sans-serif] text-[16px] text-white transition-all shadow-md"
+          className="px-[32px] py-[14px] bg-primary hover:bg-primary/90 rounded-[12px] font-medium text-[16px] text-white transition-all shadow-md"
         >
           {actionLabel}
         </motion.button>

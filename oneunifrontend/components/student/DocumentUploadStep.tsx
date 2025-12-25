@@ -107,12 +107,12 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
       {/* Header Section */}
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
             <Shield size={20} />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 font-['Inter:Bold',sans-serif] tracking-tight">Document Verification</h1>
+          <h1 className="text-3xl font-bold text-text-main tracking-tight">Document Verification</h1>
         </div>
-        <p className="text-slate-500 font-['Inter:Regular',sans-serif] text-base max-w-3xl leading-relaxed">
+        <p className="text-text-muted text-base max-w-3xl leading-relaxed">
           Please upload clear, scanned copies of your original documents.
         </p>
       </div>
@@ -140,7 +140,7 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
                     ? "border-emerald-500/20 bg-emerald-50/10 shadow-sm" 
                     : hasError 
                     ? "border-red-200 bg-red-50/10" 
-                    : "border-slate-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5"
+                    : "border-slate-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5"
                 )}
               >
                 <div className="p-6 flex flex-col lg:flex-row lg:items-center gap-6">
@@ -150,23 +150,23 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
                       "w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500",
                       isUploaded 
                         ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" 
-                        : "bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-600/20"
+                        : "bg-slate-50 text-text-muted group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/20"
                     )}>
                       {isUploaded ? <CheckCircle size={28} /> : <Icon size={28} />}
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-3">
-                        <h3 className="text-lg font-bold text-slate-900 tracking-tight">{doc.label}</h3>
+                        <h3 className="text-lg font-bold text-text-main tracking-tight">{doc.label}</h3>
                         {isUploaded && (
                           <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-widest rounded-full">Verified</span>
                         )}
                         {doc.required && !isUploaded && (
-                          <span className="px-2.5 py-0.5 bg-slate-100 text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-full">Required</span>
+                          <span className="px-2.5 py-0.5 bg-slate-100 text-text-muted text-[10px] font-bold uppercase tracking-widest rounded-full">Required</span>
                         )}
                       </div>
-                      <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-md">{doc.description}</p>
+                      <p className="text-sm text-text-body font-medium leading-relaxed max-w-md">{doc.description}</p>
                       {doc.name === 'cnicDoc' && !isUploaded && (
-                        <div className="flex items-center gap-2 mt-1 text-[10px] font-bold text-blue-600 uppercase tracking-wider bg-blue-50/50 w-fit px-2.5 py-1 rounded-lg border border-blue-100/50">
+                        <div className="flex items-center gap-2 mt-1 text-[10px] font-bold text-primary uppercase tracking-wider bg-primary/5 w-fit px-2.5 py-1 rounded-lg border border-primary/10">
                           <Fingerprint size={12} />
                           <span>Both sides in one file</span>
                         </div>
@@ -187,7 +187,7 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
                               onClick={() => handleTypeChange(doc.typeField!, type.value)}
                               className={clsx(
                                 "px-5 py-2.5 rounded-xl text-xs h-auto",
-                                isSelected ? "shadow-md" : "text-slate-400 hover:text-slate-600"
+                                isSelected ? "shadow-md" : "text-slate-400 hover:text-text-body"
                               )}
                               iconLeft={type.icon && <type.icon size={16} />}
                             >
@@ -204,12 +204,12 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
                           <FileCheck size={24} />
                         </div>
                         <div className="flex flex-col min-w-0">
-                          <span className="text-sm font-bold text-slate-900 truncate max-w-[120px]">{file.name}</span>
+                          <span className="text-sm font-bold text-text-main truncate max-w-[120px]">{file.name}</span>
                           <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{(file.size / 1024).toFixed(0)} KB</span>
                         </div>
                         <Button
                           variant="ghost"
-                          className="ml-2 p-2 h-auto rounded-xl text-slate-300 hover:text-blue-600"
+                          className="ml-2 p-2 h-auto rounded-xl text-slate-300 hover:text-primary"
                           onClick={() => document.getElementById(`file-${doc.name}`)?.click()}
                         >
                           <Upload size={18} />
@@ -260,13 +260,13 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-0.5">
-                  <h3 className="text-xl font-bold text-slate-900">Summary</h3>
-                  <p className="text-xs text-slate-400 font-medium">Upload progress</p>
+                  <h3 className="text-xl font-bold text-text-main">Summary</h3>
+                  <p className="text-xs text-text-muted font-medium">Upload progress</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="flex flex-col items-end">
-                    <span className="text-lg font-black text-slate-900 leading-none">{uploadedRequiredCount}/{requiredDocs}</span>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Documents</span>
+                    <span className="text-lg font-black text-text-main leading-none">{uploadedRequiredCount}/{requiredDocs}</span>
+                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">Documents</span>
                   </div>
                 </div>
               </div>
@@ -274,7 +274,7 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
               <div className="space-y-2">
                 <div className="relative h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                   <motion.div 
-                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-600 to-indigo-600"
+                    className="absolute inset-y-0 left-0 bg-primary"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 1, ease: "circOut" }}
@@ -290,8 +290,8 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
             {/* Guidelines Section - Integrated */}
             <div className="flex flex-col gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
               <div className="flex items-center gap-2">
-                <AlertCircle size={16} className="text-blue-600" />
-                <h4 className="text-sm font-bold text-slate-900">Upload Guidelines</h4>
+                <AlertCircle size={16} className="text-primary" />
+                <h4 className="text-sm font-bold text-text-main">Upload Guidelines</h4>
               </div>
               <div className="grid grid-cols-1 gap-3">
                 {[
@@ -300,12 +300,12 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
                   { title: "Quality", desc: "Clear & Legible", icon: ScanLine },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-md bg-white flex items-center justify-center text-slate-400 shadow-sm">
+                    <div className="w-6 h-6 rounded-md bg-white flex items-center justify-center text-text-muted shadow-sm">
                       <item.icon size={12} />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-bold text-slate-700">{item.title}:</span>
-                      <span className="text-[11px] text-slate-500 font-medium">{item.desc}</span>
+                      <span className="text-[11px] font-bold text-text-body">{item.title}:</span>
+                      <span className="text-[11px] text-text-muted font-medium">{item.desc}</span>
                     </div>
                   </div>
                 ))}
@@ -316,7 +316,7 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
             <div className="flex flex-col gap-2 pt-2">
               <Button
                 onClick={handleNext}
-                className="w-full py-4 rounded-2xl text-base shadow-xl shadow-blue-600/20"
+                className="w-full py-4 rounded-2xl text-base shadow-xl shadow-primary/20"
                 iconRight={<ChevronRight size={20} />}
               >
                 Review Application
@@ -324,7 +324,7 @@ export function DocumentUploadStep({ data, updateData, onNext, onBack }: Documen
               <Button
                 variant="ghost"
                 onClick={onBack}
-                className="w-full py-3 text-slate-400 hover:text-slate-900 text-sm"
+                className="w-full py-3 text-text-muted hover:text-text-main text-sm"
               >
                 Back to Preferences
               </Button>

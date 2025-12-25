@@ -16,9 +16,9 @@ const getPasswordStrength = (password = ""): Strength => {
   if (/[0-9]/.test(password)) strength += 15;
   if (/[^A-Za-z0-9]/.test(password)) strength += 10;
 
-  if (strength < 40) return { strength, label: "Weak", color: "#ef4444" };
-  if (strength < 70) return { strength, label: "Good", color: "#f59e0b" };
-  return { strength, label: "Strong", color: "#10b981" };
+  if (strength < 40) return { strength, label: "Weak", color: "bg-red-500" };
+  if (strength < 70) return { strength, label: "Good", color: "bg-amber-500" };
+  return { strength, label: "Strong", color: "bg-emerald-500" };
 };
 
 /**
@@ -99,16 +99,14 @@ export default function PasswordInput({
         >
           <div className="w-full h-[8px] bg-[#f1f5f9] rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full"
-              style={{ backgroundColor: passwordStrength.color }}
+              className={`h-full rounded-full ${passwordStrength.color}`}
               initial={{ width: 0 }}
               animate={{ width: `${passwordStrength.strength}%` }}
               transition={{ duration: 0.25 }}
             />
           </div>
           <p
-            className="font-['Inter:Medium',sans-serif] text-[13px]"
-            style={{ color: passwordStrength.color }}
+            className={`font-medium text-[13px] ${passwordStrength.color.replace('bg-', 'text-')}`}
           >
             Password strength: {passwordStrength.label}
           </p>
@@ -119,13 +117,13 @@ export default function PasswordInput({
       {typeof confirmValue === "string" && confirmValue.length > 0 && (
         <div className="pt-[8px]">
           {confirmValue === value ? (
-            <div className="flex items-center gap-2 text-[#10b981]">
+            <div className="flex items-center gap-2 text-emerald-500">
               <Check size={16} strokeWidth={3} />
-              <span className="font-['Inter:Regular',sans-serif] text-[13px]">Passwords match</span>
+              <span className="text-[13px]">Passwords match</span>
             </div>
           ) : (
-            <div className="flex items-center gap-2 text-[#ef4444]">
-              <span className="font-['Inter:Regular',sans-serif] text-[13px]">Passwords do not match</span>
+            <div className="flex items-center gap-2 text-red-500">
+              <span className="text-[13px]">Passwords do not match</span>
             </div>
           )}
         </div>
@@ -139,7 +137,7 @@ export default function PasswordInput({
             exit={{ opacity: 0, height: 0, marginTop: 0 }}
             className="p-4 bg-slate-50 border border-slate-100 rounded-xl overflow-hidden"
           >
-            <p className="font-['Inter:Medium',sans-serif] text-[13px] text-slate-500 mb-3">
+            <p className="font-medium text-[13px] text-text-muted mb-3">
               Password requirements:
             </p>
             <ul className="space-y-2">
@@ -151,8 +149,8 @@ export default function PasswordInput({
                 >
                   {meets8 && <Check size={12} className="text-white" strokeWidth={3} />}
                 </div>
-                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
-                  meets8 ? "text-slate-700" : "text-slate-400"
+                <span className={`text-[13px] transition-colors duration-200 ${
+                  meets8 ? "text-text-body" : "text-slate-400"
                 }`}>
                   At least 8 characters
                 </span>
@@ -166,8 +164,8 @@ export default function PasswordInput({
                 >
                   {meetsCase && <Check size={12} className="text-white" strokeWidth={3} />}
                 </div>
-                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
-                  meetsCase ? "text-slate-700" : "text-slate-400"
+                <span className={`text-[13px] transition-colors duration-200 ${
+                  meetsCase ? "text-text-body" : "text-slate-400"
                 }`}>
                   Mix of uppercase & lowercase
                 </span>
@@ -181,8 +179,8 @@ export default function PasswordInput({
                 >
                   {meetsNumber && <Check size={12} className="text-white" strokeWidth={3} />}
                 </div>
-                <span className={`font-['Inter:Regular',sans-serif] text-[13px] transition-colors duration-200 ${
-                  meetsNumber ? "text-slate-700" : "text-slate-400"
+                <span className={`text-[13px] transition-colors duration-200 ${
+                  meetsNumber ? "text-text-body" : "text-slate-400"
                 }`}>
                   At least one number
                 </span>

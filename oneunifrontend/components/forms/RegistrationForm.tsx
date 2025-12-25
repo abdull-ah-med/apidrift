@@ -33,7 +33,7 @@ export default function RegistrationForm({
       className="flex flex-col gap-[32px]"
     >
       <div className="flex flex-col gap-[8px]">
-        <h2 className="font-['Inter:Semi_Bold',sans-serif] text-[28px] text-[#1e293b]">
+        <h2 className="font-bold text-[28px] text-text-main">
           Create your account
         </h2>
       </div>
@@ -64,7 +64,7 @@ export default function RegistrationForm({
 
         {/* Role Selection */}
         <div className="flex flex-col gap-[12px]">
-          <label className="font-['Inter:Medium',sans-serif] text-[14px] text-[#334155]">
+          <label className="font-medium text-[14px] text-text-body">
             I am a
           </label>
           <div className="flex gap-[12px]">
@@ -87,7 +87,7 @@ export default function RegistrationForm({
             <motion.p
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-['Inter:Regular',sans-serif] text-[13px] text-[#ef4444]"
+              className="text-[13px] text-red-500"
             >
               {errors.role}
             </motion.p>

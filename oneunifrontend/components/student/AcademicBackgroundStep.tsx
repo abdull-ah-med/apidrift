@@ -127,10 +127,10 @@ export function AcademicBackgroundStep({
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="text-2xl font-bold text-text-main">
           Academic Background
         </h1>
-        <p className="text-slate-500">
+        <p className="text-text-muted">
           Add your educational qualifications one by one.
         </p>
       </div>
@@ -181,7 +181,7 @@ export function AcademicBackgroundStep({
                   setEditingIndex(null);
                   setIsAdding(true);
                 }}
-                className="w-full py-4 border-2 border-dashed border-blue-200 rounded-xl text-blue-600 font-bold flex items-center justify-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-all"
+                className="w-full py-4 border-2 border-dashed border-primary/20 rounded-xl text-primary font-bold flex items-center justify-center gap-2 hover:bg-primary/5 hover:border-primary/30 transition-all"
               >
                 <Plus size={20} />
                 Add Qualification
@@ -221,7 +221,7 @@ export function AcademicBackgroundStep({
         <Button
           variant="ghost"
           onClick={onBack}
-          className="px-6 py-2.5 text-slate-600 hover:bg-slate-50 rounded-xl"
+          className="px-6 py-2.5 text-text-body hover:bg-slate-50 rounded-xl"
           iconLeft={<ChevronLeft size={20} />}
         >
           Back

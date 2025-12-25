@@ -70,11 +70,11 @@ export default function StudentProfilePage() {
 
   const InfoItem = ({ label, value, icon: Icon, className }: { label: string, value: string | number | undefined, icon?: any, className?: string }) => (
     <div className={clsx("flex flex-col gap-1.5", className)}>
-      <div className="flex items-center gap-2 text-slate-400">
+      <div className="flex items-center gap-2 text-text-muted">
         {Icon && <Icon size={12} className="shrink-0" />}
         <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
       </div>
-      <span className="text-sm font-bold text-slate-900 break-words leading-tight">{value || '-'}</span>
+      <span className="text-sm font-bold text-text-main break-words leading-tight">{value || '-'}</span>
     </div>
   );
 
@@ -93,15 +93,15 @@ export default function StudentProfilePage() {
               <User size={20} />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-slate-900">Student Profile</h1>
-              <p className="text-xs text-slate-500 font-medium">Manage your academic identity</p>
+              <h1 className="text-lg font-bold text-text-main">Student Profile</h1>
+              <p className="text-xs text-text-muted font-medium">Manage your academic identity</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" className="h-10 w-10 p-0 rounded-xl text-slate-400">
+            <Button variant="ghost" className="h-10 w-10 p-0 rounded-xl text-text-muted">
               <Share2 size={18} />
             </Button>
-            <Button variant="outline" className="h-10 rounded-xl border-slate-200 text-slate-600 px-4" iconLeft={<Download size={16} />}>
+            <Button variant="outline" className="h-10 rounded-xl border-slate-200 text-text-body px-4" iconLeft={<Download size={16} />}>
               Export
             </Button>
             <Button className="h-10 rounded-xl bg-primary hover:bg-primary/90 px-6 shadow-lg shadow-primary/20" iconLeft={<Edit3 size={16} />}>
@@ -134,22 +134,22 @@ export default function StudentProfilePage() {
                     <CheckCircle2 size={14} />
                   </div>
                 </div>
-                <h2 className="mt-4 text-xl font-black text-slate-900 text-center">{data.fullName}</h2>
+                <h2 className="mt-4 text-xl font-black text-text-main text-center">{data.fullName}</h2>
                 <p className="text-sm font-bold text-primary bg-primary/5 px-3 py-1 rounded-full mt-2 border border-primary/10">
                   {data.studentId}
                 </p>
                 
                 <div className="w-full mt-8 flex flex-col gap-4">
-                  <div className="flex items-center gap-3 text-slate-600">
-                    <Mail size={16} className="text-slate-400" />
+                  <div className="flex items-center gap-3 text-text-body">
+                    <Mail size={16} className="text-text-muted" />
                     <span className="text-sm font-medium truncate">{data.email}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-slate-600">
-                    <Phone size={16} className="text-slate-400" />
+                  <div className="flex items-center gap-3 text-text-body">
+                    <Phone size={16} className="text-text-muted" />
                     <span className="text-sm font-medium">{data.phone}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-slate-600">
-                    <MapPin size={16} className="text-slate-400" />
+                  <div className="flex items-center gap-3 text-text-body">
+                    <MapPin size={16} className="text-text-muted" />
                     <span className="text-sm font-medium">{data.city}</span>
                   </div>
                 </div>
@@ -157,7 +157,7 @@ export default function StudentProfilePage() {
                 {/* Compact Status Bar - Replaces the big dark box */}
                 <div className="w-full mt-8 pt-6 border-t border-slate-100">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Profile Strength</span>
+                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">Profile Strength</span>
                     <span className="text-[10px] font-bold text-primary">{data.completionPercentage}%</span>
                   </div>
                   <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -171,7 +171,7 @@ export default function StudentProfilePage() {
                     {['Personal', 'Academic', 'Docs'].map((item) => (
                       <div key={item} className="flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                        <span className="text-[9px] font-bold text-slate-500 uppercase">{item}</span>
+                        <span className="text-[9px] font-bold text-text-muted uppercase">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -186,7 +186,7 @@ export default function StudentProfilePage() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-[32px] border border-slate-200 shadow-sm p-6"
             >
-              <h3 className="text-sm font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-text-main mb-6 flex items-center gap-2">
                 <Award size={16} className="text-secondary" />
                 Special Quotas
               </h3>
@@ -201,8 +201,8 @@ export default function StudentProfilePage() {
                     "p-3 rounded-2xl border flex flex-col gap-2 transition-all",
                     item.val === 'yes' ? "bg-primary/5 border-primary/20" : "bg-slate-50 border-slate-100 opacity-60"
                   )}>
-                    <item.icon size={14} className={item.val === 'yes' ? "text-primary" : "text-slate-400"} />
-                    <span className="text-[10px] font-bold text-slate-900">{item.label}</span>
+                    <item.icon size={14} className={item.val === 'yes' ? "text-primary" : "text-text-muted"} />
+                    <span className="text-[10px] font-bold text-text-main">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -221,7 +221,7 @@ export default function StudentProfilePage() {
                 <div className="w-10 h-10 bg-primary/5 rounded-xl flex items-center justify-center text-primary">
                   <User size={20} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">Personal Details</h3>
+                <h3 className="text-lg font-bold text-text-main">Personal Details</h3>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                 <InfoItem label="Father's Name" value={data.fatherName} icon={User} />
@@ -243,7 +243,7 @@ export default function StudentProfilePage() {
                 <div className="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary">
                   <GraduationCap size={20} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">Academic History</h3>
+                <h3 className="text-lg font-bold text-text-main">Academic History</h3>
               </div>
               <div className="space-y-8">
                 {data.educations.map((edu, index) => (
@@ -251,7 +251,7 @@ export default function StudentProfilePage() {
                     <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-4 border-secondary shadow-sm" />
                     <div className="flex flex-col gap-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-slate-900">{edu.type}</h4>
+                        <h4 className="font-bold text-text-main">{edu.type}</h4>
                         <span className="text-[10px] font-black text-secondary bg-secondary/10 px-2 py-1 rounded-md uppercase tracking-widest">
                           {edu.year}
                         </span>
@@ -275,14 +275,14 @@ export default function StudentProfilePage() {
               animate={{ opacity: 1, x: 0 }}
               className="bg-white rounded-[32px] border border-slate-200 shadow-sm p-6"
             >
-              <h3 className="text-sm font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-text-main mb-6 flex items-center gap-2">
                 <Users size={16} className="text-primary" />
                 Guardian Info
               </h3>
               <div className="flex flex-col gap-5">
                 <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10">
                   <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Guardian Name</p>
-                  <p className="text-sm font-bold text-slate-900">{data.guardianName}</p>
+                  <p className="text-sm font-bold text-text-main">{data.guardianName}</p>
                 </div>
                 <InfoItem label="Relation" value={data.guardianRelation} icon={Heart} />
                 <InfoItem label="Contact" value={data.guardianPhone} icon={Phone} />
@@ -296,7 +296,7 @@ export default function StudentProfilePage() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-[32px] border border-slate-200 shadow-sm p-6"
             >
-              <h3 className="text-sm font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-text-main mb-6 flex items-center gap-2">
                 <Building2 size={16} className="text-secondary" />
                 Preferences
               </h3>
@@ -307,7 +307,7 @@ export default function StudentProfilePage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {data.interests.map((interest, i) => (
-                    <span key={i} className="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-lg border border-slate-200">
+                    <span key={i} className="px-2 py-1 bg-slate-100 text-text-body text-[10px] font-bold rounded-lg border border-slate-200">
                       {interest}
                     </span>
                   ))}

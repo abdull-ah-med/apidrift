@@ -106,8 +106,8 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
     <div className="w-full h-full flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">Program Preferences</h1>
-        <p className="text-slate-500">Select your preferred location, shift, and areas of interest.</p>
+        <h1 className="text-2xl font-bold text-text-main">Program Preferences</h1>
+        <p className="text-text-muted">Select your preferred location, shift, and areas of interest.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -120,10 +120,10 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
             {/* Location Card */}
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-4">
               <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-                <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-                  <MapPin size={16} className="text-blue-600" />
+                <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center">
+                  <MapPin size={16} className="text-primary" />
                 </div>
-                <h3 className="font-semibold text-slate-900">Location</h3>
+                <h3 className="font-semibold text-text-main">Location</h3>
               </div>
 
               <Select
@@ -142,10 +142,10 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
             {/* Shift Card */}
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-4">
               <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-                <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
-                  <Clock size={16} className="text-amber-500" />
+                <div className="w-8 h-8 bg-secondary/10 rounded-lg flex items-center justify-center">
+                  <Clock size={16} className="text-secondary" />
                 </div>
-                <h3 className="font-semibold text-slate-900">Class Shift</h3>
+                <h3 className="font-semibold text-text-main">Class Shift</h3>
               </div>
 
               <div className="flex flex-col gap-3">
@@ -158,10 +158,10 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
                     onChange={handleChange}
                     className="peer hidden"
                   />
-                  <div className="p-3.5 bg-white border border-slate-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50/50 peer-checked:shadow-sm transition-all group-hover:border-slate-300">
+                  <div className="p-3.5 bg-white border border-slate-200 rounded-xl peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-sm transition-all group-hover:border-slate-300">
                     <div className="flex justify-between items-center">
-                      <p className="font-medium text-slate-900 text-sm">Morning</p>
-                      <span className="text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">8AM - 2PM</span>
+                      <p className="font-medium text-text-main text-sm">Morning</p>
+                      <span className="text-[11px] text-text-muted bg-slate-100 px-2 py-0.5 rounded-md">8AM - 2PM</span>
                     </div>
                   </div>
                 </label>
@@ -175,15 +175,15 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
                     onChange={handleChange}
                     className="peer hidden"
                   />
-                  <div className="p-3.5 bg-white border border-slate-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50/50 peer-checked:shadow-sm transition-all group-hover:border-slate-300">
+                  <div className="p-3.5 bg-white border border-slate-200 rounded-xl peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:shadow-sm transition-all group-hover:border-slate-300">
                     <div className="flex justify-between items-center">
-                      <p className="font-medium text-slate-900 text-sm">Evening</p>
-                      <span className="text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">2PM - 8PM</span>
+                      <p className="font-medium text-text-main text-sm">Evening</p>
+                      <span className="text-[11px] text-text-muted bg-slate-100 px-2 py-0.5 rounded-md">2PM - 8PM</span>
                     </div>
                   </div>
                 </label>
                 {errors.shift && (
-                  <p className="font-['Inter:Medium',sans-serif] text-[12px] text-red-500 ml-1">{errors.shift}</p>
+                  <p className="font-medium text-[12px] text-red-500 ml-1">{errors.shift}</p>
                 )}
               </div>
             </div>
@@ -193,15 +193,15 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-6">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
-                  <GraduationCap size={20} className="text-purple-600" />
+                <div className="w-10 h-10 bg-primary/5 rounded-xl flex items-center justify-center">
+                  <GraduationCap size={20} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Areas of Interest</h3>
-                  <p className="text-xs text-slate-500">Select up to 10 fields you are interested in</p>
+                  <h3 className="font-bold text-text-main">Areas of Interest</h3>
+                  <p className="text-xs text-text-muted">Select up to 10 fields you are interested in</p>
                 </div>
               </div>
-              <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+              <span className="text-xs font-bold text-text-muted bg-slate-100 px-3 py-1.5 rounded-full">
                 {data.interests.length}/10
               </span>
             </div>
@@ -238,7 +238,7 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
                     <motion.div 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="col-span-full text-center py-12 text-slate-400 text-sm border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/50"
+                      className="col-span-full text-center py-12 text-text-muted text-sm border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/50"
                     >
                       No interests added yet. Select from the list above.
                     </motion.div>
@@ -249,18 +249,18 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      className="flex items-center gap-3 p-4 bg-white border border-slate-200 rounded-xl group hover:border-blue-200 hover:shadow-sm transition-all"
+                      className="flex items-center gap-3 p-4 bg-white border border-slate-200 rounded-xl group hover:border-primary/20 hover:shadow-sm transition-all"
                     >
-                      <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-xs font-bold text-blue-600 border border-blue-100">
+                      <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center text-xs font-bold text-primary border border-primary/10">
                         {index + 1}
                       </div>
-                      <p className="flex-1 text-sm font-semibold text-slate-700">
+                      <p className="flex-1 text-sm font-semibold text-text-body">
                         {interest}
                       </p>
                       <button
                         type="button"
                         onClick={() => removeInterest(index)}
-                        className="text-slate-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-all"
+                        className="text-text-muted hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-all"
                       >
                         <X size={18} />
                       </button>
@@ -277,31 +277,31 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
         <div className="lg:col-span-3 flex flex-col gap-6">
           {/* Summary Card */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-4">
-            <h3 className="font-semibold text-slate-900">Selection Summary</h3>
+            <h3 className="font-semibold text-text-main">Selection Summary</h3>
             
             <div className="flex flex-col gap-3">
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <MapPin size={14} className="text-slate-500" />
-                  <span className="text-xs text-slate-600">City</span>
+                  <MapPin size={14} className="text-text-muted" />
+                  <span className="text-xs text-text-body">City</span>
                 </div>
-                <span className="text-sm font-medium text-slate-900">{data.interestedCity || '-'}</span>
+                <span className="text-sm font-medium text-text-main">{data.interestedCity || '-'}</span>
               </div>
 
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Clock size={14} className="text-slate-500" />
-                  <span className="text-xs text-slate-600">Shift</span>
+                  <Clock size={14} className="text-text-muted" />
+                  <span className="text-xs text-text-body">Shift</span>
                 </div>
-                <span className="text-sm font-medium text-slate-900 capitalize">{data.shift || '-'}</span>
+                <span className="text-sm font-medium text-text-main capitalize">{data.shift || '-'}</span>
               </div>
 
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <GraduationCap size={14} className="text-slate-500" />
-                  <span className="text-xs text-slate-600">Interests</span>
+                  <GraduationCap size={14} className="text-text-muted" />
+                  <span className="text-xs text-text-body">Interests</span>
                 </div>
-                <span className="text-sm font-medium text-slate-900">{data.interests.length}</span>
+                <span className="text-sm font-medium text-text-main">{data.interests.length}</span>
               </div>
             </div>
           </div>
@@ -319,7 +319,7 @@ export function ProgramPreferenceStep({ data, updateData, onNext, onBack }: Prog
             <Button
               variant="ghost"
               onClick={onBack}
-              className="w-full py-3 text-slate-600 hover:bg-slate-50 rounded-lg"
+              className="w-full py-3 text-text-body hover:bg-slate-50 rounded-lg"
               iconLeft={<ChevronLeft size={18} />}
             >
               Go Back

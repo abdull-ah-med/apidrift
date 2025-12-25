@@ -42,90 +42,90 @@ export const universityData = {
       {
         name: "School of Electrical Engineering and Computer Science (SEECS)",
         programs: [
-          { name: "BS Computer Science", duration: "4 Years", type: "BS" },
-          { name: "BS Software Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Electrical Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Artificial Intelligence", duration: "4 Years", type: "BS" },
-          { name: "BS Data Science", duration: "4 Years", type: "BS" },
-          { name: "MS Computer Science", duration: "2 Years", type: "MS" },
-          { name: "MS Information Security", duration: "2 Years", type: "MS" },
-          { name: "PhD Computer Science", duration: "3-5 Years", type: "PhD" }
+          { id: "bs-cs", name: "BS Computer Science", duration: "4 Years", type: "BS" },
+          { id: "bs-se", name: "BS Software Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-ee", name: "BS Electrical Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-ai", name: "BS Artificial Intelligence", duration: "4 Years", type: "BS" },
+          { id: "bs-ds", name: "BS Data Science", duration: "4 Years", type: "BS" },
+          { id: "ms-cs", name: "MS Computer Science", duration: "2 Years", type: "MS" },
+          { id: "ms-is", name: "MS Information Security", duration: "2 Years", type: "MS" },
+          { id: "phd-cs", name: "PhD Computer Science", duration: "3-5 Years", type: "PhD" }
         ]
       },
       {
         name: "NUST Business School (NBS)",
         programs: [
-          { name: "BBA (Hons)", duration: "4 Years", type: "BS" },
-          { name: "BS Accounting & Finance", duration: "4 Years", type: "BS" },
-          { name: "MBA", duration: "2 Years", type: "MS" },
-          { name: "MS Human Resource Management", duration: "2 Years", type: "MS" },
-          { name: "PhD Business Administration", duration: "3-5 Years", type: "PhD" }
+          { id: "bba", name: "BBA (Hons)", duration: "4 Years", type: "BS" },
+          { id: "bs-af", name: "BS Accounting & Finance", duration: "4 Years", type: "BS" },
+          { id: "mba", name: "MBA", duration: "2 Years", type: "MS" },
+          { id: "ms-hrm", name: "MS Human Resource Management", duration: "2 Years", type: "MS" },
+          { id: "phd-ba", name: "PhD Business Administration", duration: "3-5 Years", type: "PhD" }
         ]
       },
       {
         name: "School of Mechanical and Manufacturing Engineering (SMME)",
         programs: [
-          { name: "BS Mechanical Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Robotics & Intelligent Systems", duration: "4 Years", type: "BS" },
-          { name: "MS Mechanical Engineering", duration: "2 Years", type: "MS" },
-          { name: "MS Robotics", duration: "2 Years", type: "MS" },
-          { name: "PhD Mechanical Engineering", duration: "3-5 Years", type: "PhD" }
+          { id: "bs-me", name: "BS Mechanical Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-ris", name: "BS Robotics & Intelligent Systems", duration: "4 Years", type: "BS" },
+          { id: "ms-me", name: "MS Mechanical Engineering", duration: "2 Years", type: "MS" },
+          { id: "ms-robotics", name: "MS Robotics", duration: "2 Years", type: "MS" },
+          { id: "phd-me", name: "PhD Mechanical Engineering", duration: "3-5 Years", type: "PhD" }
         ]
       },
       {
         name: "School of Social Sciences and Humanities (S3H)",
         programs: [
-          { name: "BS Economics", duration: "4 Years", type: "BS" },
-          { name: "BS Psychology", duration: "4 Years", type: "BS" },
-          { name: "BS Mass Communication", duration: "4 Years", type: "BS" },
-          { name: "BS Public Administration", duration: "4 Years", type: "BS" },
-          { name: "MS Economics", duration: "2 Years", type: "MS" },
-          { name: "MS Clinical Psychology", duration: "2 Years", type: "MS" }
+          { id: "bs-econ", name: "BS Economics", duration: "4 Years", type: "BS" },
+          { id: "bs-psych", name: "BS Psychology", duration: "4 Years", type: "BS" },
+          { id: "bs-mc", name: "BS Mass Communication", duration: "4 Years", type: "BS" },
+          { id: "bs-pa", name: "BS Public Administration", duration: "4 Years", type: "BS" },
+          { id: "ms-econ", name: "MS Economics", duration: "2 Years", type: "MS" },
+          { id: "ms-cp", name: "MS Clinical Psychology", duration: "2 Years", type: "MS" }
         ]
       },
       {
         name: "School of Civil and Environmental Engineering (SCEE)",
         programs: [
-          { name: "BS Civil Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Environmental Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Geoinformatics Engineering", duration: "4 Years", type: "BS" },
-          { name: "MS Structural Engineering", duration: "2 Years", type: "MS" },
-          { name: "MS Transportation Engineering", duration: "2 Years", type: "MS" }
+          { id: "bs-ce", name: "BS Civil Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-ene", name: "BS Environmental Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-ge", name: "BS Geoinformatics Engineering", duration: "4 Years", type: "BS" },
+          { id: "ms-se", name: "MS Structural Engineering", duration: "2 Years", type: "MS" },
+          { id: "ms-te", name: "MS Transportation Engineering", duration: "2 Years", type: "MS" }
         ]
       },
       {
         name: "School of Chemical and Materials Engineering (SCME)",
         programs: [
-          { name: "BS Chemical Engineering", duration: "4 Years", type: "BS" },
-          { name: "BS Materials Engineering", duration: "4 Years", type: "BS" },
-          { name: "MS Chemical Engineering", duration: "2 Years", type: "MS" },
-          { name: "PhD Materials Engineering", duration: "3-5 Years", type: "PhD" }
+          { id: "bs-che", name: "BS Chemical Engineering", duration: "4 Years", type: "BS" },
+          { id: "bs-mate", name: "BS Materials Engineering", duration: "4 Years", type: "BS" },
+          { id: "ms-che", name: "MS Chemical Engineering", duration: "2 Years", type: "MS" },
+          { id: "phd-mate", name: "PhD Materials Engineering", duration: "3-5 Years", type: "PhD" }
         ]
       },
       {
         name: "School of Art, Design and Architecture (SADA)",
         programs: [
-          { name: "Bachelor of Architecture", duration: "5 Years", type: "BS" },
-          { name: "Bachelor of Industrial Design", duration: "4 Years", type: "BS" }
+          { id: "b-arch", name: "Bachelor of Architecture", duration: "5 Years", type: "BS" },
+          { id: "b-id", name: "Bachelor of Industrial Design", duration: "4 Years", type: "BS" }
         ]
       },
       {
         name: "School of Natural Sciences (SNS)",
         programs: [
-          { name: "BS Mathematics", duration: "4 Years", type: "BS" },
-          { name: "BS Physics", duration: "4 Years", type: "BS" },
-          { name: "BS Chemistry", duration: "4 Years", type: "BS" },
-          { name: "MS Mathematics", duration: "2 Years", type: "MS" },
-          { name: "PhD Physics", duration: "3-5 Years", type: "PhD" }
+          { id: "bs-math", name: "BS Mathematics", duration: "4 Years", type: "BS" },
+          { id: "bs-phys", name: "BS Physics", duration: "4 Years", type: "BS" },
+          { id: "bs-chem", name: "BS Chemistry", duration: "4 Years", type: "BS" },
+          { id: "ms-math", name: "MS Mathematics", duration: "2 Years", type: "MS" },
+          { id: "phd-phys", name: "PhD Physics", duration: "3-5 Years", type: "PhD" }
         ]
       },
       {
         name: "Atta-ur-Rahman School of Applied Biosciences (ASAB)",
         programs: [
-          { name: "BS Applied Biosciences", duration: "4 Years", type: "BS" },
-          { name: "BS Biotechnology", duration: "4 Years", type: "BS" },
-          { name: "MS Healthcare Biotechnology", duration: "2 Years", type: "MS" },
-          { name: "PhD Applied Biosciences", duration: "3-5 Years", type: "PhD" }
+          { id: "bs-ab", name: "BS Applied Biosciences", duration: "4 Years", type: "BS" },
+          { id: "bs-biotech", name: "BS Biotechnology", duration: "4 Years", type: "BS" },
+          { id: "ms-hb", name: "MS Healthcare Biotechnology", duration: "2 Years", type: "MS" },
+          { id: "phd-ab", name: "PhD Applied Biosciences", duration: "3-5 Years", type: "PhD" }
         ]
       }
     ],

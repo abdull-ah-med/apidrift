@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Search, ChevronRight, GraduationCap, BookOpen, Clock, LayoutGrid, List } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Select from "../ui/select";
 
 interface Program {
+  id: string;
   name: string;
   duration: string;
   type: string;
@@ -148,37 +150,41 @@ export function ProgramList({ departments }: ProgramListProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentDeptData.programs.map((prog, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="group bg-white p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer"
+                    <Link 
+                      key={prog.id} 
+                      href={`/student/university/programs/${prog.id}`}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <span className={cn(
-                          "text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border",
-                          prog.type === 'BS' ? 'bg-primary/5 text-primary border-primary/10' :
-                          prog.type === 'MS' ? 'bg-secondary/10 text-secondary border-secondary/20' :
-                          'bg-slate-100 text-slate-700 border-slate-200'
-                        )}>
-                          {prog.type}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded-md">
-                          <Clock size={14} />
-                          {prog.duration}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="group bg-white p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer h-full"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <span className={cn(
+                            "text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border",
+                            prog.type === 'BS' ? 'bg-primary/5 text-primary border-primary/10' :
+                            prog.type === 'MS' ? 'bg-secondary/10 text-secondary border-secondary/20' :
+                            'bg-slate-100 text-slate-700 border-slate-200'
+                          )}>
+                            {prog.type}
+                          </span>
+                          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded-md">
+                            <Clock size={14} />
+                            {prog.duration}
+                          </div>
                         </div>
-                      </div>
-                      
-                      <h4 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-primary transition-colors">
-                        {prog.name}
-                      </h4>
-                      
-                      <div className="flex items-center gap-2 text-sm text-slate-500 group-hover:text-primary transition-colors mt-4">
-                        <span>View Details</span>
-                        <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
-                      </div>
-                    </motion.div>
+                        
+                        <h4 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-primary transition-colors">
+                          {prog.name}
+                        </h4>
+                        
+                        <div className="flex items-center gap-2 text-sm text-slate-500 group-hover:text-primary transition-colors mt-4">
+                          <span>View Details</span>
+                          <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                        </div>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               </motion.div>

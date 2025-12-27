@@ -1,6 +1,6 @@
 export const universityData = {
     name: "National University of Sciences and Technology (NUST)",
-    logo: "/nust-logo.png", // Placeholder
+    logo: "/Logo/OneUniL.png", // Placeholder
     location: "H-12, Islamabad, Pakistan",
     website: "https://nust.edu.pk",
     ranking: 334, // QS World Ranking

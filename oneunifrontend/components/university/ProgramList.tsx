@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Search, ChevronRight, GraduationCap, BookOpen, Clock, LayoutGrid, List } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,8 @@ interface ProgramListProps {
 }
 
 export function ProgramList({ departments }: ProgramListProps) {
+  const params = useParams();
+  const universityId = params.id as string;
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [activeDept, setActiveDept] = useState<string>(departments[0]?.name || "");
@@ -152,7 +155,7 @@ export function ProgramList({ departments }: ProgramListProps) {
                   {currentDeptData.programs.map((prog, idx) => (
                     <Link 
                       key={prog.id} 
-                      href={`/student/university/programs/${prog.id}`}
+                      href={`/student/university/${universityId}/programs/${prog.id}`}
                     >
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}

@@ -26,7 +26,7 @@ import { FeeCard } from "@/components/university/FeeCard";
 export default function ProgramDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const programId = params.id as string;
+  const programId = params.programId as string;
   const program = getProgramDetails(programId);
   
   const [activeTab, setActiveTab] = useState<"overview" | "curriculum" | "eligibility" | "fees">("overview");

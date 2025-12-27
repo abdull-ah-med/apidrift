@@ -18,10 +18,10 @@ export default function UniversityOverviewPage() {
                 <Building2 size={16} />
                 <span>About the University</span>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-main leading-tight">
                 Excellence in <span className="text-primary">Science & Technology</span>
               </h1>
-              <p className="text-lg text-slate-600 leading-relaxed">
+              <p className="text-lg text-text-body leading-relaxed">
                 {universityData.overview}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
@@ -30,8 +30,8 @@ export default function UniversityOverviewPage() {
                     <MapPin size={24} />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Main Campus</p>
-                    <p className="font-medium text-slate-900">{universityData.location}</p>
+                    <p className="text-sm text-text-muted">Main Campus</p>
+                    <p className="font-medium text-text-main">{universityData.location}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -39,8 +39,8 @@ export default function UniversityOverviewPage() {
                     <Globe size={24} />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Global Ranking</p>
-                    <p className="font-medium text-slate-900">#{universityData.ranking} (QS)</p>
+                    <p className="text-sm text-text-muted">Global Ranking</p>
+                    <p className="font-medium text-text-main">#{universityData.ranking} (QS)</p>
                   </div>
                 </div>
               </div>
@@ -66,8 +66,8 @@ export default function UniversityOverviewPage() {
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-slate-900">Our Campuses</h2>
-            <p className="text-slate-600 mt-2 max-w-2xl">
+            <h2 className="text-3xl font-bold text-text-main">Our Campuses</h2>
+            <p className="text-text-body mt-2 max-w-2xl">
               Spread across the country, our campuses offer specialized programs and state-of-the-art facilities.
             </p>
           </div>

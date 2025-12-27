@@ -29,7 +29,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
             <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 rounded-full -z-10" />
             
             {/* Progress Line */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full -z-10 transition-all duration-500 ease-out"
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary rounded-full -z-10 transition-all duration-500 ease-out"
                 style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }} 
             />
 
@@ -51,14 +51,14 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
                     animate={{
                         scale: isActive ? 1.1 : 1,
                         backgroundColor: isActive ? "#ffffff" : isCompleted ? "#ffffff" : "#f1f5f9",
-                        borderColor: isActive ? "#2563eb" : isCompleted ? "#10b981" : "#e2e8f0",
+                        borderColor: isActive ? "var(--primary)" : isCompleted ? "#10b981" : "#e2e8f0",
                     }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     className={clsx(
                         "w-10 h-10 rounded-full flex items-center justify-center border-2 shadow-sm transition-all duration-300 z-10 relative",
-                        isActive ? "ring-4 ring-blue-100 shadow-blue-200 cursor-default" : 
+                        isActive ? "ring-4 ring-primary/10 shadow-primary/20 cursor-default" : 
                         isCompleted ? "text-emerald-600 cursor-pointer hover:bg-slate-50" : 
-                        isNavigable ? "text-slate-500 cursor-pointer hover:bg-slate-50 hover:text-blue-600" : "text-slate-400 cursor-not-allowed"
+                        isNavigable ? "text-text-muted cursor-pointer hover:bg-slate-50 hover:text-primary" : "text-slate-400 cursor-not-allowed"
                     )}
                     >
                     {isCompleted ? (
@@ -74,7 +74,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
                         size={18} 
                         className={clsx(
                             "transition-colors duration-300",
-                            isActive ? "text-blue-600" : "text-slate-400"
+                            isActive ? "text-primary" : "text-slate-400"
                         )} 
                         />
                     )}
@@ -94,7 +94,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
                         y: isActive ? 0 : -10,
                         scale: isActive ? 1 : 0.8,
                         }}
-                        className="whitespace-nowrap text-sm font-['Inter:Bold',sans-serif] text-slate-900 bg-white px-3 py-1 rounded-full shadow-md border border-slate-100"
+                        className="whitespace-nowrap text-sm font-bold text-text-main bg-white px-3 py-1 rounded-full shadow-md border border-slate-100"
                     >
                         {step.title}
                     </motion.span>
@@ -103,7 +103,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
                     {/* Hover Tooltip for non-active */}
                     {!isActive && (
                     <div className="absolute top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                        <span className="whitespace-nowrap text-xs font-['Inter:Medium',sans-serif] text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+                        <span className="whitespace-nowrap text-xs font-medium text-text-muted bg-slate-100 px-2 py-1 rounded-md">
                         {step.title}
                         </span>
                     </div>
@@ -118,14 +118,14 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
         <div className="md:hidden">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-sm font-semibold text-slate-800">
+              <p className="text-sm font-semibold text-text-main">
                 Step {currentStep} of {steps.length}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-text-muted mt-0.5">
                 {steps[currentStep - 1]?.title}
               </p>
             </div>
-            <p className="text-sm font-medium text-blue-600">
+            <p className="text-sm font-medium text-primary">
               {Math.round(((currentStep - 1) / (steps.length - 1)) * 100)}%
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
           {/* Linear Progress Bar */}
           <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-4">
             <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-indigo-600"
+              className="h-full bg-primary"
               initial={{ width: 0 }}
               animate={{
                 width: `${((currentStep - 1) / (steps.length - 1)) * 100}%`,
@@ -150,7 +150,7 @@ export default function StepIndicator({ steps, currentStep, onStepChange, maxCom
                 className={clsx(
                     "flex-1 h-1 rounded-full transition-all duration-300",
                     index + 1 < currentStep ? "bg-emerald-500" :
-                    index + 1 === currentStep ? "bg-blue-600" : "bg-slate-200"
+                    index + 1 === currentStep ? "bg-primary" : "bg-slate-200"
                 )}
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}

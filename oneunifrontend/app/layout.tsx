@@ -4,8 +4,15 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import ThemeProvider from "@/components/providers/theme-provider"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+})
 
 export const metadata: Metadata = {
   title: "One-University | Your Admission Companion",
@@ -20,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased text-text-body`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

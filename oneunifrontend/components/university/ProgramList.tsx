@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Search, ChevronRight, GraduationCap, BookOpen, Clock, LayoutGrid, List } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Select from "../ui/select";
 
 interface Program {
+  id: string;
   name: string;
   duration: string;
   type: string;
@@ -22,6 +25,8 @@ interface ProgramListProps {
 }
 
 export function ProgramList({ departments }: ProgramListProps) {
+  const params = useParams();
+  const universityId = params.id as string;
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [activeDept, setActiveDept] = useState<string>(departments[0]?.name || "");
@@ -54,8 +59,8 @@ export function ProgramList({ departments }: ProgramListProps) {
       {/* Header & Controls */}
       <div className="flex flex-col lg:flex-row gap-6 justify-between items-end border-b border-slate-200 pb-8">
         <div>
-          <h2 className="text-3xl font-bold text-slate-900 mb-2">Academic Programs</h2>
-          <p className="text-slate-600">Browse our comprehensive catalog of degrees and courses.</p>
+          <h2 className="text-3xl font-bold text-text-main mb-2">Academic Programs</h2>
+          <p className="text-text-body">Browse our comprehensive catalog of degrees and courses.</p>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
@@ -69,7 +74,7 @@ export function ProgramList({ departments }: ProgramListProps) {
                   "px-4 py-2 text-sm font-medium rounded-md transition-all",
                   selectedType === type 
                     ? "bg-white text-primary shadow-sm" 
-                    : "text-slate-600 hover:text-slate-900"
+                    : "text-text-body hover:text-text-main"
                 )}
               >
                 {type}
@@ -79,7 +84,7 @@ export function ProgramList({ departments }: ProgramListProps) {
 
           {/* Search */}
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
             <input
               type="text"
               placeholder="Search programs..."
@@ -97,7 +102,7 @@ export function ProgramList({ departments }: ProgramListProps) {
           
           {/* Sidebar (Departments List) - Hidden on Mobile, Visible on Desktop */}
           <div className="hidden lg:block w-full lg:w-1/4 lg:sticky lg:top-24 space-y-1 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-3">Departments</h3>
+            <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-3 px-3">Departments</h3>
             {filteredDepartments.map((dept) => (
               <button
                 key={dept.name}
@@ -106,7 +111,7 @@ export function ProgramList({ departments }: ProgramListProps) {
                   "w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center justify-between group",
                   activeDept === dept.name
                     ? "bg-primary/5 text-primary shadow-sm ring-1 ring-primary/20"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    : "text-text-body hover:bg-slate-50 hover:text-text-main"
                 )}
               >
                 <span className="line-clamp-1">{dept.name}</span>
@@ -143,42 +148,46 @@ export function ProgramList({ departments }: ProgramListProps) {
                   <div className="p-2 bg-primary/10 text-primary rounded-lg">
                     <BookOpen size={24} />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900">{currentDeptData.name}</h3>
+                  <h3 className="text-2xl font-bold text-text-main">{currentDeptData.name}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentDeptData.programs.map((prog, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="group bg-white p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer"
+                    <Link 
+                      key={prog.id} 
+                      href={`/student/university/${universityId}/programs/${prog.id}`}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <span className={cn(
-                          "text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border",
-                          prog.type === 'BS' ? 'bg-primary/5 text-primary border-primary/10' :
-                          prog.type === 'MS' ? 'bg-secondary/10 text-secondary border-secondary/20' :
-                          'bg-slate-100 text-slate-700 border-slate-200'
-                        )}>
-                          {prog.type}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded-md">
-                          <Clock size={14} />
-                          {prog.duration}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="group bg-white p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer h-full"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <span className={cn(
+                            "text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide border",
+                            prog.type === 'BS' ? 'bg-primary/5 text-primary border-primary/10' :
+                            prog.type === 'MS' ? 'bg-secondary/10 text-secondary border-secondary/20' :
+                            'bg-slate-100 text-text-body border-slate-200'
+                          )}>
+                            {prog.type}
+                          </span>
+                          <div className="flex items-center gap-1.5 text-xs font-medium text-text-muted bg-slate-50 px-2 py-1 rounded-md">
+                            <Clock size={14} />
+                            {prog.duration}
+                          </div>
                         </div>
-                      </div>
-                      
-                      <h4 className="font-bold text-slate-900 text-lg mb-2 group-hover:text-primary transition-colors">
-                        {prog.name}
-                      </h4>
-                      
-                      <div className="flex items-center gap-2 text-sm text-slate-500 group-hover:text-primary transition-colors mt-4">
-                        <span>View Details</span>
-                        <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
-                      </div>
-                    </motion.div>
+                        
+                        <h4 className="font-bold text-text-main text-lg mb-2 group-hover:text-primary transition-colors">
+                          {prog.name}
+                        </h4>
+                        
+                        <div className="flex items-center gap-2 text-sm text-text-muted group-hover:text-primary transition-colors mt-4">
+                          <span>View Details</span>
+                          <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                        </div>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               </motion.div>
@@ -187,11 +196,11 @@ export function ProgramList({ departments }: ProgramListProps) {
         </div>
       ) : (
         <div className="text-center py-20 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-          <div className="inline-flex p-4 bg-white rounded-full text-slate-300 mb-4 shadow-sm">
+          <div className="inline-flex p-4 bg-white rounded-full text-text-muted mb-4 shadow-sm">
             <Search size={32} />
           </div>
-          <h3 className="text-lg font-medium text-slate-900">No programs found</h3>
-          <p className="text-slate-500 mt-1">Try adjusting your search or filters to find what you're looking for.</p>
+          <h3 className="text-lg font-medium text-text-main">No programs found</h3>
+          <p className="text-text-muted mt-1">Try adjusting your search or filters to find what you're looking for.</p>
           <button 
             onClick={() => {setSearchQuery(""); setSelectedType("All");}}
             className="mt-6 text-primary font-medium hover:underline"

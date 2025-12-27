@@ -33,8 +33,8 @@ export function UniversityHeader({ data }: UniversityHeaderProps) {
               {data.name.substring(0, 1)}
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight mb-2">{data.name}</h1>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500">
+              <h1 className="text-2xl md:text-3xl font-bold text-text-main leading-tight mb-2">{data.name}</h1>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-text-muted">
                 <div className="flex items-center gap-1.5">
                   <MapPin size={15} />
                   {data.location}
@@ -53,10 +53,10 @@ export function UniversityHeader({ data }: UniversityHeaderProps) {
             </Button>
             <div className="flex gap-2">
                 <Button variant="outline" onClick={() => window.location.href = `tel:${data.contact.phone}`} title="Call">
-                    <Phone size={18} className="text-slate-600" />
+                    <Phone size={18} className="text-text-body" />
                 </Button>
                 <Button variant="outline" onClick={() => window.location.href = `mailto:${data.contact.email}`} title="Email">
-                    <Mail size={18} className="text-slate-600" />
+                    <Mail size={18} className="text-text-body" />
                 </Button>
             </div>
           </div>
@@ -68,27 +68,27 @@ export function UniversityHeader({ data }: UniversityHeaderProps) {
             {/* Fee Highlight */}
             {data.fees && (
                 <div>
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Avg. Semester Fee</p>
+                    <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">Avg. Semester Fee</p>
                     <div className="flex items-center gap-2">
                         <div className="p-1.5 bg-secondary/10 text-secondary rounded-md">
                             <DollarSign size={18} />
                         </div>
-                        <span className="text-2xl font-bold text-slate-900">{data.fees.semester}</span>
+                        <span className="text-2xl font-bold text-text-main">{data.fees.semester}</span>
                     </div>
                 </div>
             )}
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-200/60">
                 <div>
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Ranking</p>
-                    <div className="flex items-center gap-2 text-slate-700 font-medium">
+                    <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">Ranking</p>
+                    <div className="flex items-center gap-2 text-text-body font-medium">
                         <Award size={16} className="text-secondary" />
                         #{data.ranking}
                     </div>
                 </div>
                 <div>
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Established</p>
-                    <div className="flex items-center gap-2 text-slate-700 font-medium">
+                    <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">Established</p>
+                    <div className="flex items-center gap-2 text-text-body font-medium">
                         <Calendar size={16} className="text-primary" />
                         {data.established}
                     </div>

@@ -26,8 +26,8 @@ export default function RoleSelector({
       whileTap={{ scale: 0.98 }}
       className={`w-full flex flex-col items-center gap-[16px] p-[24px] rounded-[10px] border-2 transition-all ${
         isSelected
-          ? "border-[#2563eb] bg-[#eff6ff]"
-          : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1]"
+          ? "border-primary bg-primary/5"
+          : "border-slate-200 bg-white hover:border-slate-300"
       }`}
     >
       <motion.div
@@ -39,17 +39,17 @@ export default function RoleSelector({
           damping: 15
         }}
         className={`w-[56px] h-[56px] rounded-[10px] flex items-center justify-center ${
-          isSelected ? "bg-[#2563eb]" : "bg-[#f1f5f9]"
+          isSelected ? "bg-primary" : "bg-slate-100"
         } transition-colors`}
       >
         <Icon
           size={28}
-          className={isSelected ? "text-white" : "text-[#64748b]"}
+          className={isSelected ? "text-white" : "text-text-muted"}
         />
       </motion.div>
       <div className="flex flex-col gap-[4px] text-center">
-        <p className={`font-['Inter:Medium',sans-serif] text-[16px] ${
-          isSelected ? "text-[#2563eb]" : "text-[#1e293b]"
+        <p className={`font-medium text-[16px] ${
+          isSelected ? "text-primary" : "text-text-main"
         } transition-colors`}>
           {label}
         </p>

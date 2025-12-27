@@ -13,8 +13,8 @@ export default function UniversityAdmissionsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
         <div>
-          <h2 className="text-3xl font-bold text-slate-900">Admissions & Aid</h2>
-          <p className="text-slate-600 mt-1">Everything you need to know about applying to NUST.</p>
+          <h2 className="text-3xl font-bold text-text-main">Admissions & Aid</h2>
+          <p className="text-text-body mt-1">Everything you need to know about applying to NUST.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="gap-2">
@@ -57,13 +57,13 @@ export default function UniversityAdmissionsPage() {
 
         <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-slate-200 text-slate-600 rounded-lg">
+            <div className="p-2 bg-slate-200 text-text-body rounded-lg">
               <CheckCircle2 size={20} />
             </div>
-            <h3 className="font-semibold text-slate-900">Requirements</h3>
+            <h3 className="font-semibold text-text-main">Requirements</h3>
           </div>
-          <p className="text-sm text-slate-700 mb-4">Review the eligibility criteria and required documents before applying.</p>
-          <a href="#requirements" className="text-sm font-medium text-slate-700 hover:text-slate-900 underline">View Checklist</a>
+          <p className="text-sm text-text-body mb-4">Review the eligibility criteria and required documents before applying.</p>
+          <a href="#requirements" className="text-sm font-medium text-text-body hover:text-text-main underline">View Checklist</a>
         </div>
       </div>
 
@@ -76,13 +76,13 @@ export default function UniversityAdmissionsPage() {
             <div className="p-2 bg-primary/10 text-primary rounded-lg">
               <GraduationCap size={24} />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900">Eligibility & Requirements</h3>
+            <h3 className="text-2xl font-bold text-text-main">Eligibility & Requirements</h3>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Academic Qualifications */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-sm">
-              <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <h4 className="text-xl font-bold text-text-main mb-6 flex items-center gap-3">
                 <div className="p-2 bg-blue-50 text-primary rounded-lg">
                   <BookOpen size={24} />
                 </div>
@@ -95,8 +95,8 @@ export default function UniversityAdmissionsPage() {
                        <FileCheck size={22} />
                     </div>
                     <div>
-                       <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Requirement {idx + 1}</p>
-                       <p className="text-slate-700 font-medium leading-relaxed">
+                       <p className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Requirement {idx + 1}</p>
+                       <p className="text-text-body font-medium leading-relaxed">
                         {crit}
                       </p>
                     </div>
@@ -107,7 +107,7 @@ export default function UniversityAdmissionsPage() {
 
             {/* Required Entry Tests */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-sm flex flex-col">
-              <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <h4 className="text-xl font-bold text-text-main mb-6 flex items-center gap-3">
                 <div className="p-2 bg-amber-50 text-secondary rounded-lg">
                   <ClipboardCheck size={24} />
                 </div>
@@ -120,8 +120,8 @@ export default function UniversityAdmissionsPage() {
                     <div className="w-14 h-14 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-1 group-hover:bg-secondary group-hover:text-white transition-colors">
                       <FileSignature size={28} />
                     </div>
-                    <span className="font-bold text-slate-800 text-lg">{test}</span>
-                    <span className="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full font-medium">Accepted Test</span>
+                    <span className="font-bold text-text-main text-lg">{test}</span>
+                    <span className="text-xs text-text-muted bg-slate-100 px-3 py-1 rounded-full font-medium">Accepted Test</span>
                   </div>
                 ))}
               </div>
@@ -129,8 +129,8 @@ export default function UniversityAdmissionsPage() {
               <div className="mt-8 p-4 bg-secondary/5 border border-secondary/20 rounded-xl flex gap-4 items-start">
                 <AlertCircle className="text-secondary flex-shrink-0 mt-1" size={20} />
                 <div>
-                  <p className="font-bold text-slate-900 text-sm">Validity Period</p>
-                  <p className="text-sm text-slate-600 leading-relaxed mt-1">
+                  <p className="font-bold text-text-main text-sm">Validity Period</p>
+                  <p className="text-sm text-text-body leading-relaxed mt-1">
                     Test scores are valid for one academic year only. Please ensure your result is recent.
                   </p>
                 </div>
@@ -147,8 +147,8 @@ export default function UniversityAdmissionsPage() {
                 <Trophy size={24} />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-900">Scholarships & Financial Aid</h3>
-                <p className="text-slate-500 mt-1">We believe quality education should be accessible to everyone.</p>
+                <h3 className="text-2xl font-bold text-text-main">Scholarships & Financial Aid</h3>
+                <p className="text-text-muted mt-1">We believe quality education should be accessible to everyone.</p>
               </div>
             </div>
             <Button variant="outline" className="gap-2">
@@ -162,14 +162,14 @@ export default function UniversityAdmissionsPage() {
                 <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110" />
                 
                 <div className="relative z-10">
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-slate-50 text-text-muted flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
                     <Trophy size={20} />
                   </div>
-                  <h4 className="font-bold text-slate-900 mb-2 line-clamp-2 h-12">
+                  <h4 className="font-bold text-text-main mb-2 line-clamp-2 h-12">
                     {item.name}
                   </h4>
                   <div className="pt-4 border-t border-slate-100">
-                    <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mb-1">Benefits</p>
+                    <p className="text-xs text-text-muted uppercase tracking-wider font-medium mb-1">Benefits</p>
                     <p className="text-sm font-medium text-secondary">
                       {item.concession}
                     </p>
@@ -185,10 +185,10 @@ export default function UniversityAdmissionsPage() {
           {/* Fee Structure */}
           <section className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 md:p-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-slate-100 text-slate-600 rounded-lg">
+              <div className="p-2 bg-slate-100 text-text-body rounded-lg">
                 <Wallet size={20} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900">Fee Structure</h3>
+              <h3 className="text-xl font-bold text-text-main">Fee Structure</h3>
             </div>
             <FeeStructure fees={universityData.fees} />
           </section>

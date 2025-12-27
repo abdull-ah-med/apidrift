@@ -44,10 +44,10 @@ export default function SelectRolePage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <h2 className="font-['Inter:Bold',sans-serif] text-3xl text-[#1e293b] tracking-tight">
+              <h2 className="font-bold text-3xl text-text-main tracking-tight">
                 Choose your role
               </h2>
-              <p className="font-['Inter:Regular',sans-serif] text-[15px] text-[#64748b] mt-2 leading-relaxed">
+              <p className="text-[15px] text-text-muted mt-2 leading-relaxed">
                 Select how you want to use the platform to get started.
               </p>
             </motion.div>
@@ -79,7 +79,7 @@ export default function SelectRolePage() {
               <motion.p
                 initial={{ opacity: 0, y: -5 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="font-['Inter:Regular',sans-serif] text-[13px] text-[#ef4444]"
+                className="text-[13px] text-red-500"
               >
                 {error}
               </motion.p>

@@ -52,7 +52,7 @@ export default function RegistrationFormSection({
               onClick={onNext}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="flex-1 flex items-center justify-center gap-[8px] px-[32px] py-[14px] bg-[#2563eb] hover:bg-[#1d4ed8] rounded-[10px] font-['Inter:Semi_Bold',sans-serif] text-[16px] text-white transition-all shadow-md"
+              className="flex-1 flex items-center justify-center gap-[8px] px-[32px] py-[14px] bg-primary hover:bg-primary/90 rounded-[10px] font-semibold text-[16px] text-white transition-all shadow-md"
             >
               Continue
               <ChevronRight size={20} />
@@ -61,12 +61,12 @@ export default function RegistrationFormSection({
 
           {/* Footer */}
           <div className="flex items-center justify-center gap-[8px] w-full pt-[8px]">
-            <p className="font-['Inter:Regular',sans-serif] text-[14px] text-[#64748b]">
+            <p className="text-[14px] text-text-muted">
               Already have an account?
             </p>
             <button
               type="button"
-              className="font-['Inter:Medium',sans-serif] text-[14px] text-[#2563eb] hover:underline"
+              className="font-medium text-[14px] text-primary hover:underline"
             >
               Sign in
             </button>

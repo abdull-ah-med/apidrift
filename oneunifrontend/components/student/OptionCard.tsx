@@ -47,8 +47,8 @@ export function OptionCard({
             <Icon size={20} className={colorClass} />
           </div>
           <div>
-            <h3 className="font-semibold text-slate-900">{title}</h3>
-            <p className="text-xs text-slate-500">{description}</p>
+            <h3 className="font-semibold text-text-main">{title}</h3>
+            <p className="text-xs text-text-muted">{description}</p>
           </div>
         </div>
 
@@ -69,8 +69,8 @@ export function OptionCard({
           className={clsx(
             "flex-1 py-2 text-sm font-medium rounded-md text-center cursor-pointer transition-all",
             value === "no"
-              ? "bg-white text-slate-900 shadow-sm"
-              : "text-slate-500 hover:text-slate-700"
+              ? "bg-white text-text-main shadow-sm"
+              : "text-text-muted hover:text-text-body"
           )}
         >
           <input
@@ -87,8 +87,8 @@ export function OptionCard({
           className={clsx(
             "flex-1 py-2 text-sm font-medium rounded-md text-center cursor-pointer transition-all",
             value === "yes"
-              ? "bg-white text-slate-900 shadow-sm"
-              : "text-slate-500 hover:text-slate-700"
+              ? "bg-white text-text-main shadow-sm"
+              : "text-text-muted hover:text-text-body"
           )}
         >
           <input

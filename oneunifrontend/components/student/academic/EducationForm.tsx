@@ -33,13 +33,13 @@ export function EducationForm({
   return (
     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-6">
       <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-        <h3 className="font-bold text-slate-900 flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center">
+        <h3 className="font-bold text-text-main flex items-center gap-2">
+          <div className="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center">
             <Plus size={18} />
           </div>
           {editingIndex !== null ? "Edit Qualification" : "Add Qualification"}
         </h3>
-        <button onClick={onCancel} className="text-slate-400 hover:text-slate-600">
+        <button onClick={onCancel} className="text-text-muted hover:text-text-body">
           <XCircle size={20} />
         </button>
       </div>
@@ -110,13 +110,13 @@ export function EducationForm({
       <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
         <button
           onClick={onCancel}
-          className="px-6 py-2.5 text-slate-600 font-bold hover:bg-slate-50 rounded-xl transition-all"
+          className="px-6 py-2.5 text-text-body font-bold hover:bg-slate-50 rounded-xl transition-all"
         >
           Cancel
         </button>
         <button
           onClick={onSave}
-          className="px-8 py-2.5 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-md"
+          className="px-8 py-2.5 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-all shadow-md"
         >
           {editingIndex !== null ? "Update" : "Add to List"}
         </button>

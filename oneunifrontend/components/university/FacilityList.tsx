@@ -12,7 +12,7 @@ export function FacilityList({ title, icon, items }: FacilityListProps) {
     <InfoCard title={title} icon={icon}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {items.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-2.5 text-sm text-slate-700">
+          <div key={idx} className="flex items-center gap-2.5 text-sm text-text-body">
             <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
             <span>{item}</span>
           </div>

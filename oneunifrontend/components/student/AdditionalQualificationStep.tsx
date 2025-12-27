@@ -49,8 +49,8 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
   return (
     <div className="w-full h-full flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-slate-900">Additional Qualifications</h1>
-        <p className="text-slate-500">Select any special qualifications or quotas that apply to you.</p>
+        <h1 className="text-2xl font-bold text-text-main">Additional Qualifications</h1>
+        <p className="text-text-muted">Select any special qualifications or quotas that apply to you.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -73,8 +73,8 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
           title="Sports Quota"
           description="Apply for sports seat"
           icon={Trophy}
-          colorClass="text-blue-600"
-          bgClass="bg-blue-50"
+          colorClass="text-primary"
+          bgClass="bg-primary/5"
           name="sportsQuota"
           value={data.sportsQuota}
           onChange={handleChange as any}
@@ -144,7 +144,7 @@ export function AdditionalQualificationsStep({ data, updateData, onNext, onBack 
         <Button
           variant="ghost"
           onClick={onBack}
-          className="px-6 py-2.5 text-slate-600 hover:bg-slate-50 rounded-xl"
+          className="px-6 py-2.5 text-text-body hover:bg-slate-50 rounded-xl"
           iconLeft={<ChevronLeft size={20} />}
         >
           Back

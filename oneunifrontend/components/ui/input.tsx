@@ -16,6 +16,7 @@ type InputProps = {
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
 export default function Input({
@@ -32,6 +33,7 @@ export default function Input({
   disabled,
   onChange,
   onBlur,
+  inputProps
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
@@ -98,6 +100,7 @@ export default function Input({
               ? "border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10" 
               : "border-slate-200 hover:border-slate-300 focus:border-primary focus:ring-4 focus:ring-primary/10"
           )}
+          {...inputProps}
         />
 
         {rightIcon && (

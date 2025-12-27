@@ -179,7 +179,7 @@ export default function MentorProfilePage() {
               <form onSubmit={handleSendEmail} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Subject</label>
-                  <Input placeholder="e.g. Inquiry about mentorship" required />
+                  <Input placeholder="e.g. Inquiry about mentorship" inputProps={{ required: true }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
@@ -218,15 +218,15 @@ export default function MentorProfilePage() {
               <form onSubmit={handleBookSession} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Select Date</label>
-                  <Input type="date" required />
+                  <Input type="date" inputProps={{ required: true }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Select Time</label>
-                  <Input type="time" required />
+                  <Input type="time" inputProps={{ required: true }} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Topic</label>
-                  <Input placeholder="e.g. Resume Review" required />
+                  <Input placeholder="e.g. Resume Review" inputProps={{ required: true }} />
                 </div>
                 <div className="flex justify-end gap-3 pt-2">
                   <Button type="button" variant="ghost" onClick={() => setIsBookingModalOpen(false)}>Cancel</Button>

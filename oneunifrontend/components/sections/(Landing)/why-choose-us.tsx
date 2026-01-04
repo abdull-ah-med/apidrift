@@ -38,7 +38,7 @@ export default function WhyChooseUs() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
             Why Choose <span className="text-primary">One-University</span>?
           </h2>
-          <p className="text-xl text-muted-foreground">Built for students, by education experts</p>
+          <p className="text-xl text-muted-foreground">Built  for students, by education experts</p>
         </motion.div>
 
         <motion.div 

@@ -2,7 +2,7 @@
 
 import { CheckCircle, Lock, Cloud, Users, Bell } from "lucide-react"
 import { REASONS } from "@/lib/content/landing-content"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 
 const ICON_MAP: Record<string, any> = { CheckCircle, Lock, Cloud, Users, Bell }
 

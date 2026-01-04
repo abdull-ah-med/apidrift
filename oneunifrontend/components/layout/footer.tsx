@@ -31,99 +31,94 @@ const FOOTER_LINKS = {
 
 export default function Footer() {
   return (
-    <footer className="bg-background shadow-minimal transition-colors border-t border-border">
+    <footer className="relative bg-background/60 backdrop-blur-lg border-t border-border mt-auto overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-accent/20 -z-10" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-1 mb-4">
-              <Image src={OneUniL} height={50} width={50} alt="Logo" />
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Image 
+                src={OneUniL} 
+                alt="Logo" 
+                className="w-auto h-12 object-contain" 
+                width={120} 
+                height={48} 
+              />
               <span
-                className="font-bold text-lg text-foreground"
-                style={{ color: "var(--brand-blue)" }}
+                className="font-bold text-xl text-foreground flex flex-col leading-tight"
               >
-                One-University
+                <span style={{ color: "var(--brand-yellow)" }}>One-</span>
+                <span className="text-primary">University</span>
               </span>
             </div>
-            <p className="text-muted-foreground text-sm">
-              Your all-in-one companion for the university admission journey
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+              Your all-in-one companion for a simplified university admission journey. Experience the future of enrollment.
             </p>
           </div>
 
           {/* Links */}
-          <div>
-            <h4
-              className="font-bold mb-4 text-foreground"
-              style={{ color: "var(--brand-blue)" }}
-            >
-              Product
-            </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {FOOTER_LINKS.product.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="hover:text-foreground transition">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <h4 className="font-bold mb-6 text-foreground">Product</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {FOOTER_LINKS.product.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="hover:text-primary transition-colors flex items-center gap-2 group">
+                      <span className="w-0 group-hover:w-2 h-[1px] bg-primary transition-all duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Company */}
-          <div>
-            <h4
-              className="font-bold mb-4 text-foreground"
-              style={{ color: "var(--brand-blue)" }}
-            >
-              Company
-            </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {FOOTER_LINKS.company.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="hover:text-foreground transition">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <h4 className="font-bold mb-6 text-foreground">Company</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {FOOTER_LINKS.company.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="hover:text-primary transition-colors flex items-center gap-2 group">
+                       <span className="w-0 group-hover:w-2 h-[1px] bg-primary transition-all duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Legal */}
-          <div>
-            <h4
-              className="font-bold mb-4 text-foreground"
-              style={{ color: "var(--brand-blue)" }}
-            >
-              Legal
-            </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {FOOTER_LINKS.legal.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="hover:text-foreground transition">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h4 className="font-bold mb-6 text-foreground">Legal</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {FOOTER_LINKS.legal.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="hover:text-primary transition-colors flex items-center gap-2 group">
+                       <span className="w-0 group-hover:w-2 h-[1px] bg-primary transition-all duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm mb-4 md:mb-0">
-            © 2025 One-University. All rights reserved.
+        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground text-sm">
+            © {new Date().getFullYear()} One-University. All rights reserved.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
             {SOCIALS.map((social) => {
               const Icon = ICON_MAP[social.icon];
               return (
                 <a
                   key={social.label}
                   href={social.href}
-                  className="text-muted-foreground hover:text-foreground transition"
+                  className="text-muted-foreground hover:text-accent transition-transform hover:-translate-y-1"
                   aria-label={social.label}
                 >
-                  {Icon && <Icon size={20} />}
+                  {Icon && <Icon size={22} />}
                 </a>
               );
             })}

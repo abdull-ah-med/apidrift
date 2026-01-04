@@ -1,7 +1,7 @@
 "use client"
 
 import { BarChart3, MessageCircle, Columns3, CheckCircle2, TrendingUp, Bell, Calendar, Trophy, ArrowRight, LucideIcon } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 
 const ICON_MAP: Record<string, LucideIcon> = { 
   BarChart3, 

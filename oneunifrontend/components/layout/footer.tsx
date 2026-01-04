@@ -23,8 +23,8 @@ const FOOTER_LINKS = {
     { label: "Solution", href: "#solution" },
   ],
   legal: [
-    { label: "Privacy", href: "#privacy" },
-    { label: "Terms", href: "#terms" },
+    { label: "Privacy", href: "/privacy-policy" },
+    { label: "Terms", href: "/terms-of-service" },
     { label: "FAQs", href: "#faqs" },
   ],
 };

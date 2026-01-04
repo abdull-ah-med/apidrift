@@ -15,7 +15,7 @@ export default function TermsOfService() {
 
           <h2 className="text-2xl font-bold mb-4 text-foreground">1. Acceptance of Terms</h2>
           <p className="mb-6">
-            By accessing and using One-University ("the Platform"), you agree to comply with and be bound by these Terms of Service. 
+            By accessing  and using One-University ("the Platform"), you agree to comply with and be bound by these Terms of Service. 
             If you do not agree to these terms, please do not use our services.
           </p>
 

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Input from "@/components/ui/input";
 import PasswordInput from "@/components/ui/passwordInput";
 import Button from "@/components/ui/button";
+import { getGoogleOAuthUrl } from "@/lib/auth/google-oauth";
 
 type LoginFormProps = {
   formData: {
@@ -110,6 +111,7 @@ export default function LoginForm({
       </form>
       <motion.button
         type="button"
+        onClick={() => { window.location.href = getGoogleOAuthUrl(); }}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="w-full cursor-pointer flex items-center justify-center gap-[12px] px-[24px] py-[12px] bg-white border-2 border-slate-200 hover:border-slate-300 rounded-[10px] font-medium text-[15px] text-text-body transition-all"

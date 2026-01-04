@@ -42,12 +42,12 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background shadow-minimal transition-colors">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
          <Image src={OneUniL} height={80} width={80} alt="Logo"/>
           <span className="font-bold text-xl text-foreground" style={{ color: "var(--brand-yellow)" }}>
             One-<span className="text-primary">University</span>
           </span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
@@ -67,12 +67,18 @@ export default function Header() {
           <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-muted transition" aria-label="Toggle theme">
             {isDark ? <Sun size={20} className="text-accent" /> : <Moon size={20} className="text-muted-foreground" />}
           </button>
-          <Button
-          variant="primary"
-          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            // className="cursor-pointer px-6 py-2 rounded-full font-medium transition hover:shadow-minimal-hover text-white"
-          children="Get Started"/
+          <Link
+            href="/login"
+            className="text-muted-foreground hover:text-foreground transition font-medium"
           >
+            Log in
+          </Link>
+          <Link href="/registration">
+            <Button
+              variant="primary"
+              children="Get Started"
+            />
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -101,12 +107,21 @@ export default function Header() {
               {item.label}
             </button>
           ))}
-          <button
-            className="w-full px-6 py-2 rounded-full font-medium transition text-white"
-            style={{ backgroundColor: "var(--brand-blue)" }}
+          <Link
+            href="/login"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-left text-muted-foreground hover:text-foreground"
           >
-            Get Started
-          </button>
+            Log in
+          </Link>
+          <Link href="/registration" onClick={() => setIsOpen(false)}>
+            <button
+              className="w-full px-6 py-2 rounded-full font-medium transition text-white"
+              style={{ backgroundColor: "var(--brand-blue)" }}
+            >
+              Get Started
+            </button>
+          </Link>
         </div>
       )}
     </header>

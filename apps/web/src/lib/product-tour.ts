@@ -54,14 +54,6 @@ export function ProductTour({ autoStart = true }: { autoStart?: boolean }) {
             description: "Download a clean markdown guide for your PR or release notes.",
           },
         },
-        {
-          element: "#tour-assistant",
-          popover: {
-            title: "Ask the assistant",
-            description:
-              "Chat about breaking changes and migrations. Uses OpenAI when configured, otherwise DiffAware local answers.",
-          },
-        },
       ],
       onDestroyStarted: () => {
         window.localStorage.setItem(TOUR_KEY, "done");

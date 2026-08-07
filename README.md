@@ -1,80 +1,115 @@
-# APIDrift
+<p align="center">
+  <img src="apps/web/public/logo.svg" alt="APIDrift" width="72" height="72" />
+</p>
 
-**Semantic API Contract Change Detector**
+<h1 align="center">APIDrift</h1>
 
-Paste two API responses (or OpenAPI specs), get a semantic diff that classifies every change as Breaking / Non-Breaking / Deprecation, generates migration snippets, and exports a markdown Migration Guide.
+<p align="center">
+  <strong>Semantic API contract change detection</strong><br />
+  Paste two responses or OpenAPI specs. Get a classified drift report, migration adapters, and a downloadable guide.
+</p>
 
-## Stack
+<p align="center">
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#run-locally">Run locally</a> ·
+  <a href="#stack">Stack</a>
+</p>
 
-| Layer | Tech |
-|-------|------|
-| Web | Next.js 16 App Router, React 19, Tailwind CSS 4, shadcn/ui, Tailark Mist, React Bits, driver.js, assistant-ui |
-| API | FastAPI, Pydantic, deepdiff, openapi-spec-validator |
-| Chat | OpenAI via Vercel AI SDK when `OPENAI_API_KEY` is set; otherwise DiffAware local answers |
+<p align="center">
+  <img src="apps/web/public/homepage.png" alt="APIDrift landing page" width="920" />
+</p>
 
-Official docs referenced during build:
+## Why APIDrift
 
-- https://nextjs.org/docs
-- https://ui.shadcn.com/docs/installation/next
-- https://tailark.com/docs/quick-setup
-- https://reactbits.dev/get-started/installation
-- https://driverjs.com/docs/installation
-- https://www.assistant-ui.com/docs/installation
-- https://fastapi.tiangolo.com/
-- https://www.oasdiff.com/docs/breaking-changes (classification rule reference)
+Structural diffs tell you a field disappeared. They do not tell you that `isPaid` became `paymentStatus`, that customer fields moved under `customer`, or that line items need a `.map()`.
 
-## Monorepo layout
+APIDrift correlates removes and adds into renames, relocations, type migrations, boolean→enum transforms, and object restructures. Then it emits TypeScript and Python adapters shaped like the new contract, plus a markdown Migration Guide you can drop into a PR.
 
+## How it works
+
+### 1. Paste before and after
+
+Open the workspace, load JSON responses or OpenAPI specs (or use Auto-detect), and run the diff.
+
+<p align="center">
+  <img src="apps/web/public/workspace.png" alt="APIDrift workspace with before/after editors, risk report, and TypeScript migration adapter" width="920" />
+</p>
+
+You get:
+
+- An **API Drift Report** with overall risk and estimated effort
+- Semantic findings: renames, type adaptations, enum transforms, object restructures, removals, safe additions
+- Per-change confidence and detection reasons (synonym match, same value, same parent, and more)
+- Client adapters in **TypeScript**, **Python**, and a **cURL** checklist
+
+### 2. Export the Migration Guide
+
+Download a markdown guide with risk, semantic counts, warnings, and every change with confidence, reasons, and before/after samples.
+
+<p align="center">
+  <img src="apps/web/public/migration-guide.png" alt="APIDrift Migration Guide markdown export" width="920" />
+</p>
+
+## What the engine detects
+
+| Signal | Example |
+|--------|---------|
+| Field rename | `shipping.cost` → `shipping.price` |
+| Nested relocate + rename | `customerName` → `customer.fullName` |
+| Type migration | `id: 123` → `userId: "123"` |
+| Boolean → enum | `isPaid: true` → `paymentStatus: "PAID"` |
+| Enum value remap | `"processing"` → `"IN_PROGRESS"` |
+| Object rename | `shippingAddress` → `deliveryAddress` |
+| Array item schema | `items[].name` → `items[].title` with `.map()` adapters |
+| Safe addition | New optional fields classified non-breaking |
+
+Migrations prefer a complete old→new adapter: unchanged fields are kept, arrays use `.map()` / list comprehensions, and deprecated fields are dropped.
+
+## Run locally
+
+**Prerequisites:** Node.js 20.9+, pnpm 10+, Python 3.12+, [uv](https://docs.astral.sh/uv/)
+
+```bash
+pnpm install
+cd apps/api && uv sync && cd ../..
 ```
-apps/web   — Next.js frontend
-apps/api   — FastAPI backend
-examples/  — sample JSON + OpenAPI fixtures
-.githooks/ — identity + no-push guards
+
+```bash
+# terminal 1
+pnpm dev:api
+
+# terminal 2
+pnpm dev:web
 ```
 
-## Prerequisites
+| Surface | URL |
+|---------|-----|
+| Landing | http://localhost:3000 |
+| Workspace | http://localhost:3000/app |
+| API health | http://127.0.0.1:8000/health |
 
-- Node.js ≥ 20.9
-- pnpm 10+
-- Python 3.12+
-- [uv](https://docs.astral.sh/uv/)
+Browser calls use `/backend/*`, rewritten to FastAPI on port 8000.
 
-On some networks Node may hang on IPv6. Prefer:
+On networks where Node hangs on IPv6:
 
 ```bash
 export NODE_OPTIONS="--dns-result-order=ipv4first --no-network-family-autoselection"
 ```
 
-## Setup
+## Project layout
 
-```bash
-./scripts/bootstrap-git.sh   # Abdullah Ahmed identity + hooks (never push)
-pnpm install
-cd apps/api && uv sync
+```text
+apps/web      Next.js App Router UI
+apps/api      FastAPI semantic diff engine
+examples/     JSON + OpenAPI fixtures
 ```
 
-Optional chat:
+## Stack
 
-```bash
-cp .env.example apps/web/.env.local
-# set OPENAI_API_KEY=...
-```
-
-## Run
-
-```bash
-# terminal 1 — API
-pnpm dev:api
-# or: cd apps/api && uv run fastapi dev --host 127.0.0.1 --port 8000
-
-# terminal 2 — Web
-pnpm dev:web
-```
-
-- Landing: http://localhost:3000
-- Workspace: http://localhost:3000/app
-- Health: http://127.0.0.1:8000/health
-- Browser API calls use `/backend/*` → FastAPI (Next rewrites)
+| Layer | Tech |
+|-------|------|
+| Web | Next.js App Router, React, Tailwind CSS, shadcn/ui |
+| API | FastAPI, Pydantic, deepdiff, openapi-spec-validator |
 
 ## Tests
 
@@ -82,12 +117,6 @@ pnpm dev:web
 pnpm test:api
 cd apps/web && pnpm exec playwright test
 ```
-
-## Git policy (non-negotiable)
-
-- Author: `Abdullah Ahmed <contactabdullahahmed@gmail.com>`
-- GitHub account: `abdull-ah-med`
-- **Never push** — `pre-push` hook always fails
 
 ## License
 

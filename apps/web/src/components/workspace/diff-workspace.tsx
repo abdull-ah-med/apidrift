@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -14,12 +14,17 @@ import {
 } from "@/components/ui/select";
 import { ProductTour } from "@/lib/product-tour";
 import { ChangeResults } from "@/components/workspace/change-results";
+import { DiffAssistantPanel } from "@/components/workspace/diff-assistant-panel";
+import {
+  DiffResultProvider,
+  useDiffResult,
+} from "@/components/workspace/diff-result-context";
 import {
   downloadMarkdown,
   exportMigrationGuide,
   runDiff,
 } from "@/lib/apidrift/client";
-import type { DiffResult, InputKind } from "@/lib/apidrift/types";
+import type { InputKind } from "@/lib/apidrift/types";
 import {
   EXAMPLE_JSON_AFTER,
   EXAMPLE_JSON_BEFORE,
@@ -27,26 +32,27 @@ import {
   EXAMPLE_OPENAPI_BEFORE,
 } from "@/lib/apidrift/examples";
 
-export function DiffWorkspace() {
+function DiffWorkspaceInner() {
+  const { result, setResult } = useDiffResult();
   const [before, setBefore] = useState(EXAMPLE_JSON_BEFORE);
   const [after, setAfter] = useState(EXAMPLE_JSON_AFTER);
   const [inputKind, setInputKind] = useState<InputKind>("auto");
-  const [result, setResult] = useState<DiffResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
-  const onRun = useCallback(() => {
+  const onRun = useCallback(async () => {
     setError(null);
-    startTransition(async () => {
-      try {
-        const next = await runDiff({ before, after, input_kind: inputKind });
-        setResult(next);
-      } catch (err) {
-        setResult(null);
-        setError(err instanceof Error ? err.message : "Diff failed");
-      }
-    });
-  }, [after, before, inputKind]);
+    setPending(true);
+    try {
+      const next = await runDiff({ before, after, input_kind: inputKind });
+      setResult(next);
+    } catch (err) {
+      setResult(null);
+      setError(err instanceof Error ? err.message : "Diff failed");
+    } finally {
+      setPending(false);
+    }
+  }, [after, before, inputKind, setResult]);
 
   const onExport = useCallback(async () => {
     if (!result) return;
@@ -157,18 +163,29 @@ export function DiffWorkspace() {
         </p>
       )}
 
-      <section className="mt-10">
-        {result ? (
-          <ChangeResults result={result} />
-        ) : (
-          <div
-            id="tour-results"
-            className="rounded-xl border border-dashed border-border p-8 text-sm text-muted-foreground"
-          >
-            Results will appear here after you run a diff.
-          </div>
-        )}
-      </section>
+      <div className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <section>
+          {result ? (
+            <ChangeResults result={result} />
+          ) : (
+            <div
+              id="tour-results"
+              className="rounded-xl border border-dashed border-border p-8 text-sm text-muted-foreground"
+            >
+              Results will appear here after you run a diff.
+            </div>
+          )}
+        </section>
+        <DiffAssistantPanel />
+      </div>
     </main>
+  );
+}
+
+export function DiffWorkspace() {
+  return (
+    <DiffResultProvider>
+      <DiffWorkspaceInner />
+    </DiffResultProvider>
   );
 }

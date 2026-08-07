@@ -23,6 +23,7 @@
   "menuAccent": "subtle",
   "registries": {
     "@tailark-oss": "https://oss.tailark.com/r/radix/{name}.json",
-    "@react-bits": "https://reactbits.dev/r/{name}.json"
+    "@react-bits": "https://reactbits.dev/r/{name}.json",
+    "@assistant-ui": "https://r.assistant-ui.com/styles/{style}/{name}.json"
   }
 }

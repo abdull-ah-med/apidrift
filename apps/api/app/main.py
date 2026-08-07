@@ -3,6 +3,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers.diff import router as diff_router
+
 app = FastAPI(
     title="APIDrift API",
     description="Semantic API contract change detection",
@@ -21,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(diff_router)
 
 
 @app.get("/health")

@@ -5,8 +5,11 @@ description = "APIDrift FastAPI backend — semantic API contract change detecti
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+  "deepdiff>=9.1.0",
   "fastapi[standard]>=0.141.1",
+  "openapi-spec-validator>=0.9.0",
   "pydantic>=2.13.4",
+  "pyyaml>=6.0.3",
 ]
 
 [dependency-groups]

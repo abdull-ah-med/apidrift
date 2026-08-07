@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: Demo API
+  version: 1.1.0
+paths:
+  /users:
+    get:
+      summary: List users
+      deprecated: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  /v2/users:
+    get:
+      summary: List users v2
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, email, status]
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [admin, user, guest]
+        status:
+          type: string

@@ -1,1 +1,10 @@
-{"id": "1", "role": "admin", "profile": {"name": "Ada", "locale": "en"}, "status": "active"}
+{
+  "userId": "1",
+  "fullName": "Ada Lovelace",
+  "status": "ACTIVE",
+  "role": "member",
+  "total": {
+    "currency": "USD"
+  },
+  "locale": "en"
+}

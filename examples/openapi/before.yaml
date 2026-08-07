@@ -37,6 +37,10 @@ components:
           type: integer
         email:
           type: string
+        name:
+          type: string
         role:
           type: string
           enum: [admin, user]
+        cost:
+          type: number

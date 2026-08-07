@@ -27,7 +27,7 @@ export const HeroHeader = () => {
         data-state={menuState && "active"}
         className={cn(
           "fixed z-20 w-full transition-all duration-300",
-          isScrolled && "border-b border-border/60 bg-background/80 backdrop-blur-lg",
+          isScrolled && "border-b border-border/80 bg-background/85 backdrop-blur-md",
         )}
       >
         <div className="mx-auto max-w-5xl px-6">
@@ -36,7 +36,7 @@ export const HeroHeader = () => {
               <Link
                 href="/"
                 aria-label="home"
-                className="flex items-center font-mono text-sm tracking-[0.22em] uppercase"
+                className="flex items-center font-mono text-sm tracking-[0.22em] text-accent-signal uppercase"
               >
                 APIDrift
               </Link>
@@ -63,7 +63,7 @@ export const HeroHeader = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-background mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+            <div className="bg-card mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-2xl border border-border p-6 shadow-none in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0">
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item) => (

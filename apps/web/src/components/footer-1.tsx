@@ -7,9 +7,9 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/50 py-12">
+    <footer className="border-t border-border bg-panel py-12">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-6">
-        <Link href="/" className="font-mono text-sm tracking-[0.22em] uppercase">
+        <Link href="/" className="font-mono text-sm tracking-[0.22em] text-accent-signal uppercase">
           APIDrift
         </Link>
         <div className="flex flex-wrap justify-center gap-6">

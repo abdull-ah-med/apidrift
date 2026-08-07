@@ -15,14 +15,14 @@ export default function HeroSection() {
         <section className="relative min-h-[92svh] bg-background">
           <div className="pointer-events-none absolute inset-0 opacity-70">
             <Aurora
-              colorStops={["#0B3D3A", "#2BC8B7", "#0E1A2B"]}
-              amplitude={0.85}
-              blend={0.55}
-              speed={0.6}
+              colorStops={["#0a0a0b", "#134e4a", "#0a0a0b"]}
+              amplitude={0.7}
+              blend={0.45}
+              speed={0.45}
             />
           </div>
           <div className="relative z-10 mx-auto flex min-h-[92svh] w-full max-w-5xl flex-col justify-center px-6 py-28">
-            <p className="mb-4 font-mono text-xs tracking-[0.28em] text-teal-700 uppercase dark:text-teal-300">
+            <p className="mb-4 font-mono text-xs tracking-[0.28em] text-accent-signal uppercase">
               APIDrift
             </p>
             <BlurText
@@ -50,7 +50,7 @@ export default function HeroSection() {
                 </Link>
               </Button>
             </div>
-            <pre className="mt-14 max-w-xl overflow-hidden rounded-xl border border-border bg-card/80 p-4 font-mono text-xs leading-relaxed text-muted-foreground shadow-sm backdrop-blur">
+            <pre className="mt-14 max-w-xl overflow-hidden rounded-lg border border-border bg-panel/90 p-4 font-mono text-xs leading-relaxed text-muted-foreground backdrop-blur">
               {`+ removed  response.body.user.email
 ~ type     response.body.id  number → string
 ! deprecated  /v1/users  sunset: 2026-12-01`}

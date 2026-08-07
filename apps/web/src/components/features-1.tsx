@@ -22,26 +22,26 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="how-it-works" className="bg-muted/40 py-24">
+    <section id="how-it-works" className="border-t border-border bg-panel/60 py-24">
       <div className="mx-auto w-full max-w-5xl px-6">
-        <Badge variant="secondary" className="mb-4 font-mono tracking-wide">
+        <Badge variant="secondary" className="mb-4 rounded-md font-mono text-[10px] tracking-wide">
           Why APIDrift
         </Badge>
-        <h2 className="text-4xl font-semibold text-foreground text-balance">
+        <h2 className="text-4xl font-semibold tracking-tight text-foreground text-balance">
           Diffs that speak contract language
         </h2>
         <p className="mt-4 mb-12 max-w-2xl text-lg text-muted-foreground text-balance">
           Most tools stop at “field X was removed.” APIDrift tells you whether that
           removal breaks clients — and how to migrate.
         </p>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {features.map((feature) => (
-            <Card key={feature.title} className="border-border/80 bg-background/80">
+            <Card key={feature.title} className="rounded-lg border-border bg-card/70 shadow-none">
               <CardHeader>
-                <CardTitle className="text-xl">{feature.title}</CardTitle>
+                <CardTitle className="text-lg font-medium">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">{feature.body}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{feature.body}</p>
               </CardContent>
             </Card>
           ))}

@@ -17,11 +17,11 @@ const FILTERS: Array<{ id: "all" | ChangeClassification; label: string }> = [
 function severityClass(classification: ChangeClassification) {
   switch (classification) {
     case "breaking":
-      return "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300";
+      return "border-danger/40 bg-danger/10 text-danger";
     case "deprecation":
-      return "border-amber-500/40 bg-amber-500/10 text-amber-800 dark:text-amber-200";
+      return "border-warn/40 bg-warn/10 text-warn";
     default:
-      return "border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200";
+      return "border-ok/40 bg-ok/10 text-ok";
   }
 }
 
@@ -34,40 +34,47 @@ export function ChangeResults({ result }: { result: DiffResult }) {
   }, [filter, result.changes]);
 
   return (
-    <div id="tour-results" className="space-y-4">
-      <div className="flex flex-wrap gap-2">
-        <Badge variant="secondary">Total {result.summary.total}</Badge>
-        <Badge className={severityClass("breaking")}>
-          Breaking {result.summary.breaking}
+    <div id="tour-results" className="flex h-full min-h-0 flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
+          Results
+        </span>
+        <Badge variant="secondary" className="rounded-md font-mono text-[10px]">
+          {result.summary.total}
         </Badge>
-        <Badge className={severityClass("non_breaking")}>
-          Non-breaking {result.summary.non_breaking}
+        <Badge className={cn("rounded-md font-mono text-[10px]", severityClass("breaking"))}>
+          {result.summary.breaking} breaking
         </Badge>
-        <Badge className={severityClass("deprecation")}>
-          Deprecation {result.summary.deprecation}
+        <Badge className={cn("rounded-md font-mono text-[10px]", severityClass("non_breaking"))}>
+          {result.summary.non_breaking} safe
         </Badge>
-        <Badge variant="outline">Mode {result.input_kind}</Badge>
+        <Badge className={cn("rounded-md font-mono text-[10px]", severityClass("deprecation"))}>
+          {result.summary.deprecation} deprecated
+        </Badge>
+        <Badge variant="outline" className="ml-auto rounded-md font-mono text-[10px] text-muted-foreground">
+          {result.input_kind}
+        </Badge>
       </div>
 
       {result.warnings.length > 0 && (
-        <ul className="space-y-1 rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 text-sm text-amber-900 dark:text-amber-100">
+        <ul className="space-y-1 border border-warn/25 bg-warn/5 px-3 py-2 text-xs text-warn">
           {result.warnings.map((w) => (
-            <li key={w}>⚠ {w}</li>
+            <li key={w}>{w}</li>
           ))}
         </ul>
       )}
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {FILTERS.map((f) => (
           <button
             key={f.id}
             type="button"
             onClick={() => setFilter(f.id)}
             className={cn(
-              "rounded-full border px-3 py-1 text-xs transition",
+              "rounded-md border px-2.5 py-1 font-mono text-[11px] tracking-wide transition",
               filter === f.id
-                ? "border-foreground bg-foreground text-background"
-                : "border-border text-muted-foreground hover:text-foreground",
+                ? "border-accent-signal/50 bg-accent-signal/10 text-accent-signal"
+                : "border-border text-muted-foreground hover:border-border hover:text-foreground",
             )}
           >
             {f.label}
@@ -75,10 +82,10 @@ export function ChangeResults({ result }: { result: DiffResult }) {
         ))}
       </div>
 
-      <ScrollArea className="h-[320px] rounded-xl border border-border">
+      <ScrollArea className="min-h-0 flex-1 rounded-md border border-border bg-card/50">
         <ul className="divide-y divide-border">
           {filtered.length === 0 && (
-            <li className="p-6 text-sm text-muted-foreground">No changes in this filter.</li>
+            <li className="p-5 text-sm text-muted-foreground">No changes in this filter.</li>
           )}
           {filtered.map((change) => (
             <ChangeRow key={change.id} change={change} />
@@ -87,28 +94,28 @@ export function ChangeResults({ result }: { result: DiffResult }) {
       </ScrollArea>
 
       {result.snippets.length > 0 && (
-        <Tabs defaultValue={result.snippets[0]?.language}>
-          <TabsList>
+        <Tabs defaultValue={result.snippets[0]?.language} className="shrink-0">
+          <TabsList className="h-8 bg-muted/60">
             {result.snippets.map((s) => (
-              <TabsTrigger key={s.language} value={s.language}>
+              <TabsTrigger key={s.language} value={s.language} className="text-xs">
                 {s.language}
               </TabsTrigger>
             ))}
           </TabsList>
           {result.snippets.map((s) => (
-            <TabsContent key={s.language} value={s.language}>
+            <TabsContent key={s.language} value={s.language} className="mt-2">
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm font-medium">{s.title}</p>
+                  <p className="text-xs text-muted-foreground">{s.title}</p>
                   <button
                     type="button"
-                    className="text-xs text-muted-foreground underline-offset-2 hover:underline"
+                    className="font-mono text-[11px] text-accent-signal underline-offset-2 hover:underline"
                     onClick={() => navigator.clipboard.writeText(s.code)}
                   >
                     Copy
                   </button>
                 </div>
-                <pre className="overflow-x-auto rounded-xl border border-border bg-muted/40 p-4 font-mono text-xs leading-relaxed">
+                <pre className="max-h-40 overflow-auto rounded-md border border-border bg-panel p-3 font-mono text-[12px] leading-relaxed text-foreground/90">
                   {s.code}
                 </pre>
               </div>
@@ -122,16 +129,18 @@ export function ChangeResults({ result }: { result: DiffResult }) {
 
 function ChangeRow({ change }: { change: ChangeItem }) {
   return (
-    <li className="p-4">
+    <li className="px-3 py-3 transition hover:bg-muted/40">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge className={severityClass(change.classification)}>
+        <Badge className={cn("rounded-md font-mono text-[10px]", severityClass(change.classification))}>
           {change.classification.replace("_", "-")}
         </Badge>
-        <Badge variant="outline">{change.severity}</Badge>
-        <span className="font-mono text-xs text-muted-foreground">{change.id}</span>
+        <Badge variant="outline" className="rounded-md font-mono text-[10px] text-muted-foreground">
+          {change.severity}
+        </Badge>
+        <span className="font-mono text-[10px] text-muted-foreground">{change.id}</span>
       </div>
-      <p className="mt-2 font-mono text-sm">{change.path}</p>
-      <p className="mt-1 text-sm text-muted-foreground">{change.summary}</p>
+      <p className="mt-1.5 font-mono text-[13px] text-foreground">{change.path}</p>
+      <p className="mt-0.5 text-xs text-muted-foreground">{change.summary}</p>
     </li>
   );
 }

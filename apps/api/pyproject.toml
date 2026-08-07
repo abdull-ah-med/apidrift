@@ -1,0 +1,25 @@
+[project]
+name = "apidrift-api"
+version = "0.1.0"
+description = "APIDrift FastAPI backend — semantic API contract change detection"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi[standard]>=0.141.1",
+  "pydantic>=2.13.4",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0.0",
+  "httpx>=0.28.0",
+  "ruff>=0.12.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

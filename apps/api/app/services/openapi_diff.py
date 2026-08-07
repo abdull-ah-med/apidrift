@@ -32,9 +32,8 @@ def validate_openapi(doc: Any, label: str) -> list[str]:
     try:
         validate(doc)
     except OpenAPISpecValidatorError as exc:
-        # Soft-fail with warning so partial/demo specs still diff
         warnings.append(f"{label} OpenAPI validation warning: {exc}")
-    except Exception as exc:  # noqa: BLE001 — surface validator quirks
+    except Exception as exc:  # noqa: BLE001 - surface validator quirks
         warnings.append(f"{label} OpenAPI validation issue: {exc}")
     return warnings
 
@@ -130,53 +129,300 @@ def diff_openapi(before: dict[str, Any], after: dict[str, Any]) -> tuple[list[Ch
                 )
                 changes.extend(op_changes)
 
-    # Component schema property-level deep diff for shared models
     b_schemas = ((before.get("components") or {}).get("schemas")) or {}
     a_schemas = ((after.get("components") or {}).get("schemas")) or {}
     if isinstance(b_schemas, dict) and isinstance(a_schemas, dict):
         for name in sorted(set(b_schemas) & set(a_schemas)):
-            schema_changes = diff_json_responses(b_schemas[name], a_schemas[name])
-            for ch in schema_changes:
-                idx += 1
-                # Remap ids and paths into components namespace
-                remapped = ch.model_copy(
-                    update={
-                        "id": f"oas_{idx}",
-                        "path": f"components.schemas.{name}{ch.path[1:] if ch.path.startswith('$') else '.' + ch.path}",
-                        "summary": f"Schema {name}: {ch.summary}",
-                    }
-                )
-                # Required property added on request-like schemas is breaking;
-                # for shared schemas treat required_added if kind is added under required
-                if "required" in remapped.path and remapped.kind == ChangeKind.ADDED:
-                    remapped = remapped.model_copy(
-                        update={
-                            "kind": ChangeKind.REQUIRED_ADDED,
-                            "classification": ChangeClassification.BREAKING,
-                            "severity": ChangeSeverity.ERR,
-                            "summary": f"Schema {name}: required property added",
-                        }
-                    )
-                if remapped.kind == ChangeKind.REMOVED:
-                    remapped = remapped.model_copy(
-                        update={
-                            "classification": ChangeClassification.BREAKING,
-                            "severity": ChangeSeverity.ERR,
-                        }
-                    )
-                # Deprecation flag
-                if str(remapped.after_value).lower() == "true" and "deprecated" in remapped.path:
-                    remapped = remapped.model_copy(
-                        update={
-                            "kind": ChangeKind.DEPRECATED,
-                            "classification": ChangeClassification.DEPRECATION,
-                            "severity": ChangeSeverity.WARN,
-                            "summary": f"Schema {name}: marked deprecated",
-                        }
-                    )
-                changes.append(remapped)
+            schema_changes, idx = _diff_schema(
+                name,
+                b_schemas[name],
+                a_schemas[name],
+                idx,
+            )
+            changes.extend(schema_changes)
 
     return changes, warnings
+
+
+def _diff_schema(
+    name: str,
+    before: Any,
+    after: Any,
+    idx: int,
+) -> tuple[list[ChangeItem], int]:
+    changes: list[ChangeItem] = []
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return changes, idx
+
+    base = f"components.schemas.{name}"
+
+    # Deprecated flag on schema
+    if before.get("deprecated") is not True and after.get("deprecated") is True:
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{base}.deprecated",
+                kind=ChangeKind.DEPRECATED,
+                classification=ChangeClassification.DEPRECATION,
+                severity=ChangeSeverity.WARN,
+                summary=f"Schema {name}: marked deprecated",
+                before_value=False,
+                after_value=True,
+            )
+        )
+
+    b_required = set(before.get("required") or []) if isinstance(before.get("required"), list) else set()
+    a_required = set(after.get("required") or []) if isinstance(after.get("required"), list) else set()
+    for prop in sorted(a_required - b_required):
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{base}.required.{prop}",
+                kind=ChangeKind.REQUIRED_ADDED,
+                classification=ChangeClassification.BREAKING,
+                severity=ChangeSeverity.ERR,
+                summary=f"Schema {name}: required property added ({prop})",
+                before_value=None,
+                after_value=prop,
+            )
+        )
+    for prop in sorted(b_required - a_required):
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{base}.required.{prop}",
+                kind=ChangeKind.REQUIRED_REMOVED,
+                classification=ChangeClassification.NON_BREAKING,
+                severity=ChangeSeverity.INFO,
+                summary=f"Schema {name}: required property removed ({prop})",
+                before_value=prop,
+                after_value=None,
+            )
+        )
+
+    b_props = before.get("properties") if isinstance(before.get("properties"), dict) else {}
+    a_props = after.get("properties") if isinstance(after.get("properties"), dict) else {}
+
+    for prop in sorted(set(a_props) - set(b_props)):
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{base}.properties.{prop}",
+                kind=ChangeKind.ADDED,
+                classification=ChangeClassification.NON_BREAKING,
+                severity=ChangeSeverity.INFO,
+                summary=f"Schema {name}: added property {prop}",
+                before_value=None,
+                after_value=a_props[prop],
+            )
+        )
+
+    for prop in sorted(set(b_props) - set(a_props)):
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{base}.properties.{prop}",
+                kind=ChangeKind.REMOVED,
+                classification=ChangeClassification.BREAKING,
+                severity=ChangeSeverity.ERR,
+                summary=f"Schema {name}: removed property {prop}",
+                before_value=b_props[prop],
+                after_value=None,
+            )
+        )
+
+    for prop in sorted(set(b_props) & set(a_props)):
+        prop_changes, idx = _diff_property_schema(
+            f"{base}.properties.{prop}",
+            name,
+            prop,
+            b_props[prop],
+            a_props[prop],
+            idx,
+        )
+        changes.extend(prop_changes)
+
+    return changes, idx
+
+
+def _diff_property_schema(
+    path: str,
+    schema_name: str,
+    prop: str,
+    before: Any,
+    after: Any,
+    idx: int,
+) -> tuple[list[ChangeItem], int]:
+    changes: list[ChangeItem] = []
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return changes, idx
+
+    b_type = before.get("type")
+    a_type = after.get("type")
+    if b_type != a_type and b_type is not None and a_type is not None:
+        compatible = b_type == "integer" and a_type == "number"
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{path}.type",
+                kind=ChangeKind.TYPE_CHANGED,
+                classification=(
+                    ChangeClassification.NON_BREAKING
+                    if compatible
+                    else ChangeClassification.BREAKING
+                ),
+                severity=ChangeSeverity.INFO if compatible else ChangeSeverity.ERR,
+                summary=f"Schema {schema_name}.{prop}: type {b_type} → {a_type}",
+                before_value=b_type,
+                after_value=a_type,
+                mapping={"compatible": compatible, "before_type": b_type, "after_type": a_type},
+                intent="type_migration",
+            )
+        )
+
+    # nullable (OpenAPI 3.0)
+    b_null = bool(before.get("nullable"))
+    a_null = bool(after.get("nullable"))
+    if b_null and not a_null:
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{path}.nullable",
+                kind=ChangeKind.NULLABILITY_REMOVED,
+                classification=ChangeClassification.BREAKING,
+                severity=ChangeSeverity.ERR,
+                summary=f"Schema {schema_name}.{prop}: nullability removed",
+                before_value=True,
+                after_value=False,
+            )
+        )
+    elif not b_null and a_null:
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{path}.nullable",
+                kind=ChangeKind.NULLABILITY_ADDED,
+                classification=ChangeClassification.NON_BREAKING,
+                severity=ChangeSeverity.INFO,
+                summary=f"Schema {schema_name}.{prop}: became nullable",
+                before_value=False,
+                after_value=True,
+            )
+        )
+
+    if before.get("deprecated") is not True and after.get("deprecated") is True:
+        idx += 1
+        changes.append(
+            ChangeItem(
+                id=f"oas_{idx}",
+                path=f"{path}.deprecated",
+                kind=ChangeKind.DEPRECATED,
+                classification=ChangeClassification.DEPRECATION,
+                severity=ChangeSeverity.WARN,
+                summary=f"Schema {schema_name}.{prop}: marked deprecated",
+                before_value=False,
+                after_value=True,
+            )
+        )
+
+    b_enum = before.get("enum") if isinstance(before.get("enum"), list) else None
+    a_enum = after.get("enum") if isinstance(after.get("enum"), list) else None
+    if b_enum is not None and a_enum is not None:
+        b_set, a_set = set(b_enum), set(a_enum)
+        removed_vals = b_set - a_set
+        added_vals = a_set - b_set
+        if removed_vals and not added_vals:
+            idx += 1
+            changes.append(
+                ChangeItem(
+                    id=f"oas_{idx}",
+                    path=f"{path}.enum",
+                    kind=ChangeKind.ENUM_NARROWED,
+                    classification=ChangeClassification.BREAKING,
+                    severity=ChangeSeverity.ERR,
+                    summary=f"Schema {schema_name}.{prop}: enum narrowed (removed {sorted(removed_vals)!r})",
+                    before_value=b_enum,
+                    after_value=a_enum,
+                    mapping={"removed": sorted(removed_vals, key=str)},
+                    intent="enum_narrow",
+                )
+            )
+        elif added_vals and not removed_vals:
+            idx += 1
+            changes.append(
+                ChangeItem(
+                    id=f"oas_{idx}",
+                    path=f"{path}.enum",
+                    kind=ChangeKind.ENUM_WIDENED,
+                    classification=ChangeClassification.NON_BREAKING,
+                    severity=ChangeSeverity.INFO,
+                    summary=f"Schema {schema_name}.{prop}: enum widened (added {sorted(added_vals)!r})",
+                    before_value=b_enum,
+                    after_value=a_enum,
+                    mapping={"added": sorted(added_vals, key=str)},
+                    intent="enum_widen",
+                )
+            )
+        elif removed_vals and added_vals:
+            idx += 1
+            # Best-effort pairwise map by order / similarity left to correlate;
+            # emit enum_mapped structural hint
+            mapping = {str(k): str(v) for k, v in zip(sorted(removed_vals, key=str), sorted(added_vals, key=str))}
+            changes.append(
+                ChangeItem(
+                    id=f"oas_{idx}",
+                    path=f"{path}.enum",
+                    kind=ChangeKind.ENUM_MAPPED,
+                    classification=ChangeClassification.BREAKING,
+                    severity=ChangeSeverity.ERR,
+                    summary=f"Schema {schema_name}.{prop}: enum values remapped",
+                    before_value=b_enum,
+                    after_value=a_enum,
+                    mapping=mapping,
+                    intent="enum_remap",
+                    confidence=75.0,
+                )
+            )
+
+    # Constraint tightening (minLength / maximum etc.)
+    for key, tighter in (
+        ("minLength", True),
+        ("minItems", True),
+        ("minimum", True),
+        ("maxLength", False),
+        ("maxItems", False),
+        ("maximum", False),
+    ):
+        if key in before and key in after and before[key] != after[key]:
+            try:
+                b_n, a_n = float(before[key]), float(after[key])
+            except (TypeError, ValueError):
+                continue
+            is_tighter = (a_n > b_n) if tighter else (a_n < b_n)
+            if is_tighter:
+                idx += 1
+                changes.append(
+                    ChangeItem(
+                        id=f"oas_{idx}",
+                        path=f"{path}.{key}",
+                        kind=ChangeKind.CONSTRAINT_TIGHTENED,
+                        classification=ChangeClassification.BREAKING,
+                        severity=ChangeSeverity.ERR,
+                        summary=f"Schema {schema_name}.{prop}: {key} tightened ({before[key]} → {after[key]})",
+                        before_value=before[key],
+                        after_value=after[key],
+                    )
+                )
+
+    return changes, idx
 
 
 def _diff_operation(
@@ -190,7 +436,6 @@ def _diff_operation(
     if not isinstance(before_op, dict) or not isinstance(after_op, dict):
         return changes, idx
 
-    # Deprecation
     if before_op.get("deprecated") is not True and after_op.get("deprecated") is True:
         idx += 1
         changes.append(
@@ -238,7 +483,6 @@ def _diff_operation(
                 )
             )
 
-    # Required request parameters added
     b_params = before_op.get("parameters") or []
     a_params = after_op.get("parameters") or []
     if isinstance(b_params, list) and isinstance(a_params, list):

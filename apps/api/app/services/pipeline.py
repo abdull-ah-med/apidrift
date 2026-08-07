@@ -9,7 +9,9 @@ from app.schemas.diff import (
     DiffSummary,
     InputKind,
 )
-from app.services.guide import build_migration_guide
+from app.services.classify import classify_changes
+from app.services.correlate import correlate_changes
+from app.services.guide import build_executive_summary, build_migration_guide
 from app.services.json_diff import diff_json_responses
 from app.services.migrations import generate_snippets
 from app.services.openapi_diff import OpenAPIValidationError, diff_openapi
@@ -39,23 +41,37 @@ def run_diff(request: DiffRequest) -> DiffResult:
             "treat classifications as guidance and confirm against your real schema."
         )
 
-    snippets = generate_snippets(changes, request.languages)
+    correlated = correlate_changes(
+        changes,
+        before_doc,
+        after_doc,
+        threshold=request.confidence_threshold,
+    )
+    classified = classify_changes(correlated)
+    snippets = generate_snippets(
+        classified,
+        request.languages,
+        before=before_doc,
+        after=after_doc,
+    )
+    executive = build_executive_summary(classified)
     summary = DiffSummary(
-        total=len(changes),
-        breaking=sum(1 for c in changes if c.classification == ChangeClassification.BREAKING),
+        total=len(classified),
+        breaking=sum(1 for c in classified if c.classification == ChangeClassification.BREAKING),
         non_breaking=sum(
-            1 for c in changes if c.classification == ChangeClassification.NON_BREAKING
+            1 for c in classified if c.classification == ChangeClassification.NON_BREAKING
         ),
         deprecation=sum(
-            1 for c in changes if c.classification == ChangeClassification.DEPRECATION
+            1 for c in classified if c.classification == ChangeClassification.DEPRECATION
         ),
     )
     return DiffResult(
         input_kind=kind,
-        changes=changes,
+        changes=classified,
         summary=summary,
         snippets=snippets,
         warnings=warnings,
+        executive=executive,
     )
 
 

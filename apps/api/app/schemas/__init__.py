@@ -9,10 +9,12 @@ from app.schemas.diff import (
     DiffRequest,
     DiffResult,
     DiffSummary,
+    ExecutiveSummary,
     InputKind,
     MigrationGuideRequest,
     MigrationGuideResponse,
     MigrationSnippet,
+    OverallRisk,
 )
 
 __all__ = [
@@ -24,8 +26,10 @@ __all__ = [
     "DiffRequest",
     "DiffResult",
     "DiffSummary",
+    "ExecutiveSummary",
     "InputKind",
     "MigrationGuideRequest",
     "MigrationGuideResponse",
     "MigrationSnippet",
+    "OverallRisk",
 ]

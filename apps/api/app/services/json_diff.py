@@ -20,7 +20,7 @@ from app.schemas.diff import (
 
 
 def _path_from_deepdiff(path: str) -> str:
-    # DeepDiff paths look like "root['a'][0]['b']" — normalize to $.a[0].b
+    # DeepDiff paths look like "root['a'][0]['b']" - normalize to $.a[0].b
     cleaned = path.replace("root", "$")
     cleaned = cleaned.replace("']['", ".").replace("['", ".").replace("']", "")
     cleaned = cleaned.replace("].", "].")
@@ -56,7 +56,9 @@ def _types_compatible(before_t: str, after_t: str) -> bool:
 
 def diff_json_responses(before: Any, after: Any) -> list[ChangeItem]:
     changes: list[ChangeItem] = []
-    raw = DeepDiff(before, after, ignore_order=False, view="text")
+    # threshold_to_diff_deeper=0 forces key-level add/remove instead of collapsing
+    # wholesale object replacements into a single values_changed on the parent.
+    raw = DeepDiff(before, after, ignore_order=False, view="text", threshold_to_diff_deeper=0)
 
     idx = 0
 
@@ -156,7 +158,6 @@ def diff_json_responses(before: Any, after: Any) -> list[ChangeItem]:
                 )
             )
         else:
-            # Sample value drift is informational for response payloads
             changes.append(
                 ChangeItem(
                     id=f"chg_{idx}",

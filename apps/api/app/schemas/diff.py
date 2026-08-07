@@ -44,6 +44,10 @@ class ChangeKind(str, Enum):
     OPERATION_ADDED = "operation_added"
     RESPONSE_REMOVED = "response_removed"
     CONSTRAINT_TIGHTENED = "constraint_tightened"
+    RENAMED = "renamed"
+    RELOCATED = "relocated"
+    SEMANTIC_TRANSFORM = "semantic_transform"
+    ENUM_MAPPED = "enum_mapped"
     OTHER = "other"
 
 
@@ -53,10 +57,22 @@ class DiffLanguage(str, Enum):
     CURL = "curl"
 
 
+class OverallRisk(str, Enum):
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+
+
 class DiffRequest(BaseModel):
     before: str = Field(..., min_length=1, description="Before JSON response or OpenAPI document")
     after: str = Field(..., min_length=1, description="After JSON response or OpenAPI document")
     input_kind: InputKind = InputKind.AUTO
+    confidence_threshold: float = Field(
+        default=80.0,
+        ge=0.0,
+        le=100.0,
+        description="Minimum confidence (0-100) to auto-merge correlated structural ops",
+    )
     languages: list[DiffLanguage] = Field(
         default_factory=lambda: [
             DiffLanguage.TYPESCRIPT,
@@ -75,6 +91,12 @@ class ChangeItem(BaseModel):
     summary: str
     before_value: Any | None = None
     after_value: Any | None = None
+    confidence: float | None = None
+    from_path: str | None = None
+    mapping: dict[str, Any] | None = None
+    related_change_ids: list[str] = Field(default_factory=list)
+    intent: str | None = None
+    reasons: list[str] = Field(default_factory=list)
 
 
 class MigrationSnippet(BaseModel):
@@ -91,12 +113,27 @@ class DiffSummary(BaseModel):
     deprecation: int
 
 
+class ExecutiveSummary(BaseModel):
+    overall_risk: OverallRisk
+    breaking_changes: int
+    likely_renames: int
+    type_migrations: int
+    enum_migrations: int
+    boolean_transformations: int
+    field_relocations: int
+    object_restructures: int = 0
+    removed_fields: int
+    safe_additions: int
+    estimated_effort: str
+
+
 class DiffResult(BaseModel):
     input_kind: InputKind
     changes: list[ChangeItem]
     summary: DiffSummary
     snippets: list[MigrationSnippet]
     warnings: list[str] = Field(default_factory=list)
+    executive: ExecutiveSummary | None = None
 
 
 class MigrationGuideRequest(BaseModel):

@@ -1,7 +1,7 @@
 [project]
 name = "apidrift-api"
 version = "0.1.0"
-description = "APIDrift FastAPI backend — semantic API contract change detection"
+description = "APIDrift FastAPI backend - semantic API contract change detection"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

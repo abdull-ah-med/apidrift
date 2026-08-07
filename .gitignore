@@ -51,5 +51,10 @@ pnpm-debug.log*
 .turbo
 uv.lock.bak
 
-# Local plans (not product source)
-.cursor/plans/
+# Local agent / tooling (do not commit)
+.cursor/
+.githooks/
+AGENTS.md
+**/AGENTS.md
+CLAUDE.md
+**/CLAUDE.md

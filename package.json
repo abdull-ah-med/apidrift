@@ -8,6 +8,7 @@
     "build": "pnpm --filter @apidrift/web build",
     "lint": "pnpm --filter @apidrift/web lint",
     "test:api": "cd apps/api && uv run pytest",
+    "test:e2e": "pnpm --filter @apidrift/web exec playwright test",
     "check:identity": "./scripts/check-git-identity.sh"
   }
 }

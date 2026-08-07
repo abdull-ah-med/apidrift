@@ -8,7 +8,7 @@ test("landing shows APIDrift brand and workspace CTA", async ({ page }) => {
 
 test("workspace runs a semantic diff and shows results", async ({ page }) => {
   await page.goto("/app");
-  await page.getByRole("button", { name: /load json example/i }).click();
+  await page.getByRole("button", { name: /^json$/i }).click();
   await page.locator("#tour-run").click();
   await expect(page.getByText(/breaking/i).first()).toBeVisible({ timeout: 30_000 });
   await expect(page.locator("#tour-results")).toBeVisible();

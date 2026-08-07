@@ -1,15 +1,21 @@
 export const EXAMPLE_JSON_BEFORE = `{
   "id": 1,
-  "email": "ada@example.com",
-  "role": "admin",
-  "profile": { "name": "Ada" }
+  "name": "Ada Lovelace",
+  "isActive": true,
+  "role": "user",
+  "currency": "USD",
+  "email": "ada@example.com"
 }`;
 
 export const EXAMPLE_JSON_AFTER = `{
-  "id": "1",
-  "role": "admin",
-  "profile": { "name": "Ada", "locale": "en" },
-  "status": "active"
+  "userId": "1",
+  "fullName": "Ada Lovelace",
+  "status": "ACTIVE",
+  "role": "member",
+  "total": {
+    "currency": "USD"
+  },
+  "locale": "en"
 }`;
 
 export const EXAMPLE_OPENAPI_BEFORE = `openapi: 3.0.3
@@ -45,6 +51,13 @@ components:
           type: integer
         email:
           type: string
+        name:
+          type: string
+        role:
+          type: string
+          enum: [admin, user]
+        cost:
+          type: number
 `;
 
 export const EXAMPLE_OPENAPI_AFTER = `openapi: 3.0.3
@@ -81,6 +94,13 @@ components:
           type: string
         email:
           type: string
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [admin, user, guest]
+        price:
+          type: number
         status:
           type: string
 `;

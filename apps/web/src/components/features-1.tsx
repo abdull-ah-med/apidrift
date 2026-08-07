@@ -8,7 +8,7 @@ const features = [
   },
   {
     title: "Breaking change classification",
-    body: "Every change is tagged Breaking, Non-Breaking, or Deprecation — aligned with established OpenAPI change-review practice.",
+    body: "Every change is tagged Breaking, Non-Breaking, or Deprecation, aligned with established OpenAPI change-review practice.",
   },
   {
     title: "Migration snippets",
@@ -32,7 +32,7 @@ export default function Features() {
         </h2>
         <p className="mt-4 mb-12 max-w-2xl text-lg text-muted-foreground text-balance">
           Most tools stop at “field X was removed.” APIDrift tells you whether that
-          removal breaks clients — and how to migrate.
+          removal breaks clients, and how to migrate.
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           {features.map((feature) => (

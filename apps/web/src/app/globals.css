@@ -1,11 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "tw-shimmer";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Dark minimal by default — graphite + single cool signal accent */
+/* Dark minimal by default - graphite + single cool signal accent */
 :root {
   --background: #0a0a0b;
   --foreground: #e8e8ea;

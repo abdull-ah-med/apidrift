@@ -7,8 +7,10 @@
     "dev:api": "cd apps/api && uv run fastapi dev --host 127.0.0.1 --port 8000",
     "build": "pnpm --filter @apidrift/web build",
     "lint": "pnpm --filter @apidrift/web lint",
-    "test:api": "cd apps/api && uv run pytest",
+    "test:api": "cd apps/api && uv run python -m pytest",
     "test:e2e": "pnpm --filter @apidrift/web exec playwright test",
-    "check:identity": "./scripts/check-git-identity.sh"
+    "check:identity": "./scripts/check-git-identity.sh",
+    "ci:api": "cd apps/api && uv sync --group dev && uv run python -m pytest",
+    "ci:web": "pnpm --filter @apidrift/web build"
   }
 }

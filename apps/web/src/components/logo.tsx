@@ -15,7 +15,7 @@ export function BrandMark({
     <Link
       href="/"
       aria-label="APIDrift home"
-      className={cn("inline-flex items-center gap-2.5", className)}
+      className={cn("pressable inline-flex items-center gap-2.5", className)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- local SVG mark */}
       <img
@@ -23,10 +23,10 @@ export function BrandMark({
         alt=""
         width={28}
         height={28}
-        className={cn("size-7 shrink-0 rounded-sm", markClassName)}
+        className={cn("size-7 shrink-0 rounded-[7px]", markClassName)}
       />
       {showWordmark ? (
-        <span className="font-mono text-sm tracking-[0.22em] text-accent-signal uppercase">
+        <span className="type-title text-[17px] tracking-[-0.02em] text-foreground">
           APIDrift
         </span>
       ) : null}

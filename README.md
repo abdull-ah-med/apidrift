@@ -10,6 +10,11 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/abdull-ah-med/apidrift/actions/workflows/ci.yml"><img src="https://github.com/abdull-ah-med/apidrift/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/abdull-ah-med/apidrift"><img src="https://img.shields.io/badge/github-abdull--ah--med%2Fapidrift-181717?logo=github" alt="GitHub" /></a>
+</p>
+
+<p align="center">
   <a href="#how-it-works">How it works</a> ·
   <a href="#run-locally">Run locally</a> ·
   <a href="#stack">Stack</a>
@@ -115,8 +120,10 @@ examples/     JSON + OpenAPI fixtures
 
 ```bash
 pnpm test:api
-cd apps/web && pnpm exec playwright test
+pnpm test:e2e
 ```
+
+CI on [GitHub Actions](https://github.com/abdull-ah-med/apidrift/actions) runs API pytest, web lint + build, and Playwright e2e on every push and pull request to `main`.
 
 ## License
 

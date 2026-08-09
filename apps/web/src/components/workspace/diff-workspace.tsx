@@ -75,20 +75,38 @@ export function DiffWorkspace() {
 
   return (
     <SiteShell>
-      <div className="flex min-h-[calc(100svh-4rem)] flex-col">
+      <div className="flex min-h-[calc(100svh-3.25rem)] flex-col">
         <ProductTour />
 
-        <div className="sticky top-16 z-30 border-b border-border/80 bg-background/90 backdrop-blur-md">
+        <div className="material-toolbar sticky top-[3.25rem] z-30 border-b border-hairline">
           <div className="mx-auto flex h-12 max-w-[1600px] items-center gap-3 px-4 sm:px-6">
-            <p className="hidden text-sm text-muted-foreground sm:block">
+            <p className="type-caption hidden text-[13px] text-muted-foreground sm:block">
               Diff workspace
             </p>
             <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={loadJsonExample}
+              >
+                <FileJson className="size-3.5" />
+                JSON
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={loadOpenApiExample}
+              >
+                <FileCode2 className="size-3.5" />
+                OpenAPI
+              </Button>
               <Select
                 value={inputKind}
                 onValueChange={(v) => setInputKind(v as InputKind)}
               >
-                <SelectTrigger className="h-8 w-[160px] border-border bg-card text-xs">
+                <SelectTrigger className="h-8 w-[160px] border-white/12 bg-white/5 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -97,12 +115,12 @@ export function DiffWorkspace() {
                   <SelectItem value="openapi">OpenAPI</SelectItem>
                 </SelectContent>
               </Select>
-             
+
               <Button
                 id="tour-export"
                 variant="outline"
                 size="sm"
-                className="h-8 border-border text-xs"
+                className="h-8 text-xs"
                 onClick={onExport}
                 disabled={!result}
               >
@@ -112,7 +130,7 @@ export function DiffWorkspace() {
               <Button
                 id="tour-run"
                 size="sm"
-                className="h-8 bg-accent-signal text-primary-foreground hover:bg-accent-signal/90"
+                className="h-8"
                 onClick={onRun}
                 disabled={pending}
               >
@@ -124,12 +142,12 @@ export function DiffWorkspace() {
         </div>
 
         <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col">
-          <section className="grid border-b border-border md:grid-cols-2">
-            <div className="flex min-h-60 flex-col border-b border-border md:min-h-[32vh] md:border-r md:border-b-0">
-              <div className="flex items-center justify-between border-b border-border px-4 py-2">
+          <section className="grid border-b border-hairline md:grid-cols-2">
+            <div className="flex min-h-60 flex-col border-b border-hairline md:min-h-[32vh] md:border-r md:border-b-0">
+              <div className="flex items-center justify-between border-b border-hairline bg-white/5 px-4 py-2">
                 <Label
                   htmlFor="tour-before"
-                  className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase"
+                  className="type-caption text-[12px] font-medium tracking-[0.02em] text-muted-foreground"
                 >
                   Before
                 </Label>
@@ -139,15 +157,15 @@ export function DiffWorkspace() {
                 value={before}
                 onChange={(e) => setBefore(e.target.value)}
                 data-lenis-prevent
-                className="min-h-60 flex-1 resize-none overflow-auto overscroll-contain rounded-none border-0 bg-panel font-mono text-[13px] leading-relaxed shadow-none field-sizing-fixed focus-visible:ring-0"
+                className="min-h-60 flex-1 resize-none overflow-auto overscroll-contain rounded-none border-0 bg-panel font-mono text-[13px] leading-relaxed text-foreground shadow-none field-sizing-fixed focus-visible:ring-0"
                 spellCheck={false}
               />
             </div>
             <div className="flex min-h-60 flex-col md:min-h-[32vh]">
-              <div className="flex items-center justify-between border-b border-border px-4 py-2">
+              <div className="flex items-center justify-between border-b border-hairline bg-white/5 px-4 py-2">
                 <Label
                   htmlFor="tour-after"
-                  className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase"
+                  className="type-caption text-[12px] font-medium tracking-[0.02em] text-muted-foreground"
                 >
                   After
                 </Label>
@@ -157,7 +175,7 @@ export function DiffWorkspace() {
                 value={after}
                 onChange={(e) => setAfter(e.target.value)}
                 data-lenis-prevent
-                className="min-h-60 flex-1 resize-none overflow-auto overscroll-contain rounded-none border-0 bg-panel font-mono text-[13px] leading-relaxed shadow-none field-sizing-fixed focus-visible:ring-0"
+                className="min-h-60 flex-1 resize-none overflow-auto overscroll-contain rounded-none border-0 bg-panel font-mono text-[13px] leading-relaxed text-foreground shadow-none field-sizing-fixed focus-visible:ring-0"
                 spellCheck={false}
               />
             </div>
@@ -165,7 +183,7 @@ export function DiffWorkspace() {
 
           <section className="flex flex-1 flex-col">
             {error && (
-              <p className="border-b border-danger/30 bg-danger/10 px-4 py-2 text-sm text-danger">
+              <p className="border-b border-danger/25 bg-danger/10 px-4 py-2 text-sm text-danger">
                 {error}
               </p>
             )}
@@ -175,7 +193,7 @@ export function DiffWorkspace() {
               ) : (
                 <div
                   id="tour-results"
-                  className="flex min-h-70 items-center justify-center border border-dashed border-border bg-card/40 px-6 text-center text-sm text-muted-foreground"
+                  className="material-sheet flex min-h-70 items-center justify-center rounded-2xl border border-white/10 px-6 text-center text-sm text-muted-foreground"
                 >
                   Run a diff to see classified changes and migration snippets.
                 </div>

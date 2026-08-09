@@ -1,2 +1,2 @@
-/** Site-wide links. Set GITHUB_URL when the public repo is ready. */
-export const GITHUB_URL = ""; // TODO: add GitHub repository URL
+/** Public repository: https://github.com/abdull-ah-med/apidrift */
+export const GITHUB_URL = "https://github.com/abdull-ah-med/apidrift";

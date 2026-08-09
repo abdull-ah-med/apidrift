@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <img src="apps/web/public/homepage.png" alt="APIDrift landing page" width="920" />
+  <img src="apps/web/public/hero.png" alt="APIDrift landing page" width="920" />
 </p>
 
 ## Why APIDrift
@@ -32,28 +32,17 @@ APIDrift correlates removes and adds into renames, relocations, type migrations,
 
 ## How it works
 
-### 1. Paste before and after
+1. **Paste before and after**  
+   Open the workspace, load JSON responses or OpenAPI specs (or use Auto-detect), and run the diff.
 
-Open the workspace, load JSON responses or OpenAPI specs (or use Auto-detect), and run the diff.
+2. **Read the semantic report**  
+   You get overall risk and estimated effort, plus findings for renames, type adaptations, enum transforms, object restructures, removals, and safe additions. Each change includes confidence and detection reasons.
 
-<p align="center">
-  <img src="apps/web/public/workspace.png" alt="APIDrift workspace with before/after editors, risk report, and TypeScript migration adapter" width="920" />
-</p>
+3. **Take the adapters**  
+   Client adapters ship in TypeScript, Python, and a cURL checklist, shaped like the new contract.
 
-You get:
-
-- An **API Drift Report** with overall risk and estimated effort
-- Semantic findings: renames, type adaptations, enum transforms, object restructures, removals, safe additions
-- Per-change confidence and detection reasons (synonym match, same value, same parent, and more)
-- Client adapters in **TypeScript**, **Python**, and a **cURL** checklist
-
-### 2. Export the Migration Guide
-
-Download a markdown guide with risk, semantic counts, warnings, and every change with confidence, reasons, and before/after samples.
-
-<p align="center">
-  <img src="apps/web/public/migration-guide.png" alt="APIDrift Migration Guide markdown export" width="920" />
-</p>
+4. **Export the Migration Guide**  
+   Download markdown with risk, semantic counts, warnings, and every change with confidence, reasons, and before/after samples.
 
 ## What the engine detects
 
